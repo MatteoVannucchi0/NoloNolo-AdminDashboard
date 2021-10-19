@@ -1,0 +1,29 @@
+{
+  "name": "admindashboard",
+  "version": "1.0.0",
+  "description": "the dashboard for the manager of the nolonolo project",
+  "main": "index.js",
+  "dependencies": {
+    "vue": "^3.2.20"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.2.20",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-vue": "^7.19.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matteo00111/NoloNolo-AdminDashboard.git"
+  },
+  "author": "Matteo Vannucchi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matteo00111/NoloNolo-AdminDashboard/issues"
+  },
+  "homepage": "https://github.com/matteo00111/NoloNolo-AdminDashboard#readme"
+}
