@@ -4,18 +4,35 @@
 			{{ title }}
 		</h3>
 
-		<div v-if="wrongCredential" class="wrong-credential-container">
+		<div v-if="wrongEmail" class="wrong-credential-container">
 			<p><b>Login Failed:</b></p>
-			<p>You have entered the wrong credentialasdasdasd </p>
+			<p>No user found with that email</p>
+		</div>
+
+		<div v-if="wrongPassword" class="wrong-credential-container">
+			<p><b>Login Failed:</b></p>
+			<p>Incorrect password</p>
 		</div>
 
 		<b-form @submit="onSubmit">
 			<b-form-group id="input-group-1" label="" label-for="input-1">
-				<b-form-input id="input-1" v-model="form.email" type="email" placeholder="Email" required />
+				<b-form-input
+					id="input-1"
+					v-model="form.email"
+					type="email"
+					placeholder="Email"
+					required
+				/>
 			</b-form-group>
 
 			<b-form-group id="input-group-2" label="" label-for="input-2">
-				<b-form-input id="input-2" v-model="form.password" type="password" placeholder="Password" required />
+				<b-form-input
+					id="input-2"
+					v-model="form.password"
+					type="password"
+					placeholder="Password"
+					required
+				/>
 			</b-form-group>
 
 			<div class="inline">
@@ -58,7 +75,8 @@ export default {
 				password: '',
 			},
 			remember: true,
-			wrongCredential: false,
+			wrongEmail: false,
+			wrongPassword: false,
 		};
 	},
 	methods: {
@@ -77,8 +95,10 @@ export default {
 			if (res.status === 200) {
 				this.$store.commit('setToken', res.headers.get('Authorization'));
 				this.$router.push(this.to);
+			} else if (res.status === 403) {
+				this.wrongPassword = true;
 			} else {
-				this.wrongCredential = true;
+				this.wrongEmail = true;
 			}
 			//			this.$router.push(this.to);
 		},
