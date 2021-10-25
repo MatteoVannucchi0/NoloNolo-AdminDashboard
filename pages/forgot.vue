@@ -1,16 +1,13 @@
 <template>
 	<div class="login-outer-container">
 		<div class="login-form-container">
-			<LoginForm title="Sign in" url="http://localhost:8000/api/authentication/customers/login" to="/main" />
+			<ForgotForm />
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
+
 };
 </script>
-
-<style scoped>
-
-</style>

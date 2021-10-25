@@ -1,0 +1,17 @@
+.login-outer-container {
+    background: linear-gradient(rgba(255,255,255,0.25), rgba(255,255,255,0.25)), url("~/assets/loginImg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form-container {
+    background-color:white;
+    padding-top: 7vh;
+    padding-bottom: 10vh;
+    border-radius: 5%;
+    border: 2px solid black;
+}
