@@ -35,6 +35,8 @@
 		margin-top: 5vh;
 		padding: 2px;
 		width: auto;
+		text-align: center;
+		border-radius: 5px;
 	}
 
 	.wrong-credential-container > p {

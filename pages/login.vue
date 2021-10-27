@@ -1,7 +1,7 @@
 <template>
 	<div class="login-outer-container">
 		<div class="login-form-container">
-			<LoginForm title="Sign in" url="http://localhost:8000/api/authentication/customers/login" to="/main" />
+			<LoginForm title="Sign in" :url="$config.apiBaseURL + '/authentication/customers/login'" to="/main" />
 		</div>
 	</div>
 </template>

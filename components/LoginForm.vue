@@ -4,6 +4,11 @@
 			{{ title }}
 		</h3>
 
+		<div v-if="unknownError" class="wrong-credential-container">
+			<p><b>Login Failed</b></p>
+			<p>An error has occured</p>
+		</div>
+
 		<div v-if="wrongEmail" class="wrong-credential-container">
 			<p><b>Login Failed:</b></p>
 			<p>No user found with that email</p>
@@ -77,30 +82,33 @@ export default {
 			remember: true,
 			wrongEmail: false,
 			wrongPassword: false,
+			unknownError: false,
 		};
 	},
 	methods: {
 		async onSubmit(event) {
 			event.preventDefault();
 			const data = JSON.stringify(this.form);
-			const res = await fetch(this.url, {
-				method: 'POST',
-				mode: 'cors',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: data,
-			});
 
-			if (res.status === 200) {
-				this.$store.commit('setToken', res.headers.get('Authorization'));
+			try {
+				const res = await this.$axios({
+					method: 'post',
+					url: this.url,
+					mode: 'cors',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					data,
+					timeout: 5000,
+				});
+
+				this.$store.commit('setToken', res.headers.Authorization);
 				this.$router.push(this.to);
-			} else if (res.status === 403) {
-				this.wrongPassword = true;
-			} else {
-				this.wrongEmail = true;
+			} catch (error) {
+				this.wrongPassword = error.response.status === 403;
+				this.wrongEmail = error.response.status === 401;
+				this.unknownError = error.response.status !== 403 && error.response.status !== 401;
 			}
-			//			this.$router.push(this.to);
 		},
 	},
 };
