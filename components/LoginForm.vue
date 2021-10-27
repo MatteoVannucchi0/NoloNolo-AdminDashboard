@@ -1,20 +1,20 @@
 <template>
-	<div class="container">
-		<h3 class="title">
+	<div class="card-container">
+		<h3 class="card-title">
 			{{ title }}
 		</h3>
 
-		<div v-if="unknownError" class="wrong-credential-container">
+		<div v-if="unknownError" class="card-error">
 			<p><b>Login Failed</b></p>
 			<p>An error has occured</p>
 		</div>
 
-		<div v-if="wrongEmail" class="wrong-credential-container">
+		<div v-if="wrongEmail" class="card-error">
 			<p><b>Login Failed:</b></p>
 			<p>No user found with that email</p>
 		</div>
 
-		<div v-if="wrongPassword" class="wrong-credential-container">
+		<div v-if="wrongPassword" class="card-error">
 			<p><b>Login Failed:</b></p>
 			<p>Incorrect password</p>
 		</div>
@@ -40,17 +40,19 @@
 				/>
 			</b-form-group>
 
-			<div class="inline">
+			<div class="card-inline-item">
 				<b-form-checkbox id="checkbox-1" v-model="remember" name="checkbox-1" class="remember-me-checkbox" switch>
 					Remember me
 				</b-form-checkbox>
 
 				<NuxtLink to="/forgot" class="forgot-password">
-					Forgot password?
+					<p class="card-nuxt-link">
+						Forgot password?
+					</p>
 				</NuxtLink>
 			</div>
 
-			<b-button type="submit" variant="primary" block>
+			<b-button type="submit" block class="card-button">
 				Login
 			</b-button>
 		</b-form>
@@ -105,14 +107,15 @@ export default {
 				this.$store.commit('setToken', res.headers.Authorization);
 				this.$router.push(this.to);
 			} catch (error) {
-				this.wrongPassword = error.response.status === 403;
-				this.wrongEmail = error.response.status === 401;
-				this.unknownError = error.response.status !== 403 && error.response.status !== 401;
+				if (error.response) {
+					this.wrongPassword = error.response.status === 403;
+					this.wrongEmail = error.response.status === 401;
+					this.unknownError = error.response.status !== 403 && error.response.status !== 401;
+				} else {
+					this.unknownError = true;
+				}
 			}
 		},
 	},
 };
 </script>
-
-<style scoped src="@/assets/styles/form.css">
-</style>

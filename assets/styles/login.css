@@ -1,5 +1,7 @@
+@import url("./main.css");
 .login-outer-container {
-    background: linear-gradient(rgba(255,255,255,0.25), rgba(255,255,255,0.25)), url("~/assets/loginImg.jpg");
+    background: var(--bg-color);
+    /*linear-gradient(rgba(255,255,255,0.25), rgba(255,255,255,0.25)), url("~/assets/loginImg.jpg")*/
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
@@ -9,7 +11,7 @@
 }
 
 .login-form-container {
-    background-color:white;
+    background-color: var(--card-color);
     padding-top: 7vh;
     padding-bottom: 10vh;
     border-radius: 5%;

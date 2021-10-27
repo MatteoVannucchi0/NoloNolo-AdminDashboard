@@ -1,0 +1,70 @@
+@import url("./main.css");
+.card {
+    background-color: var(--card-bg-color);
+    border: var(--card-border);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    margin: var(--card-margin);
+    color: var(--card-font-color);
+    box-shadow: -0px -0px var(--card-shadow-color);
+}
+
+.card-container {
+    margin: 15px;
+    width: auto;
+}
+
+.card-title {
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: var(--card-title-margin-bottom);
+    color: var(--card-title-color);
+}
+
+.card-error {
+    border: var(--card-error-border);
+    border-radius: var(--card-error-border-radius);
+    background-color: var(--card-error-bg-color);
+    width: auto;
+    text-align: center;
+    margin: var(--card-error-margin);
+    padding: var(--card-error-padding);
+}
+
+.card-error>p {
+    margin: 0 0 0 0;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.card-inline-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 3vw;
+    margin-bottom: 4vh;
+    margin-top: 0;
+}
+
+.card-inline-item>* {
+    font-size: small;
+}
+
+.card-nuxt-link {
+    color: var(--card-link-font-color);
+}
+
+.card-button {
+    background-color: var(--card-button-bg-color);
+    color: var(--card-button-font-color);
+}
+
+.card-button:hover {
+    background-color: var(--card-button-bg-color-hover) !important;
+    color: var(--card-button-font-color-hover) !important;
+}
+
+.card-button:active {
+    background-color: var(--card-button-bg-color-focus) !important;
+    color: var(--card-button-font-color-focus) !important;
+}

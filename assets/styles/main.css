@@ -1,0 +1,39 @@
+:root {
+    /*GLOBAL VARIABLE*/
+    --bg-color: #16113a;
+    /*CARD VARIABLE*/
+    --card-bg-color: #272953;
+    --card-shadow-color: #1b1d46;
+    --card-border: 3px solid #1b1d46;
+    --card-border-radius: 5%;
+    --card-font-color: #FFFFFF;
+    --card-padding: 7vh 0 10vh 0px;
+    --card-margin: 0 0 0 0;
+    --card-font-color: #FFFFFF;
+    /*CARD LINK VARIABLE*/
+    --card-link-font-color: rgb(12, 156, 149);
+    /*CARD TITLE VARIABLE*/
+    --card-title-color: var(card-font-color);
+    --card-title-margin-bottom: 5vh;
+    /*CARD ERROR VARIABLE*/
+    --card-error-bg-color: rgba(255, 0, 0, .3);
+    --card-error-border: 2px solid red;
+    --card-error-border-radius: 5px;
+    --card-error-padding: 2px;
+    --card-error-margin: 5vh 0 5vh 0;
+    /*CARD BUTTON VARIABLE*/
+    --card-button-bg-color: rgb(12, 156, 149);
+    --card-button-font-color: var(--card-font-color);
+    --card-button-bg-color-hover: rgb(40, 144, 224);
+    --card-button-font-color-hover: var(--card-font-color);
+    --card-button-bg-color-focus: transparent;
+    --card-button-font-color-focus: var(--card-font-color);
+}
+
+.main-container {
+    background: var(--bg-color);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}

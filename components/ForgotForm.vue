@@ -1,6 +1,6 @@
 <template>
-	<div class="container">
-		<h3 class="title">
+	<div class="card-container">
+		<h3 class="card-title">
 			{{ title }}
 		</h3>
 		<small>
@@ -11,7 +11,7 @@
 				<b-form-input id="input-1" v-model="form.email" type="email" placeholder="Email" required />
 			</b-form-group>
 
-			<b-button type="submit" variant="primary" block>
+			<b-button type="submit" block class="card-button">
 				Send
 			</b-button>
 		</b-form>
@@ -62,7 +62,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped src="@/assets/styles/form.css">
-
-</style>

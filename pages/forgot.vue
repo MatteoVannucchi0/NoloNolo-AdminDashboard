@@ -1,6 +1,6 @@
 <template>
 	<div class="login-outer-container">
-		<div class="login-form-container">
+		<div class="card">
 			<ForgotForm />
 		</div>
 	</div>
