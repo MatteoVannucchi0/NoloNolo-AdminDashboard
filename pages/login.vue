@@ -1,8 +1,8 @@
 <template>
 	<div class="login-outer-container">
-		<div class="card">
-			<LoginForm title="Sign in" :url="$config.apiBaseURL + '/authentication/customers/login'" to="/main" />
-		</div>
+		<b-card title="Sign in" class="">
+			<LoginForm title="" :url="$config.apiBaseURL + '/authentication/customers/login'" to="/main" />
+		</b-card>
 	</div>
 </template>
 

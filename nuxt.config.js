@@ -23,6 +23,8 @@ export default {
 	css: [
 		'@/assets/styles/login',
 		'@/assets/styles/card',
+		'@/assets/styles/sidebar',
+
 	],
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

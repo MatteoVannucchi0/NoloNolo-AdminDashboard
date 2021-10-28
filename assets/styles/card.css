@@ -54,17 +54,4 @@
     color: var(--card-link-font-color);
 }
 
-.card-button {
-    background-color: var(--card-button-bg-color);
-    color: var(--card-button-font-color);
-}
-
-.card-button:hover {
-    background-color: var(--card-button-bg-color-hover) !important;
-    color: var(--card-button-font-color-hover) !important;
-}
-
-.card-button:active {
-    background-color: var(--card-button-bg-color-focus) !important;
-    color: var(--card-button-font-color-focus) !important;
-}
+.card-button {}

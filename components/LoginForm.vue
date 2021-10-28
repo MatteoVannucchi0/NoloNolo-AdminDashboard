@@ -52,7 +52,7 @@
 				</NuxtLink>
 			</div>
 
-			<b-button type="submit" block class="card-button">
+			<b-button type="submit" variant="info" block class="card-button">
 				Login
 			</b-button>
 		</b-form>

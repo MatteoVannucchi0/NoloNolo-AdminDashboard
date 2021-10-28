@@ -11,7 +11,7 @@
     --card-margin: 0 0 0 0;
     --card-font-color: #FFFFFF;
     /*CARD LINK VARIABLE*/
-    --card-link-font-color: rgb(12, 156, 149);
+    --card-link-font-color: #17a2b8;
     /*CARD TITLE VARIABLE*/
     --card-title-color: var(card-font-color);
     --card-title-margin-bottom: 5vh;
@@ -22,12 +22,6 @@
     --card-error-padding: 2px;
     --card-error-margin: 5vh 0 5vh 0;
     /*CARD BUTTON VARIABLE*/
-    --card-button-bg-color: rgb(12, 156, 149);
-    --card-button-font-color: var(--card-font-color);
-    --card-button-bg-color-hover: rgb(40, 144, 224);
-    --card-button-font-color-hover: var(--card-font-color);
-    --card-button-bg-color-focus: transparent;
-    --card-button-font-color-focus: var(--card-font-color);
 }
 
 .main-container {
