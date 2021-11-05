@@ -1,0 +1,3 @@
+.fill-child-flex-space>* {
+    flex-grow: 1;
+}

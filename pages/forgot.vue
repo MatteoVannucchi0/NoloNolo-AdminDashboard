@@ -1,8 +1,6 @@
 <template>
 	<div class="login-outer-container">
-		<div class="card">
-			<ForgotForm />
-		</div>
+		<ForgotForm />
 	</div>
 </template>
 

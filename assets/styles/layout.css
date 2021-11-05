@@ -1,0 +1,43 @@
+.main-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-areas: "header" "body" "footer";
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+}
+
+.body-container {
+    grid-area: body;
+    display: grid;
+    grid-template-areas: "sidebar content ";
+    grid-template-rows: 1fr;
+    grid-template-columns: auto 1fr;
+    overflow: hidden;
+}
+
+.header-container {
+    grid-area: header;
+}
+
+.footer-container {
+    grid-area: footer;
+}
+
+.sidebar-container {
+    grid-area: sidebar;
+}
+
+.content-container {
+    grid-area: content;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-content: stretch;
+    gap: 5px;
+    overflow-y: scroll;
+    padding-left: 10px;
+    padding-right: 10px;
+}

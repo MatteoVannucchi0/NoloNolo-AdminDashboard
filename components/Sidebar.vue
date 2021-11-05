@@ -1,12 +1,13 @@
 <template>
-	<div role="navigation">
-		<b-sidebar
+	<div class="">
+		<div
 			id="main-sidebar"
-			:visible="true"
-			:title="title"
-			sidebar-class="sidebar"
-			header-class="sidebar-header"
+			class="sidebar"
+			role="navigation"
 		>
+			<div class="sidebar-header ">
+				Sidebar
+			</div>
 			<b-nav vertical class="sidebar-nav" variant="success" pill>
 				<b-nav-item link-classes="sidebar-nav-item">
 					Dashboard
@@ -33,15 +34,7 @@
 					Disabled
 				</b-nav-item>
 			</b-nav>
-			<template #header="{}">
-				<div class="">
-					{{ title }}
-				</div>
-			</template>
-			<template #footer="{ }">
-				<div class="" />
-			</template>
-		</b-sidebar>
+		</div>
 	</div>
 </template>
 

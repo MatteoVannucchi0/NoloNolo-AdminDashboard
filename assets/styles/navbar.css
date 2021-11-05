@@ -1,0 +1,14 @@
+@import url("./main.css");
+.navbar {
+    background: transparent;
+    color: white;
+}
+
+.navbar-brand {
+    color: white !important;
+    margin-left: 20px;
+}
+
+.navbar * {
+    color: white;
+}

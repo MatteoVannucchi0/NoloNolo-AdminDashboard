@@ -3,13 +3,24 @@
     background: rgb(29, 139, 247) !important;
     background: linear-gradient(180deg, rgba(29, 139, 247, 1) 0%, rgba(40, 113, 245, 1) 51%, rgba(50, 89, 244, 1) 100%) !important;
     color: white !important;
-    height: 100%;
+    padding: 1.5vh .3vh 1.5vh .3vw;
+    border-radius: 1em;
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+@media only screen and (max-width: 350px) {
+    .sidebar {
+        display: none;
+    }
 }
 
 .sidebar-header {
-    margin: 0 1vw 0 1vw;
+    margin: 0 .5vw 0 .5vw;
     border-bottom: 1px solid white;
     font-weight: bold;
+    text-align: center;
+    font-size: 1.2em;
 }
 
 .sidebar-footer {
@@ -20,9 +31,11 @@
 .sidebar-nav {
     background: transparent;
     height: 100%;
+    display: flex;
     justify-content: space-around;
 }
 
 .sidebar-nav-item {
     color: white !important;
+    margin-bottom: 2vh;
 }

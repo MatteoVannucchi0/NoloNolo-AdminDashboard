@@ -1,4 +1,3 @@
-@import url("./main.css");
 .card {
     background-color: var(--card-bg-color);
     border: var(--card-border);
@@ -9,16 +8,11 @@
     box-shadow: -0px -0px var(--card-shadow-color);
 }
 
-.card-container {
-    margin: 15px;
-    width: auto;
-}
-
 .card-title {
     text-align: center;
     text-transform: uppercase;
-    margin-bottom: var(--card-title-margin-bottom);
-    color: var(--card-title-color);
+    margin-bottom: 0;
+    color: white;
 }
 
 .card-error {
@@ -41,8 +35,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 3vw;
-    margin-bottom: 4vh;
+    gap: 0;
+    margin-bottom: 0;
     margin-top: 0;
 }
 
@@ -53,5 +47,3 @@
 .card-nuxt-link {
     color: var(--card-link-font-color);
 }
-
-.card-button {}

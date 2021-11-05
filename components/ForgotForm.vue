@@ -1,5 +1,5 @@
 <template>
-	<div class="card-container">
+	<div class="card">
 		<h3 class="card-title">
 			{{ title }}
 		</h3>
@@ -62,3 +62,26 @@ export default {
 	},
 };
 </script>
+
+<style scoped>
+@import url("../assets/styles/main.css");
+.card {
+    padding: 4vh 0px 10vh 0px;
+}
+
+.card-title {
+    margin-bottom: 5vh;
+}
+
+.card-error {
+    margin: 0 0 5vh 0;
+    padding: 2px;
+}
+
+.card-inline-item {
+    gap: 3vw;
+    margin-bottom: 4vh;
+    margin-top: 0;
+}
+
+</style>

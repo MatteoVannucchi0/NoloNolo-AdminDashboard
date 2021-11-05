@@ -24,7 +24,17 @@ export default {
 		'@/assets/styles/login',
 		'@/assets/styles/card',
 		'@/assets/styles/sidebar',
+		'@/assets/styles/layout',
+		'@/assets/styles/navbar',
+		'@/assets/styles/helper',
 
+	],
+
+	script: [
+		{
+			type: 'text/javascript',
+			src: '@/assets/global.js',
+		},
 	],
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
