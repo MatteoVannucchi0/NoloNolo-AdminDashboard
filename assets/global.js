@@ -10,18 +10,37 @@ function between(min, max) {
 	);
 }
 
-const graphData = [];
+function fillData(index) {
+	const data = {};
+	data.label = `Linea-${index}`;
+	data.data = [];
 
-for (let i = 0; i < months.length; i += 1) {
-	const x = between(0, 20);
-	const y = between(0, 10);
-	graphData.push({
-		label: `Punto-${i}`,
-		x,
-		y,
-	});
+	for (let i = 0; i < months.length; i += 1) {
+		const x = between(0, 20);
+		const y = between(0, 10);
+		data.data.push({
+			x,
+			y,
+		});
+	}
+	return data;
 }
 
-console.log(graphData);
+const numberOfData = 3;
+const graphData = [];
+for (let i = 0; i < numberOfData; i += 1) {
+	graphData[i] = fillData(i);
+}
 
-export { months, shortMonths, graphData };
+const graphOption = {
+	borderColor: '#3e95cd',
+	fill: false,
+	smooth: false,
+};
+
+const graph = {
+	graphData,
+	graphOption,
+};
+
+export { months, shortMonths, graph };

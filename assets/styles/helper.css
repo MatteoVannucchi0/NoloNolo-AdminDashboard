@@ -1,3 +1,13 @@
 .fill-child-flex-space>* {
     flex-grow: 1;
 }
+
+.container-flex {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-content: stretch;
+    gap: 5px;
+}
+
+.container-grid {}
