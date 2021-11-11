@@ -1,8 +1,8 @@
 <template>
 	<b-card class="card">
-		<h3 class="card-title">
+		<div class="card-title">
 			{{ title }}
-		</h3>
+		</div>
 
 		<div v-if="unknownError" class="card-error">
 			<p><b>Login Failed</b></p>

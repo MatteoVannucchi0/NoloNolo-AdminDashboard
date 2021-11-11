@@ -27,13 +27,17 @@ export default {
 		'@/assets/styles/layout',
 		'@/assets/styles/navbar',
 		'@/assets/styles/helper',
-
+		'@/assets/styles/chart',
 	],
 
 	script: [
 		{
 			type: 'text/javascript',
 			src: '@/assets/global.js',
+		},
+		{
+			type: 'text/javascript',
+			src: '@/assets/helper/graphHelper.js',
 		},
 	],
 

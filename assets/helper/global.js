@@ -1,8 +1,4 @@
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-	'August', 'September', 'October', 'November', 'December'];
-
-// eslint-disable-next-line no-unused-vars
-const shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+import { months } from './graphHelper';
 
 function between(min, max) {
 	return Math.floor(
@@ -43,4 +39,5 @@ const graph = {
 	graphOption,
 };
 
-export { months, shortMonths, graph };
+// eslint-disable-next-line import/prefer-default-export
+export { graph };
