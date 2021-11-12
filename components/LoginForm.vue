@@ -60,12 +60,11 @@
 </template>
 
 <script>
+import config from '../assets/helper/config';
+import api from '../assets/helper/api';
+
 export default {
 	props: {
-		url: {
-			type: String,
-			default: '',
-		},
 		to: {
 			type: String,
 			default: '',
@@ -93,18 +92,11 @@ export default {
 			const data = JSON.stringify(this.form);
 
 			try {
-				const res = await this.$axios({
-					method: 'post',
-					url: this.url,
-					mode: 'cors',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					data,
-					timeout: 5000,
-				});
+				const res = await api.employees.login(data);
+				config.setToken(res.headers.authorization);
 
-				this.$store.commit('setToken', res.headers.Authorization);
+				// TODO vanno tolti
+				this.$store.commit('setToken', res.headers.authorization);
 				this.$router.push(this.to);
 			} catch (error) {
 				if (error.response) {

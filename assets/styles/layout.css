@@ -28,6 +28,7 @@
 
 .sidebar-container {
     grid-area: sidebar;
+    padding-bottom: 2vh;
 }
 
 .content-container {

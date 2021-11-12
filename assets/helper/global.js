@@ -6,19 +6,18 @@ function between(min, max) {
 	);
 }
 
+function generateRandomData(length) {
+	const data = [];
+	for (let i = 0; i < length; i += 1) {
+		data.push({ y: between(0, 100) });
+	}
+	return data;
+}
+
 function fillData(index) {
 	const data = {};
 	data.label = `Linea-${index}`;
-	data.data = [];
-
-	for (let i = 0; i < months.length; i += 1) {
-		const x = between(0, 20);
-		const y = between(0, 10);
-		data.data.push({
-			x,
-			y,
-		});
-	}
+	data.data = generateRandomData(months.length * 5);
 	return data;
 }
 

@@ -7,6 +7,7 @@
     border-radius: .5rem;
     margin-top: 0;
     margin-left: 20px;
+    height: 100%;
 }
 
 @media only screen and (max-width: 350px) {
@@ -20,7 +21,7 @@
     border-bottom: 1px solid white;
     font-weight: bold;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.7em;
 }
 
 .sidebar-footer {
@@ -38,4 +39,6 @@
 .sidebar-nav-item {
     color: white !important;
     margin-bottom: 2vh;
+    font-size: 1.1em;
+    font-weight: bold;
 }

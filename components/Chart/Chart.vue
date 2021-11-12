@@ -1,5 +1,5 @@
 <template>
-	<div :aria-label="chartOptions.title" role="figure">
+	<div id="canvasContainer" :aria-label="chartOptions.title" role="figure">
 		<canvas id="chart" :height="height" :width="width" />
 	</div>
 </template>
@@ -43,10 +43,12 @@ export default {
 		return {
 			loaded: true,
 			ctx: null,
+			chart: null,
 		};
 	},
 	watch: {
 		labels() {
+			this.resetCanvas();
 			this.updateChart();
 		},
 	},
@@ -74,13 +76,16 @@ export default {
 
 			this.ctx = this.ctx || document.getElementById('chart').getContext('2d');
 
-			// eslint-disable-next-line no-unused-vars
-			const myChart = new Chart(this.ctx, {
+			this.chart = new Chart(this.ctx, {
 				type: this.chartType,
 				data: chartdata,
 				options: this.chartOptions,
 			});
 			this.loaded = true;
+		},
+		resetCanvas() {
+			this.chart.destroy();
+			this.chart = null;
 		},
 	},
 };

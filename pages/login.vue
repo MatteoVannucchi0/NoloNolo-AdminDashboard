@@ -1,6 +1,6 @@
 <template>
 	<div class="login-outer-container">
-		<LoginForm title="Sign in" :url="$config.apiBaseURL + '/authentication/customers/login'" to="/main" />
+		<LoginForm title="Sign in" to="/" />
 	</div>
 </template>
 

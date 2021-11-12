@@ -1,15 +1,17 @@
 <template>
 	<div class="card card-container">
-		<h3>TEST</h3>
+		<div class="card-title">
+			{{ employee.lastname }} {{ employee.firstname }}
+		</div>
 	</div>
 </template>
 
 <script>
 export default {
 	props: {
-		title: {
-			type: String,
-			default: '',
+		employee: {
+			type: Object,
+			default: () => {},
 		},
 	},
 };

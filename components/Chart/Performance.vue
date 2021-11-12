@@ -1,6 +1,6 @@
 <template>
 	<div class="card">
-		<div class="card-inline-item">
+		<div class="">
 			<div class="chart-title">
 				Performance over {{ graphDataRangeSelected }}
 			</div>
@@ -67,6 +67,8 @@ export default {
 
 	methods: {
 		updateGraph() {
+			console.log('Updated graph', this.chartdata);
+
 			if (this.graphDataRangeSelected === '6 months') {
 				this.chartLabel = getShiftedNMonths(6);
 			} else if (this.graphDataRangeSelected === '1 year') {
@@ -83,7 +85,7 @@ export default {
 #buttonContainer{
 	width: min-content;
 	margin-left: auto;
-	margin-right: 0;
+	margin-right: 10px;
 }
 
 .card-inline-item{
