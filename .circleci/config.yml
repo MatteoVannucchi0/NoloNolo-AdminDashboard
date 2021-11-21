@@ -27,7 +27,7 @@ jobs:
 
       - run:
           name: Build SPA file
-          command: nuxt build --spa
+          command: npm run build
 
       - save_cache:
           key: node-v1-{{ checksum "package-lock.json" }}
