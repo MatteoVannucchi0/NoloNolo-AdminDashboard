@@ -37,7 +37,7 @@ jobs:
       - run: 
           command: | 
             ssh-keyscan -H donpasquale.cs.unibo.it >> ~/.ssh/known_hosts
-            scp -r dist/. matteo.vannucchi@donpasquale.cs.unibo.it:/home/web/site202120/html/public/frontend/dashboard
+            scp -r dist/* matteo.vannucchi@donpasquale.cs.unibo.it:/home/web/site202120/html/public/frontend/dashboard
 
 workflows:
   version: 2
