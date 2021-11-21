@@ -1,9 +1,9 @@
-version: 2
+version: 2.1
 
 jobs:
   ci:
     docker:
-      - image: cimg/node:lts
+      - image: circleci/node:10-browsers
     steps:
       - checkout
 
@@ -45,13 +45,9 @@ jobs:
 
 workflows:
   version: 2
-  ci:
-    jobs:     
-      - run:
-          name: Deploy to server
-      - ci:
+  build-deploy:
+    jobs:
+      - build:
           filters:
             branches:
-              only:
-                - main
-                - master
+              only: main
