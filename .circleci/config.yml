@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:10-browsers
+      - image: cimg/node:lts
     steps:
       - checkout
 
@@ -26,10 +26,6 @@ jobs:
           command: npm ci
 
       - run:
-          name: Run linter
-          command: npm run lint
-
-      - run:
           name: Build SPA file
           command: npm run build
 
@@ -41,7 +37,7 @@ jobs:
       - run: 
           command: | 
             ssh-keyscan -H donpasquale.cs.unibo.it >> ~/.ssh/known_hosts
-            scp -r dist/ matteo.vannucchi@donpasquale.cs.unibo.it:/home/web/site202120/html/public/frontend/dashboard
+            scp -r dist/. matteo.vannucchi@donpasquale.cs.unibo.it:/home/web/site202120/html/public/frontend/dashboard
 
 workflows:
   version: 2
