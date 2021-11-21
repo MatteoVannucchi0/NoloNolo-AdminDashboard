@@ -81,5 +81,19 @@ export default {
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
+		// Set the absolute path where the assets are.
+		// https://nuxtjs.org/api/configuration-build#publicpath
+		publicPath: 'https://site202120.tw.cs.unibo.it/dashboard/',
 	},
+
+	router: {
+		// Set the "Base" of the router.
+		// https://router.vuejs.org/en/api/options.html#base
+		base: '/dashboard/',
+	},
+
+	link: [
+		// Do this if you have files that are located at /static/
+		// https://nuxtjs.org/guide/assets#static
+	],
 };
