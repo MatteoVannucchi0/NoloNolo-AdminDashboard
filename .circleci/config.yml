@@ -6,7 +6,7 @@ jobs:
       - image: cimg/node:lts
     steps:
       - checkout
-      
+
       - add_ssh_keys:
           fingerprints:
             - "0a:f1:27:85:56:44:07:44:50:60:40:8f:1f:73:b5:30" 
@@ -28,7 +28,7 @@ jobs:
           name: Run linter
           command: npm run lint
 
-      - build:
+      - run:
           name: Build SPA file
           command: npm run build
       
