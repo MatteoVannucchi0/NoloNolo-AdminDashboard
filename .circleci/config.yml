@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  ci:
+  build:
     docker:
       - image: circleci/node:10-browsers
     steps:
