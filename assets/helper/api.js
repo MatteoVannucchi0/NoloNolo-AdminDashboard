@@ -15,11 +15,33 @@ async function request(params) {
 	});
 }
 
+function mapToQueryString(obj) {
+	return Object.keys(obj).map((key) => `${key}=${encodeURIComponent(obj[key])}`).join('&');
+}
+
+function paginatorNext(paginator, url) {
+	const query = `limit=${paginator.limit}&page=${paginator.nextPage}`;
+
+	return request({
+		url: `${url}?${query}`,
+		method: 'get',
+	});
+}
+
+function paginatorPrev(paginator, url) {
+	const query = `limit=${paginator.limit}&page=${paginator.prevPage}`;
+
+	return request({
+		url: `${url}?${query}`,
+		method: 'get',
+	});
+}
+
 const api = {
 	customer: {
-		async get() {
+		async get(query = {}) {
 			return request({
-				url: config.customersApiUrl,
+				url: `${config.customersApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
 			});
 		},
@@ -39,11 +61,13 @@ const api = {
 				timeout: config.loginTimeout,
 			});
 		},
+		async paginatorNext(paginator) { return paginatorNext(paginator, config.customersApiUrl); },
+		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.customersApiUrl); },
 	},
 	employees: {
-		async get() {
+		async get(query = {}) {
 			return request({
-				url: config.employeesApiUrl,
+				url: `${config.employeesApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
 			});
 		},
@@ -63,11 +87,13 @@ const api = {
 				timeout: config.loginTimeout,
 			});
 		},
+		async paginatorNext(paginator) { return paginatorNext(paginator, config.employeesApiUrl); },
+		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.employeesApiUrl); },
 	},
 	rentals: {
-		async get() {
+		async get(query = {}) {
 			return request({
-				url: config.rentalsApiUrl,
+				url: `${config.rentalsApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
 			});
 		},
@@ -79,11 +105,13 @@ const api = {
 				data,
 			});
 		},
+		async paginatorNext(paginator) { return paginatorNext(paginator, config.rentalsApiUrl); },
+		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.rentalsApiUrl); },
 	},
 	products: {
-		async get() {
+		async get(query = {}) {
 			return request({
-				url: config.productsApiUrl,
+				url: `${config.productsApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
 			});
 		},
@@ -95,6 +123,17 @@ const api = {
 				data,
 			});
 		},
+		async paginatorNext(paginator) { return paginatorNext(paginator, config.productsApiUrl); },
+		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.productsApiUrl); },
+	},
+	toServerUrl(url) {
+		return `${config.serverUrl}/${url}`;
+	},
+	toServerApiUrl(url) {
+		return `${config.serverApiUrl}/${url}`;
+	},
+	toServerImageUrl(url) {
+		return `${config.serverImageUrl}/${url}`;
 	},
 };
 
