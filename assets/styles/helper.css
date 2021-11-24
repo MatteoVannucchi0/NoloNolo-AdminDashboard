@@ -10,4 +10,8 @@
     gap: 5px;
 }
 
-.container-grid {}
+.container-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
