@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import api from '../assets/helper/api';
+/* eslint-disable no-underscore-dangle */
+import api from '../../assets/helper/api';
 
 export default {
 	props: {
@@ -49,6 +50,15 @@ export default {
 
 	#email {
 		font-size: 1.2em !important;
-
 	}
+
+    .card-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .card-image img {
+        width: 100%;
+        height: 100%;
+    }
 </style>

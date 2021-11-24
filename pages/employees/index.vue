@@ -1,32 +1,22 @@
 <template>
-	<div class="main-container">
-		<div class="header-container">
-			<Navbar />
-		</div>
-		<div class="body-container">
-			<div class="sidebar-container">
-				<Sidebar title="Sidebar" />
+	<div>
+		<b-container fluid>
+			<div id="employeeContainer" class="container-grid">
+				<CardEmployee v-for="employee in employees" :key="employee._id" :v-if="loaded" :employee="employee" />
 			</div>
-			<div class="content-container">
-				<b-container fluid>
-					<div id="employeeContainer" class="container-grid">
-						<EmployeeCard v-for="employee in employees" :key="employee._id" :v-if="loaded" :employee="employee" />
-					</div>
-				</b-container>
-				<b-button v-if="paginator.hasPrevPage" @click="paginatorPrev">
-					Prev
-				</b-button>
-				<b-button v-if="paginator.hasNextPage" @click="paginatorNext">
-					Next
-				</b-button>
-			</div>
-		</div>
+		</b-container>
+		<b-button v-if="paginator.hasPrevPage" @click="paginatorPrev">
+			Prev
+		</b-button>
+		<b-button v-if="paginator.hasNextPage" @click="paginatorNext">
+			Next
+		</b-button>
 	</div>
 </template>
 
 <script>
 
-import api from '../assets/helper/api';
+import api from '../../assets/helper/api';
 
 export default {
 	data() {
@@ -60,7 +50,7 @@ export default {
 		},
 	},
 	async mounted() {
-		this.paginator = (await api.employees.get({ limit: 3 })).data;
+		this.paginator = (await api.employees.get()).data;
 	},
 	methods: {
 		async paginatorPrev() {

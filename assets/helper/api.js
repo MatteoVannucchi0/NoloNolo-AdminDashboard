@@ -38,10 +38,16 @@ function paginatorPrev(paginator, url) {
 }
 
 const api = {
-	customer: {
-		async get(query = {}) {
+	customers: {
+		async get(query = { limit: config.paginatorLimit }) {
 			return request({
 				url: `${config.customersApiUrl}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async getSingle(id, query = {}) {
+			return request({
+				url: `${config.customersApiUrl}/${id}?${mapToQueryString(query)}`,
 				method: 'get',
 			});
 		},
@@ -65,9 +71,15 @@ const api = {
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.customersApiUrl); },
 	},
 	employees: {
-		async get(query = {}) {
+		async get(query = { limit: config.paginatorLimit }) {
 			return request({
 				url: `${config.employeesApiUrl}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async getSingle(id, query = {}) {
+			return request({
+				url: `${config.employeesApiUrl}/${id}?${mapToQueryString(query)}`,
 				method: 'get',
 			});
 		},
@@ -91,7 +103,7 @@ const api = {
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.employeesApiUrl); },
 	},
 	rentals: {
-		async get(query = {}) {
+		async get(query = { limit: config.paginatorLimit }) {
 			return request({
 				url: `${config.rentalsApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
@@ -109,7 +121,7 @@ const api = {
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.rentalsApiUrl); },
 	},
 	products: {
-		async get(query = {}) {
+		async get(query = { limit: config.paginatorLimit }) {
 			return request({
 				url: `${config.productsApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
