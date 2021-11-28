@@ -1,10 +1,12 @@
 :root {
     /*GLOBAL VARIABLE*/
-    --bg-color: #16113a;
+    --bg-color: #1e1e2e;
+    /* #16113a;*/
     /*CARD VARIABLE*/
-    --card-bg-color: #272953;
+    --card-bg-color: #27293d;
+    /* #272953;*/
     --card-shadow-color: #1b1d46;
-    --card-border: 3px solid #1b1d46;
+    --card-border: 0px solid #1b1d46;
     --card-border-radius: .5rem;
     --card-font-color: #FFFFFF;
     --card-padding: 0 0 0 0;

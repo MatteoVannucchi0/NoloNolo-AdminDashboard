@@ -1,9 +1,11 @@
 <template>
 	<div>
 		<b-navbar toggleable="lg" class="navbar">
-			<b-navbar-brand href="#" class="navbar-brand">
-				NoloNolo
-			</b-navbar-brand>
+			<NuxtLink to="/">
+				<b-navbar-brand class="navbar-brand">
+					NoloNolo
+				</b-navbar-brand>
+			</NuxtLink>
 
 			<b-navbar-toggle target="nav-collapse" />
 

@@ -4,9 +4,9 @@
 			{{ employee.lastname }} {{ employee.firstname }}
 		</div>
 		<div class="card-image">
-			<a v-if="link" :href="employeeSingleUrl">
+			<NuxtLink v-if="link" :to="employeeSingleUrl">
 				<img :src="profilePictureUrl">
-			</a>
+			</NuxtLink>
 			<span v-else><img :src="profilePictureUrl"></span>
 		</div>
 		<div v-if="false" id="email">

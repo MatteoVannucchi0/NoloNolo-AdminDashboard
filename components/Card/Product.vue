@@ -4,9 +4,9 @@
 			{{ product.name }}
 		</div>
 		<div class="card-image">
-			<a v-if="link" :href="productSingleUrl">
+			<NuxtLink v-if="link" :to="productSingleUrl">
 				<img :src="productImageUrl">
-			</a>
+			</NuxtLink>
 			<span v-else><img :src="productImageUrl"></span>
 		</div>
 		<div id="category">
