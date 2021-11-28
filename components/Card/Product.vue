@@ -1,19 +1,22 @@
 <template>
 	<div class="card card-container">
 		<div class="card-title">
-			{{ employee.lastname }} {{ employee.firstname }}
+			{{ product.name }}
 		</div>
 		<div class="card-image">
-			<a v-if="link" :href="employeeSingleUrl">
-				<img :src="profilePictureUrl">
+			<a v-if="link" :href="productSingleUrl">
+				<img :src="productImageUrl">
 			</a>
-			<span v-else><img :src="profilePictureUrl"></span>
+			<span v-else><img :src="productImageUrl"></span>
 		</div>
-		<div v-if="false" id="email">
-			{{ employee.loginInfo.email }}
+		<div id="category">
+			Category: {{ product.category }} - Subcategory: {{ product.subcategory }}
 		</div>
-		<div>
-			{{ employee.authorization }}
+		<div class="card-description">
+			{{ product.description }}
+		</div>
+		<div class="tag-container">
+			<span v-for="tag in product.tags" :key="tag.key+tag.value">Key: {{ tag.key }} - Value: {{ tag.value }}</span>
 		</div>
 	</div>
 </template>
@@ -24,7 +27,7 @@ import api from '../../assets/helper/api';
 
 export default {
 	props: {
-		employee: {
+		product: {
 			type: Object,
 			default: () => {},
 		},
@@ -34,12 +37,15 @@ export default {
 		},
 	},
 	computed: {
-		profilePictureUrl() {
-			return api.toServerImageUrl(this.employee.profilePicture);
+		productImageUrl() {
+			return api.toServerImageUrl(this.product.image);
 		},
-		employeeSingleUrl() {
-			return `employees/${this.employee._id}`;
+		productSingleUrl() {
+			return `inventory/${this.product._id}`;
 		},
+	},
+	mounted() {
+		console.log('Dentro: ', this.product);
 	},
 };
 </script>
@@ -60,7 +66,6 @@ export default {
 
 	#email {
 		font-size: 1.2em !important;
-
 	}
 
     .card-image {

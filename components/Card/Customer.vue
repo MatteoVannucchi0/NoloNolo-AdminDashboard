@@ -4,11 +4,12 @@
 			{{ customer.lastname }} {{ customer.firstname }}
 		</div>
 		<div class="card-image">
-			<a :href="customerSingleUrl">
+			<a v-if="link" :href="customerSingleUrl">
 				<img :src="profilePictureUrl">
 			</a>
+			<span v-else><img :src="profilePictureUrl"></span>
 		</div>
-		<div v-if="false" id="email">
+		<div id="email">
 			{{ customer.loginInfo.email }}
 		</div>
 		<div class="Address">
@@ -35,6 +36,10 @@ export default {
 			type: Object,
 			default: () => {},
 		},
+		link: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	computed: {
 		profilePictureUrl() {
@@ -45,7 +50,6 @@ export default {
 		},
 	},
 	mounted() {
-		console.log('Dentro: ', this.customer);
 	},
 };
 </script>

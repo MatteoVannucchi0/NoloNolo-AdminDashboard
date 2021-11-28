@@ -5,12 +5,7 @@
 				<CardEmployee v-for="employee in employees" :key="employee._id" :v-if="loaded" :employee="employee" />
 			</div>
 		</b-container>
-		<b-button v-if="paginator.hasPrevPage" @click="paginatorPrev">
-			Prev
-		</b-button>
-		<b-button v-if="paginator.hasNextPage" @click="paginatorNext">
-			Next
-		</b-button>
+		<Pagination :paginator="paginator" @next="paginatorNext" @prev="paginatorPrev" @at="paginatorAt" />
 	</div>
 </template>
 
@@ -58,6 +53,9 @@ export default {
 		},
 		async paginatorNext() {
 			this.paginator = (await api.employees.paginatorNext(this.paginator)).data;
+		},
+		async paginatorAt(paginator, page) {
+			this.paginator = (await api.employees.paginatorAt(paginator, page)).data;
 		},
 	},
 };

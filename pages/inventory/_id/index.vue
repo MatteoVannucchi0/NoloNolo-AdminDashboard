@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<div v-if="loaded" id="employeeContainer" class="container-grid">
-			<InfoEmployee :employee="employee" />
+		<div v-if="loaded" id="productContainer" class="container-grid">
+			<InfoProduct :product="product" />
 		</div>
 	</div>
 </template>
@@ -12,7 +12,7 @@ import api from '../../../assets/helper/api';
 export default {
 	data() {
 		return {
-			employee: {
+			product: {
 				type: Object,
 				default: () => {},
 			},
@@ -20,7 +20,7 @@ export default {
 		};
 	},
 	async mounted() {
-		this.employee = (await api.employees.getSingle(this.$route.params.id)).data;
+		this.product = (await api.products.getSingle(this.$route.params.id)).data;
 		this.loaded = true;
 	},
 };

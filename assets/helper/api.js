@@ -37,6 +37,15 @@ function paginatorPrev(paginator, url) {
 	});
 }
 
+function paginatorAt(paginator, page, url) {
+	const query = `limit=${paginator.limit}&page=${page}`;
+
+	return request({
+		url: `${url}?${query}`,
+		method: 'get',
+	});
+}
+
 const api = {
 	customers: {
 		async get(query = { limit: config.paginatorLimit }) {
@@ -69,6 +78,7 @@ const api = {
 		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.customersApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.customersApiUrl); },
+		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.customersApiUrl); },
 	},
 	employees: {
 		async get(query = { limit: config.paginatorLimit }) {
@@ -101,6 +111,7 @@ const api = {
 		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.employeesApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.employeesApiUrl); },
+		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.employeesApiUrl); },
 	},
 	rentals: {
 		async get(query = { limit: config.paginatorLimit }) {
@@ -127,6 +138,12 @@ const api = {
 				method: 'get',
 			});
 		},
+		async getSingle(id, query = {}) {
+			return request({
+				url: `${config.productsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
 		async post(data) {
 			// TODO se si aggiungono le immagini va messo multiplart form data
 			return request({
@@ -137,6 +154,8 @@ const api = {
 		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.productsApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.productsApiUrl); },
+		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.productsApiUrl); },
+
 	},
 	toServerUrl(url) {
 		return `${config.serverUrl}/${url}`;
@@ -145,7 +164,7 @@ const api = {
 		return `${config.serverApiUrl}/${url}`;
 	},
 	toServerImageUrl(url) {
-		return `${config.serverImageUrl}/${url}`;
+		return `${config.serverUrl}/${url}`;
 	},
 };
 

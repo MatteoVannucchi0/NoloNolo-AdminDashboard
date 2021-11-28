@@ -1,14 +1,14 @@
 <template>
-	<div class="card card-container">
-		<CardCustomer :customer="customer" :link="false" />
+	<div>
+		<CardProduct :product="product" :link="false" />
 	</div>
 </template>
-
 <script>
+/* eslint-disable no-underscore-dangle */
 
 export default {
 	props: {
-		customer: {
+		product: {
 			type: Object,
 			default: () => {},
 		},
@@ -17,5 +17,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

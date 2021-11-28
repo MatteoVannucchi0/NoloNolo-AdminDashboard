@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<b-container fluid>
-			<div id="customerContainer" class="container-grid">
-				<CardCustomer v-for="customer in customers" :key="customer._id" :v-if="loaded" :customer="customer" />
+			<div id="employeeContainer" class="container-grid">
+				<CardProduct v-for="product in products" :key="product._id" :v-if="loaded" :product="product" />
 			</div>
 		</b-container>
 		<Pagination :paginator="paginator" @next="paginatorNext" @prev="paginatorPrev" @at="paginatorAt" />
@@ -23,11 +23,7 @@ export default {
 		};
 	},
 	computed: {
-		duplicateData() {
-			return undefined;
-		},
-
-		customers() {
+		products() {
 			return this.paginator ? this.paginator.docs : undefined;
 		},
 		loaded() {
@@ -35,17 +31,17 @@ export default {
 		},
 	},
 	async mounted() {
-		this.paginator = (await api.customers.get()).data;
+		this.paginator = (await api.products.get()).data;
 	},
 	methods: {
-		async paginatorPrev(paginator) {
-			this.paginator = (await api.customers.paginatorPrev(paginator)).data;
+		async paginatorPrev() {
+			this.paginator = (await api.products.paginatorPrev(this.paginator)).data;
 		},
-		async paginatorNext(paginator) {
-			this.paginator = (await api.customers.paginatorNext(paginator)).data;
+		async paginatorNext() {
+			this.paginator = (await api.products.paginatorNext(this.paginator)).data;
 		},
 		async paginatorAt(paginator, page) {
-			this.paginator = (await api.customers.paginatorAt(paginator, page)).data;
+			this.paginator = (await api.products.paginatorAt(paginator, page)).data;
 		},
 	},
 };
