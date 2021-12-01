@@ -19,11 +19,6 @@
 					Inventory
 				</nuxt-link>
 			</b-nav-item>
-			<b-nav-item>
-				<nuxt-link to="/rentals" class="sidebar-nav-item">
-					Rentals
-				</nuxt-link>
-			</b-nav-item>
 		</b-nav>
 	</div>
 </template>

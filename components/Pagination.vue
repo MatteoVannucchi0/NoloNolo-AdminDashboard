@@ -74,7 +74,6 @@ export default {
 	},
 	methods: {
 		update() {
-			console.log(this.paginator);
 		},
 		async paginatorPrev() {
 			this.$emit('prev', this.paginator);
