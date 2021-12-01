@@ -13,15 +13,21 @@ const config = {
 
 	// TOKEN AND AUTHENTICATION
 	getToken() {
-		// Nel caso in cui siamo sul client, diamo priorità al token nel sessionStorage, perché supponiamo essere più aggiornato
-		if (process.client) return sessionStorage.getItem('authToken') || localStorage.getItem('authToken') || undefined;
-		return undefined;
+		try {
+			// diamo priorità al token nel sessionStorage, perché supponiamo essere più aggiornato
+			return sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+		} catch (err) {
+			console.error(err);
+			return undefined;
+		}
 	},
 	setToken(token, remember = true) {
-		if (process.client) {
+		try {
 			this._tokenChanged = true;
 			if (remember) localStorage.setItem('authToken', token);
 			else sessionStorage.setItem('authToken', token);
+		} catch (err) {
+			console.error(err);
 		}
 	},
 	_loggedIn: false,
