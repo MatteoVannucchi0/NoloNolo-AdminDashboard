@@ -14,17 +14,10 @@ function generateRandomData(length) {
 	return data;
 }
 
-function fillData(index) {
-	const data = {};
-	data.label = `Linea-${index}`;
-	data.data = generateRandomData(months.length * 5);
-	return data;
-}
-
 const numberOfData = 3;
 const graphData = [];
 for (let i = 0; i < numberOfData; i += 1) {
-	graphData[i] = fillData(i);
+	graphData[i] = generateRandomData(months.length * 5);
 }
 
 const graphOption = {
