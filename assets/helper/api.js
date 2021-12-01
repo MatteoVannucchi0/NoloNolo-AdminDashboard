@@ -3,7 +3,7 @@ import config from './config';
 
 async function request(params) {
 	const headers = params.headers || { 'Content-Type': 'application/json' };
-	headers.authorization = config.token;
+	headers.authorization = config.getToken();
 
 	return axios({
 		method: params.method || 'get',
@@ -157,6 +157,15 @@ const api = {
 		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.productsApiUrl); },
 
 	},
+	authentication: {
+		async verify() {
+			return request({
+				url: `${config.serverApiUrl}/authentication/verify`,
+				method: 'get',
+				timeout: config.loginTimeout,
+			});
+		},
+	},
 	toServerUrl(url) {
 		return `${config.serverUrl}/${url}`;
 	},
@@ -167,5 +176,19 @@ const api = {
 		return `${config.serverUrl}/${url}`;
 	},
 };
+
+// Sovrascrive la checkToken di base per usare le richieste delle api
+config.checkToken = async function () {
+	if (!this.getToken()) return false;
+
+	try {
+		await api.authentication.verify();
+		return true;
+	} catch (err) {
+		return false;
+	}
+};
+
+config.loggedIn().then((x) => console.log('Logged in:', x)).catch((err) => console.error(err));
 
 export default api;
