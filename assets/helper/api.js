@@ -68,6 +68,12 @@ const api = {
 				data,
 			});
 		},
+		async getRentals(id, query = {}) {
+			return request({
+				url: `${config.customersApiUrl}/${id}/rentals?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
 		async login(credentials) {
 			return request({
 				url: `${config.serverApiUrl}/authentication/customers/login`,
