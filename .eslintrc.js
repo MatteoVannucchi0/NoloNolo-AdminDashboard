@@ -36,6 +36,7 @@ module.exports = {
 		'no-tabs': 0,
 		'vue/html-indent': ['error', 'tab'],
 		'max-len': 'off',
+		'no-restricted-syntax': ['error', 'LabeledStatement', 'WithStatement'],
 	},
 	settings: {
 		'import/core-modules': ['vue', 'vuex'], // these modules are included in nuxt.js
