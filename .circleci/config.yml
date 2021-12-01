@@ -40,6 +40,7 @@ jobs:
             scp -r dist/* matteo.vannucchi@donpasquale.cs.unibo.it:/home/web/site202120/html/public/frontend/dashboard
 
             head -n -2 assets/helper/api.js > assets/helper/apiTemp.js ; mv assets/helper/apiTemp.js assets/helper/api.js
+            tail -n +3 assets/helper/api.js > assets/helper/apiTemp.js ; mv assets/helper/apiTemp.js assets/helper/api.js
             head -n -2 assets/helper/config.js > assets/helper/configTemp.js ; mv assets/helper/configTemp.js assets/helper/config.js
 
             scp assets/helper/api.js matteo.vannucchi@donpasquale.cs.unibo.it:/home/web/site202120/html/public/frontend/assets/
