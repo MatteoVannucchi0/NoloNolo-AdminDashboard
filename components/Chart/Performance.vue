@@ -17,12 +17,13 @@
 				/>
 			</div>
 		</div>
-		<Chart
+		<ChartMultipleDatasets
 			chart-type="line"
-			:data="chartdata"
+			:data="data"
 			:data-options="dataOptions"
 			:chart-options="options"
-			:labels="chartLabel"
+			:chart-labels="chartLabel"
+			:data-labels="['linea1', 'linea2', 'linea3']"
 			height="400px"
 		/>
 	</div>
@@ -39,7 +40,7 @@ export default {
 	},
 	data() {
 		return {
-			chartdata: graph.graphData,
+			data: graph.graphData,
 			dataOptions: graph.graphOption,
 			options: {
 				responsive: true,
@@ -55,7 +56,7 @@ export default {
 					align: 'start',
 				},
 			},
-			chartLabel: graph.chartLabel,
+			chartLabel: getShiftedMonthsForNYear(1),
 			graphDataRangeOptions: [
 				{ text: '6M', value: '6 months' },
 				{ text: '1Y', value: '1 year' },
@@ -67,7 +68,7 @@ export default {
 
 	methods: {
 		updateGraph() {
-			console.log('Updated graph', this.chartdata);
+			console.log('Updated graph', this.data);
 
 			if (this.graphDataRangeSelected === '6 months') {
 				this.chartLabel = getShiftedNMonths(6);

@@ -1,12 +1,11 @@
 <template>
-	<div id="canvasContainer" :aria-label="chartOptions.title" role="figure">
+	<div id="canvasContainer" class="chart-container" :aria-label="chartOptions.title" role="figure">
 		<canvas id="chart" :height="height" :width="width" />
 	</div>
 </template>
 
 <script>
 import Chart from 'chart.js';
-import { getShiftedMonthsForNYear } from '../../assets/helper/graphHelper';
 
 export default {
 	props: {
@@ -22,13 +21,26 @@ export default {
 			type: [Array, Object],
 			default: () => {},
 		},
+		dataLabels: {
+			type: Array,
+			default: () => [],
+		},
 		chartOptions: {
 			type: Object,
-			default: () => {},
-		},
-		labels: {
-			type: Array,
-			default: () => getShiftedMonthsForNYear(1),
+			default: () => ({
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				title: {
+					display: true,
+					color: 'rgba(229,12,12,0.7)',
+					text: '',
+					position: 'top',
+					align: 'start',
+				},
+			}),
 		},
 		width: {
 			type: String,
@@ -47,43 +59,48 @@ export default {
 		};
 	},
 	watch: {
-		labels() {
-			this.resetCanvas();
-			this.updateChart();
+		dataLabels() {
+			this.createChart();
+		},
+		chartType() {
+			this.createChart();
+		},
+		data() {
+			this.createChart();
+		},
+		dataOptions() {
+			this.createChart();
+		},
+		chartOptions() {
+			this.createChart();
 		},
 	},
 	mounted() {
-		this.updateChart();
+		this.createChart();
 	},
 	methods: {
+		createChart() {
+			this.resetCanvas();
+			this.updateChart();
+		},
 		updateChart() {
-			const datasets = this.data;
-			let datasetsOptions = this.dataOptions || [];
-
-			// Nel caso in cui le dataOptions sia un solo oggetto quell'opzione viene assegnata a tutti i datasets
-			if (this.dataOptions && !Array.isArray(this.dataOptions)) {
-				datasetsOptions = Array(this.data.length).fill(this.dataOptions);
-			}
-
-			for (let i = 0; i < this.data.length; i += 1) {
-				datasets[i] = { ...datasets[i], ...datasetsOptions[i] };
-			}
-
-			const chartdata = {
-				labels: this.labels,
+			const datasets = [{ data: this.data, ...this.dataOptions }];
+			const data = {
 				datasets,
+				labels: this.dataLabels,
 			};
 
 			this.ctx = this.ctx || document.getElementById('chart').getContext('2d');
 
 			this.chart = new Chart(this.ctx, {
 				type: this.chartType,
-				data: chartdata,
+				data,
 				options: this.chartOptions,
 			});
 			this.loaded = true;
 		},
 		resetCanvas() {
+			if (!this.chart) { return; }
 			this.chart.destroy();
 			this.chart = null;
 		},
