@@ -5,3 +5,11 @@
     font-weight: 400 !important;
     font-size: 28px !important;
 }
+
+.chart-container {
+    padding: 25px;
+    width: auto;
+    height: 100%;
+}
+
+.chart-container>canvas {}
