@@ -93,7 +93,7 @@ export default {
 
 			try {
 				const res = await api.employees.login(data);
-				config.setToken(res.headers.authorization);
+				config.setToken(res.headers.authorization, this.remember);
 
 				// TODO vanno tolti
 				this.$store.commit('setToken', res.headers.authorization);
