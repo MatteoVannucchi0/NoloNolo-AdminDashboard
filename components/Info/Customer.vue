@@ -6,6 +6,9 @@
 		<div id="category-spending">
 			<ChartCustomerCategorySpending :customer="customer" />
 		</div>
+		<div id="spending-overtime">
+			<ChartCustomerSpendingOverTime :customer="customer" />
+		</div>
 	</div>
 </template>
 

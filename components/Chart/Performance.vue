@@ -18,6 +18,7 @@
 			</div>
 		</div>
 		<ChartMultipleDatasets
+			chart-namme="PerformaceChart"
 			chart-type="line"
 			:data="data"
 			:data-options="dataOptions"

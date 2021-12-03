@@ -4,6 +4,7 @@
 			Spending across products category
 		</div>
 		<ChartSingleDatasets
+			chart-name="CustomerCategorySpending"
 			chart-type="doughnut"
 			:data="data"
 			:data-options="dataOptions"

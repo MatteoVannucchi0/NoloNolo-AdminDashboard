@@ -1,6 +1,6 @@
 <template>
-	<div id="canvasContainer" class="chart-container" :aria-label="chartOptions.title" role="figure">
-		<canvas id="chart" :height="height" :width="width" />
+	<div :id="containerId" class="chart-container" :aria-label="chartOptions.title" role="figure">
+		<canvas :id="chartId" :height="height" :width="width" />
 	</div>
 </template>
 
@@ -9,6 +9,10 @@ import Chart from 'chart.js';
 
 export default {
 	props: {
+		chartName: {
+			type: String,
+			default: 'NEED A CHART NAME',
+		},
 		chartType: {
 			type: String,
 			default: 'line',
@@ -58,6 +62,14 @@ export default {
 			chart: null,
 		};
 	},
+	computed: {
+		containerId() {
+			return `canvasContainer-${this.chartName}`;
+		},
+		chartId() {
+			return `chart-${this.chartName}`;
+		},
+	},
 	watch: {
 		dataLabels() {
 			this.createChart();
@@ -90,7 +102,7 @@ export default {
 				labels: this.dataLabels,
 			};
 
-			this.ctx = this.ctx || document.getElementById('chart').getContext('2d');
+			this.ctx = this.ctx || document.getElementById(this.chartId).getContext('2d');
 
 			this.chart = new Chart(this.ctx, {
 				type: this.chartType,
