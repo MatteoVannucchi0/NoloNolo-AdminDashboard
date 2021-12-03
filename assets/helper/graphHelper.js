@@ -57,5 +57,5 @@ function getShiftedNMonths(numberOfMonths) {
 }
 
 export {
-	shortMonths, months, getShiftedNMonths, getShiftedMonthsForNYear,
+	shortMonths, months, getShiftedNMonths, getShiftedMonthsForNYear, getLabel,
 };
