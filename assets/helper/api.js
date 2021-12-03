@@ -126,6 +126,37 @@ const api = {
 				method: 'get',
 			});
 		},
+		async getSingle(id, query = {}) {
+			return request({
+				url: `${config.rentalsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.rentalsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
+			});
+		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.rentalsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
+				data,
+			});
+		},
+		async getBill(id, query = {}) {
+			return request({
+				url: `${config.rentalsApiUrl}/${id}/bill?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async getUnit(id, query = {}) {
+			return request({
+				url: `${config.rentalsApiUrl}/${id}/unit?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
 		async post(data) {
 			// TODO se si aggiungono le immagini va messo multiplart form data
 			return request({
@@ -194,7 +225,5 @@ config.checkToken = async function () {
 		return false;
 	}
 };
-
-config.loggedIn().then((x) => console.log('Logged in:', x)).catch((err) => console.error(err));
 
 export default api;
