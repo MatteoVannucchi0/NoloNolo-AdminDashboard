@@ -35,10 +35,10 @@ function mapDictiornayKeyNumberToMonthString(dictionary, timePeriod = 12) {
 	return newDictionary;
 }
 
-function generateMonthYearForPeriodInMonth(monthsPeriod, startingDate = new Date()) {
+function generateMonthYearForPeriodInMonth(monthsPeriod, endDate = new Date()) {
 	const arr = [];
-	const startingYear = startingDate.getFullYear();
-	const startingMonth = startingDate.getMonth();
+	const startingYear = endDate.getFullYear();
+	const startingMonth = endDate.getMonth();
 
 	let currentMonth = startingMonth;
 	let currentYear = startingYear;
@@ -54,35 +54,69 @@ function generateMonthYearForPeriodInMonth(monthsPeriod, startingDate = new Date
 		}
 	}
 
-	console.log(arr);
-
 	return arr;
 }
 
-function generateMonthYearForPeriodInYear(yearsPeriod, startingDate = new Date()) {
-	return generateMonthYearForPeriodInMonth(yearsPeriod * 12, startingDate);
+function generateMonthYearForPeriodInYear(yearsPeriod, endDate = new Date()) {
+	return generateMonthYearForPeriodInMonth(yearsPeriod * 12, endDate);
 }
 
-function generateMonthYearForPeriod(periodString, startingDate = new Date()) {
+function generateMonthYearForPeriod(periodString, endDate = new Date()) {
 	const [value, periodType] = periodString.split('-');
 
 	if (periodType === 'Y') {
-		return generateMonthYearForPeriodInYear(value, startingDate).reverse();
+		return generateMonthYearForPeriodInYear(value, endDate).reverse();
 	} if (periodType === 'M') {
-		return generateMonthYearForPeriodInMonth(value, startingDate).reverse();
+		return generateMonthYearForPeriodInMonth(value, endDate).reverse();
 	}
 
 	throw new Error(`Unknown period type: ${periodType}`);
 }
 
-function generateDateKeyForPeriod(periodString, startingDate = new Date()) {
+/**
+ * Genera un array di stringhe nel formato 'MESE-ANNO' mese per mese per tutto il periodo passato.
+ * @constructor
+ * @param {string} periodString - La stringa rappresentante il periodo da generare. Esempio '3-Y'.
+ * @param {Date} startingDate - La data finale del periodo .
+ */
+function generateDateKeyForPeriod(periodString, endDate = new Date()) {
 	const arr = [];
-	for (const { month, year } of generateMonthYearForPeriod(periodString, startingDate)) {
+	for (const { month, year } of generateMonthYearForPeriod(periodString, endDate)) {
 		const dateKey = `${numberToMonth(month)}-${year}`;
 		arr.push(dateKey);
 	}
-
 	return arr;
+}
+
+/**
+ * Genera un dizionario key-value dove la key sono delle stringhe nel formato {MESE-ANNO} dove MESE è il nome del mese e il
+ * value è dato dalla somma dei value di tutti i rent in quello specifico mese e anno.
+ * @constructor
+ * @param {Array} rentals - I rentals da cui calcolare i value
+ * @param {string} periodString - La stringa rappresentante il periodo da generare. Esempio '3-Y'.
+ * @param {Function} processRentalFunc -- Funzione che prende un rent è restituisce una endDate, e un value
+ * @param {Date} startingDate - La data finale del periodo .
+ */
+function rentalsToValueDictionary(rentals, periodString, processRentalFunc, startingDate = new Date()) {
+	const dateToValue = new Map();
+
+	for (const dateKey of generateDateKeyForPeriod(periodString, startingDate)) {
+		dateToValue.set(dateKey, 0);
+	}
+
+	for (const rent of rentals) {
+		const { endDate, value } = processRentalFunc(rent);
+
+		const endMonth = numberToMonth(endDate.getMonth());
+		const endYear = endDate.getFullYear();
+		const dateKey = `${endMonth}-${endYear}`;
+
+		if (dateToValue.has(dateKey)) {
+			dateToValue.set(dateKey, dateToValue.get(dateKey) + value);
+		}
+	}
+
+	return dateToValue;
 }
 
 export default {
@@ -93,4 +127,5 @@ export default {
 	numberToMonth,
 	generateMonthYearForPeriod,
 	generateDateKeyForPeriod,
+	rentalsToValueDictionary,
 };
