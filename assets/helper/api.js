@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import config from './config';
 
@@ -49,6 +50,8 @@ function paginatorAt(paginator, page, url) {
 const api = {
 	customers: {
 		async get(query = { limit: config.paginatorLimit }) {
+			if (!query.limit && query.limit !== 0) { query.limit = config.paginatorLimit; }
+
 			return request({
 				url: `${config.customersApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
@@ -88,6 +91,8 @@ const api = {
 	},
 	employees: {
 		async get(query = { limit: config.paginatorLimit }) {
+			if (!query.limit && query.limit !== 0) { query.limit = config.paginatorLimit; }
+
 			return request({
 				url: `${config.employeesApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
@@ -121,6 +126,8 @@ const api = {
 	},
 	rentals: {
 		async get(query = { limit: config.paginatorLimit }) {
+			if (!query.limit && query.limit !== 0) { query.limit = config.paginatorLimit; }
+
 			return request({
 				url: `${config.rentalsApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
@@ -170,6 +177,8 @@ const api = {
 	},
 	products: {
 		async get(query = { limit: config.paginatorLimit }) {
+			if (!query.limit && query.limit !== 0) { query.limit = config.paginatorLimit; }
+
 			return request({
 				url: `${config.productsApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
