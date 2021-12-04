@@ -15,8 +15,8 @@
 <script>
 /* eslint-disable no-underscore-dangle */
 
-import api from '../../assets/helper/api';
-import appearanceConfig from '../../assets/helper/appearanceConfig';
+import api from '../../../assets/helper/api';
+import appearanceConfig from '../../../assets/helper/appearanceConfig';
 
 export default {
 	props: {

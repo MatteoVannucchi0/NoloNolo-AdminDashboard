@@ -1,6 +1,9 @@
 <template>
 	<div>
 		<CardEmployee :employee="employee" :link="false" />
+		<div id="spending-overtime">
+			<ChartEmployeeEarningOverTime :employee="employee" />
+		</div>
 	</div>
 </template>
 

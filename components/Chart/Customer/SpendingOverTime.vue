@@ -3,17 +3,8 @@
 		<div class="chart-title">
 			Spending over time
 		</div>
-		<div id="buttonContainer">
-			<b-form-radio-group
-				id="graphTypeSelect"
-				v-model="graphDataRangeSelected"
-				:options="graphDataRangeOptions"
-				aria-describedby="Graph data range radio"
-				button-variant="outline-primary"
-				name="radio-btn-outline"
-				buttons
-				@change="updateGraph"
-			/>
+		<div>
+			<ChartOptionRadioGroup :options="graphDataRangeOptions" :selected="graphDataRangeSelected" @onChange="updateSelected" />
 		</div>
 		<ChartSingleDatasets
 			chart-name="CustomerSpendingOverTime"
@@ -28,9 +19,9 @@
 <script>
 /* eslint-disable no-underscore-dangle */
 
-import api from '../../assets/helper/api';
-import appearanceConfig from '../../assets/helper/appearanceConfig';
-import helper from '../../assets/helper/helper';
+import api from '../../../assets/helper/api';
+import appearanceConfig from '../../../assets/helper/appearanceConfig';
+import helper from '../../../assets/helper/helper';
 
 export default {
 	props: {
@@ -48,7 +39,7 @@ export default {
 			chartLabel: [],
 			graphDataRangeOptions: [
 				{ text: '6M', value: '6-M' },
-				{ text: '1Y', value: '1-Y' },
+				{ text: '1Y', value: '1-Y', checked: true },
 				{ text: '5Y', value: '5-Y' },
 			],
 			graphDataRangeSelected: '1-Y',
@@ -56,45 +47,27 @@ export default {
 	},
 	watch: {
 		async graphDataRangeSelected() {
-			await this.setupData();
+			await this.updateGraph();
 		},
 	},
 	async mounted() {
-		await this.setupData();
-		this.updateGraph();
+		await this.updateGraph();
 	},
 	methods: {
-		async setupData() {
+		updateSelected(sel) {
+			this.graphDataRangeSelected = sel;
+		},
+		async updateGraph() {
 			const rentals = (await api.customers.getRentals(this.customer._id, { populate: true })).data;
-
-			const monthToActualSpending = new Map();
-			const monthToPredictedSpending = new Map();
-
 			const graphPeriod = this.graphDataRangeSelected;
-
-			for (const dateKey of helper.generateDateKeyForPeriod(graphPeriod)) {
-				monthToPredictedSpending.set(dateKey, 0);
-				monthToActualSpending.set(dateKey, 0);
-			}
-
-			for (const rent of rentals) {
+			const dateToSpending = helper.rentalsToValueDictionary(rentals, graphPeriod, (rent) => {
 				const endDate = rent.state === 'close' ? new Date(rent.actualEndDate) : new Date(rent.expectedEndDate);
-				const endMonth = helper.numberToMonth(endDate.getMonth());
-				const endYear = endDate.getFullYear();
-				const dateKey = `${endMonth}-${endYear}`;
-
-				const spent = rent.unit.price;
-
-				const map = rent.state === 'close' ? monthToActualSpending : monthToPredictedSpending;
-				if (map.has(dateKey)) {
-					map.set(dateKey, map.get(dateKey) + spent);
-				}
-			}
+				return { endDate, value: rent.unit.price };
+			});
 
 			const data = [];
 			const dataLabels = [];
-
-			monthToPredictedSpending.forEach((value, key) => {
+			dateToSpending.forEach((value, key) => {
 				data.push(value);
 				dataLabels.push(key);
 			});
@@ -106,8 +79,6 @@ export default {
 				hoverBorderColor: appearanceConfig.doughnut.hoverBorderColor,
 				hoverBorderWidth: appearanceConfig.doughnut.hoverBorderWidth,
 			};
-		},
-		updateGraph() {
 		},
 	},
 };
