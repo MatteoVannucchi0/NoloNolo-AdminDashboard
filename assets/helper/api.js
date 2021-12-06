@@ -1,6 +1,7 @@
-/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import config from './config';
+
+/* eslint-disable no-param-reassign */
 
 async function request(params) {
 	const headers = params.headers || { 'Content-Type': 'application/json' };
