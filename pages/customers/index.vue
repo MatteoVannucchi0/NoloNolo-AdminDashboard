@@ -5,9 +5,9 @@
 				<b-form-input v-model="filterText" placeholder="Enter the customer's name" />
 			</div>
 			<div v-if="!isEmpty">
-				<div id="customerContainer" class="container-grid">
+				<b-card-group id="customerContainer" class="container-grid">
 					<CardCustomer v-for="customer in customers" :key="customer._id" :v-if="loaded" :customer="customer" />
-				</div>
+				</b-card-group>
 				<Pagination :paginator="paginator" @next="paginatorNext" @prev="paginatorPrev" @at="paginatorAt" />
 			</div>
 			<div v-else>
@@ -79,7 +79,7 @@ export default {
 		height: 200px;
 	}
 	.container-grid {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		grid-template-rows: auto;
 		justify-content: stretch;
 		column-gap: 15px;

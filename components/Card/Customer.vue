@@ -1,29 +1,28 @@
 <template>
-	<div class="card card-container">
-		<div class="card-title">
-			{{ customer.lastname }} {{ customer.firstname }}
-		</div>
-		<div class="card-image">
+	<b-card :title="customer.lastname + ' ' + customer.firstname" text-variant="white">
+		<b-card-body>
 			<NuxtLink v-if="link" :to="customerSingleUrl">
-				<img :src="profilePictureUrl">
+				<b-img :src="profilePictureUrl" fluid center />
 			</NuxtLink>
 			<span v-else><img :src="profilePictureUrl"></span>
-		</div>
-		<div id="email">
-			{{ customer.loginInfo.email }}
-		</div>
-		<div class="Address">
-			<ul>
-				<li><span>Country: {{ customer.address.country }}</span></li>
-				<li><span>City: {{ customer.address.city }}</span></li>
-				<li><span>Zipcode: {{ customer.address.zipcode }}</span></li>
-				<li><span>Street Address: {{ customer.address.streetAddress }}</span></li>
-			</ul>
-		</div>
-		<div>
-			{{ customer.dateOfBirth }}
-		</div>
-	</div>
+			<b-card-text>
+				<div id="email">
+					{{ customer.loginInfo.email }}
+				</div>
+				<div class="Address">
+					<ul>
+						<li><span>Country: {{ customer.address.country }}</span></li>
+						<li><span>City: {{ customer.address.city }}</span></li>
+						<li><span>Zipcode: {{ customer.address.zipcode }}</span></li>
+						<li><span>Street Address: {{ customer.address.streetAddress }}</span></li>
+					</ul>
+				</div>
+				<div>
+					{{ customer.dateOfBirth }}
+				</div>
+			</b-card-text>
+		</b-card-body>
+	</b-card>
 </template>
 
 <script>
@@ -55,17 +54,13 @@ export default {
 </script>
 
 <style scoped>
-	.card-container {
+	.align-center-content {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
 	.container-flex{
 		align-items: center;
-	}
-
-	.card {
-		padding: 25px;
 	}
 
 	#email {
