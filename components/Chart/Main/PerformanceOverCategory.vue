@@ -1,5 +1,5 @@
 <template>
-	<div class="card" style="height:100%;">
+	<div>
 		<ChartRentalsOverCategory :get-rentals="getRentals" name="CustomerCategorySpending" />
 	</div>
 </template>
@@ -17,7 +17,7 @@ export default {
 	},
 	methods: {
 		async getRentals() {
-			return (await api.customers.getRentals(this.customer._id, { populate: true })).data;
+			return (await api.rentals.get({ populate: true, limit: 0 })).data.docs;
 		},
 	},
 };

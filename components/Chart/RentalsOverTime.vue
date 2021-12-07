@@ -8,7 +8,7 @@
 		</div>
 		<ChartSingleDatasets
 			:chart-name="name"
-			chart-type="line"
+			:chart-type="chartType"
 			:data="data"
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
@@ -34,6 +34,10 @@ export default {
 		name: {
 			type: String,
 			required: true,
+		},
+		chartType: {
+			type: String,
+			default: 'line',
 		},
 	},
 	data() {

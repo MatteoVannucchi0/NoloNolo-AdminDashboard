@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<b-container fluid>
-			<ChartPerformance />
+			<ChartMainPerformanceOverTime />
+			<ChartMainPerformanceOverCategory />
 		</b-container>
 	</div>
 </template>

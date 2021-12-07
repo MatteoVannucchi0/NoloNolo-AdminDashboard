@@ -2,7 +2,7 @@
 	<div class="card" style="height:100%;">
 		<ChartRentalsOverTime
 			:get-rentals="getRentals"
-			name="Performance"
+			name="CustomerSpendingOverTime"
 			:data-options="dataOptions"
 		/>
 	</div>
@@ -31,7 +31,7 @@ export default {
 				default: false,
 			},
 			dataOptions: {
-				backgroundColor: 'red',
+				borderColor: 'red',
 				hoverBorderColor: appearanceConfig.doughnut.hoverBorderColor,
 				hoverBorderWidth: appearanceConfig.doughnut.hoverBorderWidth,
 			},
