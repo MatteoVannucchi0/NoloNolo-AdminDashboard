@@ -3,10 +3,10 @@
 		<div id="main-info" class="card card-container">
 			<CardCustomer :customer="customer" :link="false" />
 		</div>
-		<div id="category-spending">
+		<div id="category-spending" class="card">
 			<ChartCustomerCategorySpending :customer="customer" />
 		</div>
-		<div id="spending-overtime">
+		<div id="spending-overtime" class="card">
 			<ChartCustomerSpendingOverTime :customer="customer" />
 		</div>
 	</div>
@@ -25,15 +25,6 @@ export default {
 </script>
 
 <style scoped>
-	.info-cards-container {
-		display: grid;
-		grid-template-areas: "info graph1"
-							"graph2 graph3";
-		grid-template-columns: 1fr 1fr;
-		grid-gap: 10px;
-		height: 100%;
-	}
-
 	#main-info {
 		grid-area: info;
 	}

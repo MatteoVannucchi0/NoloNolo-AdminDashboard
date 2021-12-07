@@ -1,8 +1,12 @@
 <template>
 	<div>
-		<b-container fluid>
-			<ChartMainPerformanceOverTime />
-			<ChartMainPerformanceOverCategory />
+		<b-container id="layout-test" fluid>
+			<div class="card">
+				<ChartMainPerformanceOverTime />
+			</div>
+			<div class="card">
+				<ChartMainPerformanceOverCategory />
+			</div>
 		</b-container>
 	</div>
 </template>
@@ -30,5 +34,9 @@ export default {
 	.card {
 		display: flex;
 		justify-content: center;
+	}
+
+	#layout-test {
+		display: grid;
 	}
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<div class="card" style="height:100%;">
+	<div>
 		<div class="chart-title">
 			Earning over time
 		</div>

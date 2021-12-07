@@ -1,6 +1,6 @@
 <template>
 	<div style="height: 100%;">
-		<ChartRentalsOverCategory :get-rentals="getRentals" name="CustomerCategorySpending" />
+		<ChartRentalsOverCategory :get-rentals="getRentals" name="EmployeeCategoryEarning" />
 	</div>
 </template>
 <script>
@@ -10,14 +10,14 @@ import api from '../../../assets/helper/api';
 
 export default {
 	props: {
-		customer: {
+		employee: {
 			type: Object,
 			default: () => {},
 		},
 	},
 	methods: {
 		async getRentals() {
-			return (await api.customers.getRentals(this.customer._id, { populate: true })).data;
+			return (await api.rentals.get({ populate: true, employee: this.employee._id, limit: 0 })).data.docs;
 		},
 	},
 };

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="visible">
 		<b-button v-if="paginator.hasPrevPage" @click="paginatorPrev">
 			Prev
 		</b-button>
@@ -39,6 +39,9 @@ export default {
 		},
 	},
 	computed: {
+		visible() {
+			return this.paginator.hasPrevPage || this.paginator.hasNextPage;
+		},
 		showLast() {
 			return this.lastShown && this.paginator.hasPrevPage;
 		},

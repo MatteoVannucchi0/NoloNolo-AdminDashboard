@@ -1,5 +1,5 @@
 <template>
-	<div class="card" style="height:100%;">
+	<div>
 		<ChartRentalsOverTime
 			:get-rentals="getRentals"
 			name="EmployeeEarningOverTime"

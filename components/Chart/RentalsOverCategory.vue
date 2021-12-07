@@ -1,5 +1,5 @@
 <template>
-	<div class="card" style="height:100%;">
+	<div>
 		<div class="chart-title">
 			Spending across products category
 		</div>
@@ -9,6 +9,7 @@
 			:data="data"
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
+			height="350px"
 		/>
 	</div>
 </template>
@@ -55,7 +56,7 @@ export default {
 			for (const rent of rentals) {
 				const { category } = rent.unit.product;
 				// TODO dovrebbe essere rentals.priceEstimantion ...., però i dati non ci sono quindi simulo
-				const spent = 5;
+				const spent = rent.unit.price;
 				categoryToSpending[category] = categoryToSpending[category] ? categoryToSpending[category] + spent : spent;
 			}
 

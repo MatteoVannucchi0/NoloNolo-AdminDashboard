@@ -1,7 +1,12 @@
 <template>
-	<div>
-		<CardEmployee :employee="employee" :link="false" />
-		<div id="spending-overtime">
+	<div class="info-cards-container">
+		<div id="main-info" class="card card-container">
+			<CardEmployee :employee="employee" :link="false" />
+		</div>
+		<div id="category-earning" class="card">
+			<ChartEmployeeEarningOverCategory :employee="employee" />
+		</div>
+		<div id="overtime-earning" class="card">
 			<ChartEmployeeEarningOverTime :employee="employee" />
 		</div>
 	</div>
@@ -22,4 +27,15 @@ export default {
 </script>
 
 <style scoped>
+	#main-info {
+		grid-area: info;
+	}
+
+	#category-earning {
+		grid-area: graph1;
+	}
+
+	#overtime-earning {
+		grid-area: graph2;
+	}
 </style>

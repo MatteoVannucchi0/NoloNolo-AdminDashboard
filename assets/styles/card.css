@@ -45,3 +45,12 @@
 .card-nuxt-link {
     color: var(--card-link-font-color);
 }
+
+.info-cards-container {
+    display: grid;
+    grid-template-areas: "info graph1"
+        "graph2 graph3";
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    height: 100%;
+}
