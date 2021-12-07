@@ -1,84 +1,45 @@
 <template>
 	<div class="card" style="height:100%;">
-		<div class="chart-title">
-			Spending over time
-		</div>
-		<div>
-			<ChartOptionRadioGroup :options="graphDataRangeOptions" :selected="graphDataRangeSelected" @onChange="updateSelected" />
-		</div>
-		<ChartSingleDatasets
-			chart-name="CustomerSpendingOverTime"
-			chart-type="line"
-			:data="data"
+		<ChartRentalsOverTime
+			:get-rentals="getRentals"
+			name="Performance"
 			:data-options="dataOptions"
-			:data-labels="dataLabels"
-			height="300px"
 		/>
 	</div>
 </template>
 <script>
 /* eslint-disable no-underscore-dangle */
+import appearanceConfig from '../../../assets/helper/appearanceConfig';
 
 import api from '../../../assets/helper/api';
-import appearanceConfig from '../../../assets/helper/appearanceConfig';
-import helper from '../../../assets/helper/helper';
 
 export default {
 	props: {
 		customer: {
 			type: Object,
-			default: () => {},
+			required: true,
 		},
 	},
 	data() {
 		return {
-			data: [],
-			dataOptions: [],
-			dataLabels: [],
-			options: {},
-			chartLabel: [],
-			graphDataRangeOptions: [
-				{ text: '6M', value: '6-M' },
-				{ text: '1Y', value: '1-Y', checked: true },
-				{ text: '5Y', value: '5-Y' },
-			],
-			graphDataRangeSelected: '1-Y',
-		};
-	},
-	watch: {
-		async graphDataRangeSelected() {
-			await this.updateGraph();
-		},
-	},
-	async mounted() {
-		await this.updateGraph();
-	},
-	methods: {
-		updateSelected(sel) {
-			this.graphDataRangeSelected = sel;
-		},
-		async updateGraph() {
-			const rentals = (await api.customers.getRentals(this.customer._id, { populate: true })).data;
-			const graphPeriod = this.graphDataRangeSelected;
-			const dateToSpending = helper.rentalsToValueDictionary(rentals, graphPeriod, (rent) => {
-				const endDate = rent.state === 'close' ? new Date(rent.actualEndDate) : new Date(rent.expectedEndDate);
-				return { endDate, value: rent.unit.price };
-			});
-
-			const data = [];
-			const dataLabels = [];
-			dateToSpending.forEach((value, key) => {
-				data.push(value);
-				dataLabels.push(key);
-			});
-
-			this.data = data.length !== 0 ? data : [1];
-			this.dataLabels = dataLabels.length !== 0 ? dataLabels : [''];
-			this.dataOptions = {
-				backgroundColor: dataLabels.map((category) => appearanceConfig.doughnut.getColorOfCategory(category)),
+			rentals: {
+				type: Array,
+				default: () => [],
+			},
+			loaded: {
+				type: Boolean,
+				default: false,
+			},
+			dataOptions: {
+				backgroundColor: 'red',
 				hoverBorderColor: appearanceConfig.doughnut.hoverBorderColor,
 				hoverBorderWidth: appearanceConfig.doughnut.hoverBorderWidth,
-			};
+			},
+		};
+	},
+	methods: {
+		async getRentals() {
+			return (await api.customers.getRentals(this.customer._id, { populate: true })).data;
 		},
 	},
 };

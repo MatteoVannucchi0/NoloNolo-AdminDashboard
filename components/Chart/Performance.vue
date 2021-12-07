@@ -1,96 +1,40 @@
 <template>
-	<div class="card">
-		<div class="">
-			<div class="chart-title">
-				Performance over {{ graphDataRangeSelected }}
-			</div>
-			<div id="buttonContainer">
-				<b-form-radio-group
-					id="graphTypeSelect"
-					v-model="graphDataRangeSelected"
-					:options="graphDataRangeOptions"
-					aria-describedby="Graph data range radio"
-					button-variant="outline-primary"
-					name="radio-btn-outline"
-					buttons
-					@change="updateGraph"
-				/>
-			</div>
-		</div>
-		<ChartMultipleDatasets
-			chart-namme="PerformaceChart"
-			chart-type="line"
-			:data="data"
+	<div class="card" style="height:100%;">
+		<ChartRentalsOverTime
+			:get-rentals="getRentals"
+			name="Performance"
 			:data-options="dataOptions"
-			:chart-options="options"
-			:chart-labels="chartLabel"
-			:data-labels="['linea1', 'linea2', 'linea3']"
-			height="400px"
 		/>
 	</div>
 </template>
-
 <script>
-// eslint-disable-next-line no-unused-vars
-import { graph } from '../../assets/helper/global';
-import { getShiftedNMonths, getShiftedMonthsForNYear } from '../../assets/helper/graphHelper';
+/* eslint-disable no-underscore-dangle */
+import appearanceConfig from '../../assets/helper/appearanceConfig';
+
+import api from '../../assets/helper/api';
 
 export default {
-	props: {
-
-	},
 	data() {
 		return {
-			data: graph.graphData,
-			dataOptions: graph.graphOption,
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-				legend: {
-					display: false,
-				},
-				title: {
-					display: true,
-					color: 'rgba(229,12,12,0.7)',
-					text: 'PERFORMANCE ANNUALI',
-					position: 'top',
-					align: 'start',
-				},
+			rentals: {
+				type: Array,
+				default: () => [],
 			},
-			chartLabel: getShiftedMonthsForNYear(1),
-			graphDataRangeOptions: [
-				{ text: '6M', value: '6 months' },
-				{ text: '1Y', value: '1 year' },
-				{ text: '5Y', value: '5 year' },
-			],
-			graphDataRangeSelected: '1 year',
+			loaded: {
+				type: Boolean,
+				default: false,
+			},
+			dataOptions: {
+				backgroundColor: 'red',
+				hoverBorderColor: appearanceConfig.doughnut.hoverBorderColor,
+				hoverBorderWidth: appearanceConfig.doughnut.hoverBorderWidth,
+			},
 		};
 	},
-
 	methods: {
-		updateGraph() {
-			console.log('Updated graph', this.data);
-
-			if (this.graphDataRangeSelected === '6 months') {
-				this.chartLabel = getShiftedNMonths(6);
-			} else if (this.graphDataRangeSelected === '1 year') {
-				this.chartLabel = getShiftedMonthsForNYear(1);
-			} else if (this.graphDataRangeSelected === '5 year') {
-				this.chartLabel = getShiftedMonthsForNYear(5);
-			}
+		async getRentals() {
+			return (await api.rentals.get({ populate: true, limit: 0 })).data.docs;
 		},
 	},
 };
 </script>
-
-<style scoped>
-#buttonContainer{
-	width: min-content;
-	margin-left: auto;
-	margin-right: 10px;
-}
-
-.card-inline-item{
-	margin: 15px 10px 15px 10px;
-}
-</style>
