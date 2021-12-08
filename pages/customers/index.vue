@@ -1,14 +1,17 @@
 <template>
 	<div>
 		<b-container fluid>
-			<div id="filter-container">
-				<b-form-input v-model="filterText" placeholder="Enter the customer's name" />
-			</div>
+			<b-form-group id="filter-container">
+				<b-form-input v-model="filterNameText" placeholder="Enter the customer's name" />
+				<b-form-checkbox v-model="filterOnlyWithRents" name="checkboxFilterOnlyWithRents">
+					Only with rentals
+				</b-form-checkbox>
+			</b-form-group>
 			<div v-if="!isEmpty">
 				<b-card-group id="customerContainer" class="container-grid">
 					<CardCustomer v-for="customer in customers" :key="customer._id" :v-if="loaded" :customer="customer" />
 				</b-card-group>
-				<Pagination :paginator="paginator" @next="paginatorNext" @prev="paginatorPrev" @at="paginatorAt" />
+				<Pagination :paginator="paginator" @at="paginatorAt" />
 			</div>
 			<div v-else>
 				<h2 style="color: white;">
@@ -30,7 +33,8 @@ export default {
 				type: Object,
 				default: () => {},
 			},
-			filterText: '',
+			filterNameText: '',
+			filterOnlyWithRents: false,
 		};
 	},
 	computed: {
@@ -48,26 +52,31 @@ export default {
 		},
 	},
 	watch: {
-		async filterText() {
-			if (this.filterText.length > 0) {
-				this.paginator = (await api.customers.get({ nameStartWith: this.filterText })).data;
-			} else {
-				this.paginator = (await api.customers.get()).data;
-			}
+		async filterNameText() {
+			await this.getFiltered();
+		},
+		async filterOnlyWithRents() {
+			await this.getFiltered();
 		},
 	},
 	async mounted() {
 		this.paginator = (await api.customers.get()).data;
 	},
 	methods: {
-		async paginatorPrev(paginator) {
-			this.paginator = (await api.customers.paginatorPrev(paginator)).data;
+		async getFiltered() {
+			const query = {};
+			if (this.filterNameText.length > 0) {
+				query.nameStartWith = this.filterNameText;
+			}
+
+			if (this.filterOnlyWithRents) {
+				query.onlyWithRentals = this.filterOnlyWithRents;
+			}
+
+			await this.paginatorAt(this.paginator, 1, query);
 		},
-		async paginatorNext(paginator) {
-			this.paginator = (await api.customers.paginatorNext(paginator)).data;
-		},
-		async paginatorAt(paginator, page) {
-			this.paginator = (await api.customers.paginatorAt(paginator, page)).data;
+		async paginatorAt(paginator, page, query = {}) {
+			this.paginator = (await api.customers.paginatorAt(paginator, page, query)).data;
 		},
 	},
 };
@@ -79,7 +88,7 @@ export default {
 		height: 200px;
 	}
 	.container-grid {
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(5, 1fr);
 		grid-template-rows: auto;
 		justify-content: stretch;
 		column-gap: 15px;

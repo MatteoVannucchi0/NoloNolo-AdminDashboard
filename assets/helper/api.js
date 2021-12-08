@@ -39,11 +39,11 @@ function paginatorPrev(paginator, url) {
 	});
 }
 
-function paginatorAt(paginator, page, url) {
-	const query = `limit=${paginator.limit}&page=${page}`;
+function paginatorAt(paginator, page, url, query = {}) {
+	const finshedQuery = `limit=${paginator.limit}&page=${page}&${mapToQueryString(query)}`;
 
 	return request({
-		url: `${url}?${query}`,
+		url: `${url}?${finshedQuery}`,
 		method: 'get',
 	});
 }
@@ -73,6 +73,8 @@ const api = {
 			});
 		},
 		async getRentals(id, query = {}) {
+			if (!query.limit && query.limit !== 0) { query.limit = config.paginatorLimitRentals; }
+
 			return request({
 				url: `${config.customersApiUrl}/${id}/rentals?${mapToQueryString(query)}`,
 				method: 'get',
@@ -88,7 +90,9 @@ const api = {
 		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.customersApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.customersApiUrl); },
-		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.customersApiUrl); },
+		async paginatorAt(paginator, page, query = {}) { return paginatorAt(paginator, page, config.customersApiUrl, query); },
+		async paginatorRentalAt(paginator, customerID, page, query = {}) { return paginatorAt(paginator, page, `${config.customersApiUrl}/${customerID}/rentals`, query); },
+
 	},
 	employees: {
 		async get(query = { limit: config.paginatorLimit }) {

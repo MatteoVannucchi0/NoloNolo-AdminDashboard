@@ -1,24 +1,40 @@
 <template>
-	<div class="card card-container">
-		<div class="card-title">
-			{{ product.name }}
-		</div>
-		<div class="card-image">
-			<NuxtLink v-if="link" :to="productSingleUrl">
-				<img :src="productImageUrl">
-			</NuxtLink>
-			<span v-else><img :src="productImageUrl"></span>
-		</div>
-		<div id="category">
-			Category: {{ product.category }} - Subcategory: {{ product.subcategory }}
-		</div>
-		<div class="card-description">
-			{{ product.description }}
-		</div>
-		<div class="tag-container">
-			<span v-for="tag in product.tags" :key="tag.key+tag.value">Key: {{ tag.key }} - Value: {{ tag.value }}</span>
-		</div>
-	</div>
+	<b-card :title="rental._id" text-variant="white">
+		<b-badge :variant="badgeColor" pill>
+			{{ rental.state }}
+		</b-badge>
+		<b-card-body align="">
+			<b-card-text class="">
+				<div>
+					{{ rental.startDate }} - {{ rental.state == "close" ? rental.actualEndDate : rental.expectedEndDate }}
+				</div>
+				<div>
+					Customer: {{ rental.customer }}
+				</div>
+				<div v-if="rental.employee">
+					<NuxtLink :to="employeeLink">
+						Employee: {{ rental.employee }}
+					</NuxtLink>
+				</div>
+				<div>
+					<NuxtLink :to="productLink">
+						Unit: {{ rental.unit }}
+					</NuxtLink>
+				</div>
+
+				<div>
+					Price Estimation: {{ rental.priceEstimantion }}
+				</div>
+				<div>
+					Final Bill: {{ rental.bill }}
+				</div>
+
+				<div>
+					State: {{ rental.state }}
+				</div>
+			</b-card-text>
+		</b-card-body>
+	</b-card>
 </template>
 
 <script>
@@ -36,45 +52,23 @@ export default {
 			default: true,
 		},
 	},
+	data() {
+		return {
+			productLink: '/inventory/',
+		};
+	},
 	computed: {
-		productImageUrl() {
-			return api.toServerImageUrl(this.product.image);
+		employeeLink() {
+			return `/employees/${this.rental.employee}`;
 		},
-		productSingleUrl() {
-			return `inventory/${this.product._id}`;
+		badgeColor() {
+			if (this.rental.state === 'close') return 'success';
+			if (this.rental.state === 'open') return 'info';
+			return 'danger';
 		},
 	},
-	mounted() {
-		console.log('Dentro: ', this.product);
+	async mounted() {
+		this.productLink = `/inventory/${(await api.products.get({ unit: this.rental.unit })).data.docs[0]._id}`;
 	},
 };
 </script>
-
-<style scoped>
-	.card-container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	.container-flex{
-		align-items: center;
-	}
-
-	.card {
-		padding: 25px;
-	}
-
-	#email {
-		font-size: 1.2em !important;
-	}
-
-    .card-image {
-        width: 200px;
-        height: 200px;
-    }
-
-    .card-image img {
-        width: 100%;
-        height: 100%;
-    }
-</style>

@@ -4,9 +4,10 @@
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-areas: "header" "body" "footer";
+    grid-template-areas: "header""body""footer";
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr;
+    color: white;
 }
 
 .body-container {
@@ -34,6 +35,6 @@
 .content-container {
     grid-area: content;
     overflow-y: scroll;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 300px;
+    padding-right: 300px;
 }

@@ -5,11 +5,14 @@
 		</div>
 		<div class="body-container">
 			<div class="sidebar-container">
-				<Sidebar title="Sidebar" />
+				<Sidebar v-if="true" title="Sidebar" />
 			</div>
 			<div class="content-container">
 				<Nuxt />
 			</div>
+		</div>
+		<div class="footer-container">
+			<Footer />
 		</div>
 	</div>
 </template>

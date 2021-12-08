@@ -39,7 +39,7 @@ export default {
 	},
 	methods: {
 		async getRentals() {
-			return (await api.customers.getRentals(this.customer._id, { populate: true })).data;
+			return (await api.customers.getRentals(this.customer._id, { populate: true, limit: 0 })).data.docs;
 		},
 	},
 };

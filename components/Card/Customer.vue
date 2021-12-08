@@ -1,14 +1,14 @@
 <template>
 	<b-card :title="customer.lastname + ' ' + customer.firstname" text-variant="white">
-		<b-card-body>
-			<NuxtLink v-if="link" :to="customerSingleUrl">
-				<b-img :src="profilePictureUrl" fluid center />
-			</NuxtLink>
-			<span v-else><img :src="profilePictureUrl"></span>
-			<b-card-text>
-				<div id="email">
-					{{ customer.loginInfo.email }}
-				</div>
+		<b-card-body align="center">
+			<div class="card-image">
+				<NuxtLink v-if="link" :to="customerSingleUrl">
+					<img :src="profilePictureUrl">
+				</NuxtLink>
+				<span v-else><img :src="profilePictureUrl"></span>
+			</div>
+			<b-card-text class="text-center">
+				<span id="email"> {{ customer.loginInfo.email }} </span>
 				<div class="Address">
 					<ul>
 						<li><span>Country: {{ customer.address.country }}</span></li>
@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style scoped>
-	.align-center-content {
+	.card-container {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -64,16 +64,19 @@ export default {
 	}
 
 	#email {
-		font-size: 1.2em !important;
+		font-size: 1em !important;
 	}
 
     .card-image {
-        width: 200px;
-        height: 200px;
+        width: 175px;
+        height: 175px;
     }
-
     .card-image img {
         width: 100%;
         height: 100%;
     }
+
+	.card .card-body {
+		padding: 4px;
+	}
 </style>
