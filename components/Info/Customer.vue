@@ -10,18 +10,38 @@
 			<ChartCustomerSpendingOverTime :customer="customer" />
 		</div>
 		<div v-if="rentalsLoaded" class="customer-rentals">
-			<div v-if="!noRentals">
-				<h2 class="text-center">
-					Rentals
-				</h2>
-				<div class="customer-rentals-grid">
-					<CardRental v-for="rental in customerRentals" :key="rental._id" :rental="rental" />
-				</div>
-				<Pagination :paginator="rentalsPaginator" @at="paginatorRentalAt" />
-			</div>
-			<h2 v-else class="text-center">
-				No Rentals associated with this customer
+			<h2 v-if="!noRentals" class="text-center">
+				Rentals
 			</h2>
+			<h2 v-else class="text-center">
+				No Rentals Found
+			</h2>
+			<b-form-group id="filter-container">
+				<b-form-input v-model="filterRentalsId" placeholder="Enter the rental's id" />
+				<b-form-checkbox-group
+					id="checkbox-state"
+					v-model="checkboxStateSelected"
+					:options="checkboxStateOption"
+					aria-describedby="rentals state selection"
+					name="checkbox-state"
+				/>
+				Sort type: <b-form-select
+					v-model="selectSortTypeSelected"
+					:options="selectSortTypeOption"
+					class="mb-3"
+					value-field="item"
+					text-field="name"
+					disabled-field="notEnabled"
+				/>
+			</b-form-group>
+
+			<div v-if="!noRentals">
+				<div class="customer-rentals-grid">
+					<CardRental v-for="rental in customerRentals" :key="rental._id" :rental="rental" :link-customer="false" />
+				</div>
+				<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
+			</div>
+			<div v-else class="empty-rentals" />
 		</div>
 	</div>
 </template>
@@ -30,6 +50,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import api from '../../assets/helper/api';
+import Helper from '../../assets/helper/helper';
 
 export default {
 	props: {
@@ -40,9 +61,18 @@ export default {
 	},
 	data() {
 		return {
-			customerRentals: [],
 			rentalsLoaded: false,
 			rentalsPaginator: {},
+			customerRentals: [],
+			filterRentalsId: '',
+			checkboxStateSelected: ['pending', 'open', 'close'],
+			checkboxStateOption: [
+				{ text: 'Pending', value: 'pending' },
+				{ text: 'Open', value: 'open' },
+				{ text: 'Close', value: 'close' },
+			],
+			selectSortTypeSelected: 'State-Ascending',
+			selectSortTypeOption: ['Date-Ascending', 'Date-Descending', 'State-Ascending', 'State-Descending'],
 		};
 	},
 	computed: {
@@ -50,15 +80,36 @@ export default {
 			return this.customerRentals.length === 0;
 		},
 	},
+	watch: {
+		filterRentalsId() {
+			this.filterUpdate();
+		},
+		checkboxStateSelected() {
+			this.filterUpdate();
+		},
+		selectSortTypeSelected() {
+			this.filterUpdate();
+		},
+	},
 	async mounted() {
-		this.rentalsPaginator = (await api.customers.getRentals(this.customer._id)).data;
-		this.customerRentals = this.rentalsPaginator.docs;
+		this.rentalsPaginator = await api.localPagination.fromApi(api.customers.getRentals, [this.customer._id]);
+		this.filterUpdate();
 		this.rentalsLoaded = true;
 	},
 	methods: {
-		async paginatorRentalAt(paginator, page, query = {}) {
-			this.rentalsPaginator = (await api.customers.paginatorRentalAt(paginator, this.customer._id, page, query)).data;
-			this.customerRentals = this.rentalsPaginator.docs;
+		paginatorRentalAt(paginator, page) {
+			this.customerRentals = this.rentalsPaginator.at(page);
+		},
+		filterUpdate() {
+			let filtered = [];
+
+			for (const doc of this.rentalsPaginator.getAllDocs()) {
+				if (doc._id.includes(this.filterRentalsId) && this.checkboxStateSelected.includes(doc.state)) { filtered.push(doc); }
+			}
+
+			filtered = Helper.sortRentalsBy(filtered, this.selectSortTypeSelected);
+
+			this.customerRentals = this.rentalsPaginator.setFiltered(filtered);
 		},
 	},
 };
@@ -88,5 +139,9 @@ export default {
 		justify-content: stretch;
 		column-gap: 15px;
 		row-gap: 5px;
+	}
+
+	.empty-rentals {
+		height: 500px;
 	}
 </style>

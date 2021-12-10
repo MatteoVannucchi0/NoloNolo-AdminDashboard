@@ -6,15 +6,23 @@
 		<b-card-body align="">
 			<b-card-text class="">
 				<div>
-					{{ rental.startDate }} - {{ rental.state == "close" ? rental.actualEndDate : rental.expectedEndDate }}
+					{{ new Date(rental.startDate).toLocaleDateString() }} - {{ new Date(rental.state == "close" ? rental.actualEndDate : rental.expectedEndDate).toLocaleDateString() }}
 				</div>
 				<div>
-					Customer: {{ rental.customer }}
+					<NuxtLink v-if="linkCustomer" :to="customerLink">
+						Customer: {{ rental.customer }}
+					</NuxtLink>
+					<span v-else>
+						Customer: {{ rental.customer }}
+					</span>
 				</div>
 				<div v-if="rental.employee">
-					<NuxtLink :to="employeeLink">
+					<NuxtLink v-if="linkEmployee" :to="employeeLink">
 						Employee: {{ rental.employee }}
 					</NuxtLink>
+					<span v-else>
+						Employee: {{ rental.employee }}
+					</span>
 				</div>
 				<div>
 					<NuxtLink :to="productLink">
@@ -47,7 +55,11 @@ export default {
 			type: Object,
 			default: () => {},
 		},
-		link: {
+		linkCustomer: {
+			type: Boolean,
+			default: true,
+		},
+		linkEmployee: {
 			type: Boolean,
 			default: true,
 		},
@@ -61,6 +73,9 @@ export default {
 		employeeLink() {
 			return `/employees/${this.rental.employee}`;
 		},
+		customerLink() {
+			return `/customers/${this.rental.customer}`;
+		},
 		badgeColor() {
 			if (this.rental.state === 'close') return 'success';
 			if (this.rental.state === 'open') return 'info';
@@ -68,7 +83,8 @@ export default {
 		},
 	},
 	async mounted() {
-		this.productLink = `/inventory/${(await api.products.get({ unit: this.rental.unit })).data.docs[0]._id}`;
+		const unit = (await api.units.getSingle(this.rental.unit)).data;
+		this.productLink = `/inventory/${unit.product}`;
 	},
 };
 </script>

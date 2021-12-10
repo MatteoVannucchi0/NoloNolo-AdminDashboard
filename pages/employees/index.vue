@@ -1,11 +1,21 @@
 <template>
 	<div>
 		<b-container fluid>
+			<h2 class="text-center">
+				EMPLOYEES
+			</h2>
+			<div class="spacer" />
+			<b-form-group id="filter-container">
+				<b-form-input v-model="filterNameText" placeholder="Enter the employee's name" />
+				<b-form-checkbox v-model="filterOnlyWithRents" name="checkboxFilterOnlyWithRents">
+					Only with rentals
+				</b-form-checkbox>
+			</b-form-group>
 			<div id="employeeContainer" class="container-grid">
 				<CardEmployee v-for="employee in employees" :key="employee._id" :v-if="loaded" :employee="employee" />
 			</div>
 		</b-container>
-		<Pagination :paginator="paginator" @next="paginatorNext" @prev="paginatorPrev" @at="paginatorAt" />
+		<Pagination :paginator="paginator" @at="paginatorAt" />
 	</div>
 </template>
 
@@ -16,27 +26,12 @@ import api from '../../assets/helper/api';
 export default {
 	data() {
 		return {
-			paginator: {
-				type: Object,
-				default: () => {},
-			},
+			paginator: {},
+			filterNameText: '',
+			filterOnlyWithRents: false,
 		};
 	},
 	computed: {
-		duplicateData() {
-			/* const makeRepeated = (arr, repeats) => [].concat(...Array.from({ length: repeats }, () => arr));
-			const data = makeRepeated(this.employees, 50); */
-			/* eslint-disable no-underscore-dangle */
-			/* eslint-disable no-restricted-syntax */
-
-			/* // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-			for (const e of data) {
-				e._id = Math.random() * (1000000 - 10) + 10;
-			} */
-
-			return undefined;
-		},
-
 		employees() {
 			return this.paginator ? this.paginator.docs : undefined;
 		},
@@ -44,18 +39,32 @@ export default {
 			return !!this.paginator;
 		},
 	},
+	watch: {
+		async filterNameText() {
+			await this.getFiltered();
+		},
+		async filterOnlyWithRents() {
+			await this.getFiltered();
+		},
+	},
 	async mounted() {
 		this.paginator = (await api.employees.get()).data;
 	},
 	methods: {
-		async paginatorPrev() {
-			this.paginator = (await api.employees.paginatorPrev(this.paginator)).data;
+		async getFiltered() {
+			const query = {};
+			if (this.filterNameText.length > 0) {
+				query.nameStartWith = this.filterNameText;
+			}
+
+			if (this.filterOnlyWithRents) {
+				query.onlyWithRentals = this.filterOnlyWithRents;
+			}
+
+			await this.paginatorAt(this.paginator, 1, query);
 		},
-		async paginatorNext() {
-			this.paginator = (await api.employees.paginatorNext(this.paginator)).data;
-		},
-		async paginatorAt(paginator, page) {
-			this.paginator = (await api.employees.paginatorAt(paginator, page)).data;
+		async paginatorAt(paginator, page, query = {}) {
+			this.paginator = (await api.employees.paginatorAt(paginator, page, query)).data;
 		},
 	},
 };

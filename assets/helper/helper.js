@@ -107,6 +107,11 @@ function rentalsToValueDictionary(rentals, periodString, processRentalFunc, star
 	for (const rent of rentals) {
 		const { endDate, value } = processRentalFunc(rent);
 
+		if (Number.isNaN(endDate.getTime())) {
+			// eslint-disable-next-line no-continue
+			continue;
+		}
+
 		const endMonth = numberToMonth(endDate.getMonth());
 		const endYear = endDate.getFullYear();
 		const dateKey = `${endMonth}-${endYear}`;
@@ -119,6 +124,33 @@ function rentalsToValueDictionary(rentals, periodString, processRentalFunc, star
 	return dateToValue;
 }
 
+function stateToOrder(state) {
+	// eslint-disable-next-line no-nested-ternary
+	return state === 'pending' ? -1 : state === 'open' ? 0 : 1;
+}
+
+function sortRentalsBy(rentals, by) {
+	switch (by) {
+	// Pending -> Open -> Close
+	case 'State-Ascending':
+		rentals.sort((a, b) => (stateToOrder(a.state) - stateToOrder(b.state)));
+		break;
+	case 'State-Descending':
+		rentals.sort((a, b) => (-stateToOrder(a.state) + stateToOrder(b.state)));
+		break;
+	case 'Date-Ascending':
+		rentals.sort((a, b) => (new Date(a.startDate).getTime() - new Date(b.startDate).getTime()));
+		break;
+	case 'Date-Descending':
+		rentals.sort((a, b) => (-new Date(a.startDate).getTime() + new Date(b.startDate).getTime()));
+		break;
+	default:
+		break;
+	}
+
+	return rentals;
+}
+
 export default {
 	randomBetween,
 	randomColor,
@@ -128,4 +160,5 @@ export default {
 	generateMonthYearForPeriod,
 	generateDateKeyForPeriod,
 	rentalsToValueDictionary,
+	sortRentalsBy,
 };

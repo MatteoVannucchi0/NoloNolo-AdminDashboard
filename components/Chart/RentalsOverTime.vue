@@ -52,7 +52,7 @@ export default {
 				{ text: '1Y', value: '1-Y', checked: true },
 				{ text: '5Y', value: '5-Y' },
 			],
-			graphDataRangeSelected: '1-Y',
+			graphDataRangeSelected: '6-M',
 		};
 	},
 	watch: {

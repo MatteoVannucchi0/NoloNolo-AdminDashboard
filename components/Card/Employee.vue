@@ -1,5 +1,10 @@
 <template>
 	<div class="card card-container">
+		<h4>
+			<b-badge :variant="badgeColor">
+				{{ employee.authorization }}
+			</b-badge>
+		</h4>
 		<div class="card-title">
 			{{ employee.lastname }} {{ employee.firstname }}
 		</div>
@@ -11,9 +16,6 @@
 		</div>
 		<div v-if="false" id="email">
 			{{ employee.loginInfo.email }}
-		</div>
-		<div>
-			{{ employee.authorization }}
 		</div>
 	</div>
 </template>
@@ -39,6 +41,9 @@ export default {
 		},
 		employeeSingleUrl() {
 			return `employees/${this.employee._id}`;
+		},
+		badgeColor() {
+			return this.employee.authorization === 'admin' ? 'danger' : 'warning';
 		},
 	},
 };

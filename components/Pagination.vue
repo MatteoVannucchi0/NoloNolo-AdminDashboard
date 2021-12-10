@@ -3,17 +3,23 @@
 </template>
 
 <script>
+
 export default {
-	props: {
-		paginator: {
-			type: Object,
-			default: () => {},
-		},
-	},
+	props: ['value', 'paginator'],
 	data() {
 		return {
-			currentPage: 1,
+			noVModelCurretPage: 1,
 		};
+	},
+	computed: {
+		currentPage: {
+			get() {
+				return this.value || this.noVModelCurretPage;
+			},
+			set(newValue) {
+				if (this.value) { this.$emit('input', newValue); } else { this.noVModelCurretPage = newValue; }
+			},
+		},
 	},
 	watch: {
 		paginator() {
@@ -30,6 +36,7 @@ export default {
 		update() {
 		},
 		async paginatorAt(page) {
+			console.log(page);
 			this.$emit('at', this.paginator, page);
 		},
 	},

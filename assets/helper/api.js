@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from './config';
+import Paginator from './pagination';
 
 /* eslint-disable no-param-reassign */
 
@@ -117,6 +118,14 @@ const api = {
 				data,
 			});
 		},
+		async getRentals(id, query = {}) {
+			if (!query.limit && query.limit !== 0) { query.limit = config.paginatorLimitRentals; }
+
+			return request({
+				url: `${config.employeesApiUrl}/${id}/rentals?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
 		async login(credentials) {
 			return request({
 				url: `${config.serverApiUrl}/authentication/employees/login`,
@@ -127,7 +136,7 @@ const api = {
 		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.employeesApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.employeesApiUrl); },
-		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.employeesApiUrl); },
+		async paginatorAt(paginator, page, query = {}) { return paginatorAt(paginator, page, config.employeesApiUrl, query); },
 	},
 	rentals: {
 		async get(query = { limit: config.paginatorLimit }) {
@@ -208,6 +217,22 @@ const api = {
 		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.productsApiUrl); },
 
 	},
+	units: {
+		async get(query = { limit: config.paginatorLimit }) {
+			if (!query.limit && query.limit !== 0) { query.limit = config.paginatorLimit; }
+
+			return request({
+				url: `${config.unitsApiUrl}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async getSingle(id, query = {}) {
+			return request({
+				url: `${config.unitsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+	},
 	authentication: {
 		async verify() {
 			return request({
@@ -215,6 +240,17 @@ const api = {
 				method: 'get',
 				timeout: config.loginTimeout,
 			});
+		},
+	},
+	localPagination: {
+		async fromApi(getterFunction, params, query = {}) {
+			query.limit = 0;
+			const backendPaginator = (await getterFunction(...params, query)).data;
+			return new Paginator(backendPaginator.docs, 6);
+		},
+
+		from(docs, limit) {
+			return new Paginator(docs, limit);
 		},
 	},
 	toServerUrl(url) {

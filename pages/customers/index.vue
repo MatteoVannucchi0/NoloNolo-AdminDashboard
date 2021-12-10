@@ -1,6 +1,10 @@
 <template>
 	<div>
 		<b-container fluid>
+			<h2 class="text-center">
+				CUSTOMERS
+			</h2>
+			<div class="spacer" />
 			<b-form-group id="filter-container">
 				<b-form-input v-model="filterNameText" placeholder="Enter the customer's name" />
 				<b-form-checkbox v-model="filterOnlyWithRents" name="checkboxFilterOnlyWithRents">
@@ -93,5 +97,9 @@ export default {
 		justify-content: stretch;
 		column-gap: 15px;
 		row-gap: 5px;
+	}
+
+	.spacer{
+		height: 30px;
 	}
 </style>
