@@ -151,6 +151,34 @@ function sortRentalsBy(rentals, by) {
 	return rentals;
 }
 
+function roleToValue(role) {
+	if (role === 'admin') return 1;
+	if (role === 'employee') return 0;
+	return -1;
+}
+
+function sortEmployeesBy(employees, by) {
+	switch (by) {
+	// Pending -> Open -> Close
+	case 'A-Z':
+		employees.sort((a, b) => (a.lastname.localeCompare(b.lastname)));
+		break;
+	case 'Z-A':
+		employees.sort((a, b) => (-a.lastname.localeCompare(b.lastname)));
+		break;
+	case 'Role-Ascending':
+		employees.sort((a, b) => (roleToValue(a.authorization) - roleToValue(b.authorization)));
+		break;
+	case 'Role-Descending':
+		employees.sort((a, b) => (-roleToValue(a.authorization) + roleToValue(b.authorization)));
+		break;
+	default:
+		break;
+	}
+
+	return employees;
+}
+
 export default {
 	randomBetween,
 	randomColor,
@@ -161,4 +189,5 @@ export default {
 	generateDateKeyForPeriod,
 	rentalsToValueDictionary,
 	sortRentalsBy,
+	sortEmployeesBy,
 };
