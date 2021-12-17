@@ -33,12 +33,14 @@ const config = {
 		}
 	},
 	_loggedIn: false,
-	_tokenChanged: false,
+	_tokenChanged: true,
 	async loggedIn() {
 		if (this._tokenChanged) {
+			console.log('token changed, checking new token...');
 			this._loggedIn = await this.checkToken();
 		}
 
+		console.log('Is logged in: ', this._loggedIn);
 		return this._loggedIn;
 	},
 	async checkToken() { throw new Error('checkToken must be overwritten before use'); },

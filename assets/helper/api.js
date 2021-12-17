@@ -243,7 +243,7 @@ const api = {
 		},
 	},
 	localPagination: {
-		async fromApi(getterFunction, params, query = {}) {
+		async fromApi(getterFunction, params = [], query = {}) {
 			query.limit = 0;
 			const backendPaginator = (await getterFunction(...params, query)).data;
 			return new Paginator(backendPaginator.docs, 6);
