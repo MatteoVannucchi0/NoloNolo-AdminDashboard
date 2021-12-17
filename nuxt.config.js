@@ -90,6 +90,7 @@ export default {
 		// Set the "Base" of the router.
 		// https://router.vuejs.org/en/api/options.html#base
 		base: '/dashboard/',
+		middleware: ['authentication'],
 	},
 
 	link: [

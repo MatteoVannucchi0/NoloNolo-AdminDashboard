@@ -41,7 +41,6 @@ import api from '../../assets/helper/api';
 import Helper from '../../assets/helper/helper';
 
 export default {
-	middleware: 'protectedPage',
 	data() {
 		return {
 			paginator: {},
