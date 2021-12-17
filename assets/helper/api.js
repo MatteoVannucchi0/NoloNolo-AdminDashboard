@@ -266,7 +266,10 @@ const api = {
 
 // Sovrascrive la checkToken di base per usare le richieste delle api
 config.checkToken = async function () {
-	if (!this.getToken()) return false;
+	const token = config.getToken();
+	console.log('Checking token:', token);
+
+	if (!token) return false;
 
 	try {
 		await api.authentication.verify();
