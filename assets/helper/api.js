@@ -271,10 +271,10 @@ const api = {
 				method: 'get',
 			});
 		},
-		async post(data) {
+		async post(data, idProduct) {
 			// TODO se si aggiungono le immagini va messo multiplart form data
 			return request({
-				url: config.productsApiUrl,
+				url: `${config.productsApiUrl}/${idProduct}/units/`,
 				method: 'post',
 				data,
 			});
