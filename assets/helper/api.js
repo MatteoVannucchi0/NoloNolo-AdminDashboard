@@ -73,6 +73,19 @@ const api = {
 				data,
 			});
 		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.customersApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
+			});
+		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.customersApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
+				data,
+			});
+		},
 		async getRentals(id, query = {}) {
 			if (!query.limit && query.limit !== 0) { query.limit = config.paginatorLimitRentals; }
 
@@ -115,6 +128,19 @@ const api = {
 			return request({
 				url: config.employeesApiUrl,
 				method: 'post',
+				data,
+			});
+		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.employeesApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
+			});
+		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.employeesApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
 				data,
 			});
 		},
@@ -212,6 +238,19 @@ const api = {
 				data,
 			});
 		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.productsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
+			});
+		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.productsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
+				data,
+			});
+		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.productsApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.productsApiUrl); },
 		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.productsApiUrl); },
@@ -230,6 +269,14 @@ const api = {
 			return request({
 				url: `${config.unitsApiUrl}/${id}?${mapToQueryString(query)}`,
 				method: 'get',
+			});
+		},
+		async post(data) {
+			// TODO se si aggiungono le immagini va messo multiplart form data
+			return request({
+				url: config.productsApiUrl,
+				method: 'post',
+				data,
 			});
 		},
 	},
