@@ -9,11 +9,16 @@
 			</NuxtLink>
 			<span v-else><img :src="productImageUrl"></span>
 		</div>
-		<div id="category">
-			Category: {{ product.category }} - Subcategory: {{ product.subcategory }}
-		</div>
+		<h4>
+			<b-badge variant="danger">
+				{{ product.category + " - " + product.subcategory }}
+			</b-badge>
+		</h4>
 		<div class="card-description">
-			{{ product.description }}
+			{{ shortenDescription }}
+			<b-button @click="changeDescription">
+				{{ expandButtonDescription }}
+			</b-button>
 		</div>
 		<div class="tag-container">
 			<span v-for="tag in product.tags" :key="tag.key+tag.value">Key: {{ tag.key }} - Value: {{ tag.value }}</span>
@@ -35,6 +40,12 @@ export default {
 			type: Boolean,
 			default: true,
 		},
+
+	},
+	data() {
+		return {
+			shortDescription: true,
+		};
 	},
 	computed: {
 		productImageUrl() {
@@ -43,9 +54,30 @@ export default {
 		productSingleUrl() {
 			return `inventory/${this.product._id}`;
 		},
+		shortenDescription() {
+			if (!this.shortDescription) {
+				return this.product.description;
+			}
+
+			const maxDescriptionLength = 200;
+			if (this.product.description.length > maxDescriptionLength) {
+				return `${this.product.description.substring(0, maxDescriptionLength)}...`;
+			}
+			return this.product.description;
+		},
+		expandButtonDescription() {
+			return this.shortDescription ? 'espandi' : 'comprimi';
+		},
 	},
 	mounted() {
 		console.log('Dentro: ', this.product);
+	},
+	methods: {
+		changeDescription() {
+			console.log(this.shortDescription);
+			// eslint-disable-next-line vue/no-mutating-props
+			this.shortDescription = !this.shortDescription;
+		},
 	},
 };
 </script>
@@ -53,10 +85,7 @@ export default {
 <style scoped>
 	.card-container {
 		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	.container-flex{
+		justify-content: start;
 		align-items: center;
 	}
 
@@ -64,17 +93,8 @@ export default {
 		padding: 25px;
 	}
 
-	#email {
-		font-size: 1.2em !important;
-	}
-
-    .card-image {
+    .card-image img {
         width: 200px;
         height: 200px;
-    }
-
-    .card-image img {
-        width: 100%;
-        height: 100%;
     }
 </style>

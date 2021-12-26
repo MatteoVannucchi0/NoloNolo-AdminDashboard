@@ -2,20 +2,23 @@
 	<div>
 		<b-container id="layout-test" fluid>
 			<div class="card">
-				<ChartMainPerformanceOverTime />
+				<ChartMainPerformanceOverTime v-if="rentals.length > 0" :rentals="rentals" />
 			</div>
 			<div class="card">
-				<ChartMainPerformanceOverCategory />
+				<ChartMainPerformanceOverCategory v-if="rentals.length > 0" :rentals="rentals" />
 			</div>
 		</b-container>
 	</div>
 </template>
 
 <script>
+import api from '../assets/helper/api';
 
 export default {
 	data() {
-		return {};
+		return {
+			rentals: [],
+		};
 	},
 	head() {
 		return {
@@ -25,6 +28,10 @@ export default {
 				{ charset: 'utf-8' },
 			],
 		};
+	},
+	async mounted() {
+		const project = ['state', 'startDate', 'expectedEndDate', 'actualEndDate', 'unit'];
+		this.rentals = (await api.rentals.get({ populate: true, limit: 0, project })).data.docs;
 	},
 };
 
@@ -38,5 +45,6 @@ export default {
 
 	#layout-test {
 		display: grid;
+		grid-gap: 10px;
 	}
 </style>
