@@ -52,7 +52,7 @@ export default {
 <style scoped>
 	.card-container {
 		display: flex;
-		justify-content: center;
+		justify-content: start;
 		align-items: center;
 	}
 	.container-flex{
