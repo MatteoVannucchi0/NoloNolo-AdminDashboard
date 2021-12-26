@@ -4,20 +4,13 @@
 	</div>
 </template>
 <script>
-/* eslint-disable no-underscore-dangle */
-
-import api from '../../../assets/helper/api';
-
 export default {
 	props: {
-		customer: {
-			type: Object,
-			default: () => {},
-		},
+		rentals: [],
 	},
 	methods: {
 		async getRentals() {
-			return (await api.rentals.get({ populate: true, limit: 0 })).data.docs;
+			return Promise.resolve(this.rentals);
 		},
 	},
 };

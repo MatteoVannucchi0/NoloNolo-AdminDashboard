@@ -11,19 +11,12 @@
 /* eslint-disable no-underscore-dangle */
 import appearanceConfig from '../../../assets/helper/appearanceConfig';
 
-import api from '../../../assets/helper/api';
-
 export default {
+	props: {
+		rentals: [],
+	},
 	data() {
 		return {
-			rentals: {
-				type: Array,
-				default: () => [],
-			},
-			loaded: {
-				type: Boolean,
-				default: false,
-			},
 			dataOptions: {
 				borderColor: 'red',
 				hoverBorderColor: appearanceConfig.doughnut.hoverBorderColor,
@@ -33,7 +26,7 @@ export default {
 	},
 	methods: {
 		async getRentals() {
-			return (await api.rentals.get({ populate: true, limit: 0 })).data.docs;
+			return Promise.resolve(this.rentals);
 		},
 	},
 };
