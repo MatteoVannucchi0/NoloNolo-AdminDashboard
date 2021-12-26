@@ -5,7 +5,7 @@
 		</div>
 		<div class="body-container">
 			<div class="sidebar-container">
-				<Sidebar v-if="true" title="Sidebar" />
+				<Sidebar v-if="false" title="Sidebar" />
 			</div>
 			<div class="content-container">
 				<Nuxt />
