@@ -224,6 +224,12 @@ const api = {
 				method: 'get',
 			});
 		},
+		async getUnits(id, query = {}) {
+			return request({
+				url: `${config.productsApiUrl}/${id}/units?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
 		async getSingle(id, query = {}) {
 			return request({
 				url: `${config.productsApiUrl}/${id}?${mapToQueryString(query)}`,
