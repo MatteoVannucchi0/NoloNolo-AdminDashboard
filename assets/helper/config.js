@@ -44,6 +44,10 @@ const config = {
 		console.log('Is logged in: ', this._loggedIn);
 		return this._loggedIn;
 	},
+	logout() {
+		this.setToken('', false);
+		this.setToken('', true);
+	},
 	async checkToken() { throw new Error('checkToken must be overwritten before use'); },
 };
 
