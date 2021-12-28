@@ -257,6 +257,12 @@ const api = {
 				data,
 			});
 		},
+		async available(id, query = {}) {
+			return request({
+				url: `${config.productsApiUrl}/${id}/available?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.productsApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.productsApiUrl); },
 		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.productsApiUrl); },
@@ -299,7 +305,9 @@ const api = {
 		async fromApi(getterFunction, params = [], query = {}) {
 			query.limit = 0;
 			const backendPaginator = (await getterFunction(...params, query)).data;
-			return new Paginator(backendPaginator.docs, 6);
+
+			// Non è detto che le api restituiscano sempre un paginator, quindi .docs non è sempre definito
+			return new Paginator(backendPaginator.docs || backendPaginator, 6);
 		},
 
 		from(docs, limit) {

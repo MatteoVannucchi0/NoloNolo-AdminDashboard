@@ -38,6 +38,7 @@ const config = {
 		if (this._tokenChanged) {
 			console.log('token changed, checking new token...');
 			this._loggedIn = await this.checkToken();
+			this._tokenChanged = false;
 		}
 
 		console.log('Is logged in: ', this._loggedIn);
