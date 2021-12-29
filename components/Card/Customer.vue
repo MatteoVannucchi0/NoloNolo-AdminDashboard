@@ -7,7 +7,7 @@
 				</NuxtLink>
 				<span v-else><img :src="profilePictureUrl"></span>
 			</div>
-			<b-card-text class="text-center">
+			<b-card-text v-if="showExtraInfo" class="text-center">
 				<span id="email"> {{ customer.loginInfo.email }} </span>
 				<div class="Address">
 					<ul>
@@ -36,6 +36,10 @@ export default {
 			default: () => {},
 		},
 		link: {
+			type: Boolean,
+			default: true,
+		},
+		showExtraInfo: {
 			type: Boolean,
 			default: true,
 		},

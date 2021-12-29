@@ -5,23 +5,57 @@
 				CUSTOMERS
 			</h2>
 			<div class="spacer" />
-			<b-form-group id="filter-container">
-				<b-form-input v-model="filterNameText" placeholder="Enter the customer's name" />
-				<b-form-checkbox v-model="filterOnlyWithRents" name="checkboxFilterOnlyWithRents">
-					Only with rentals
-				</b-form-checkbox>
-			</b-form-group>
-			<div v-if="customers.length > 0">
-				<div id="customersContainer" class="container-grid">
-					<CardCustomer v-for="customer in customers" :key="customer._id" :v-if="loaded" :customer="customer" />
+			<div class="filter-container">
+				<div id="filter-group">
+					<b-form-group
+						id="filter-name-container"
+						label-for="filter-name-input"
+						label="Nome cliente"
+						description="Filtro dei clienti per nome"
+					>
+						<b-form-input id="filter-name-input" v-model="filterNameText" placeholder="Inserisci il nome del cliente" list="name-list" />
+						<b-form-datalist id="name-list" :options="nameList" />
+					</b-form-group>
+					<div id="other-filter">
+						<b-form-group
+							id="filter-sort-type-container"
+							label-for="filter-sort-type"
+							label="Ordina per:"
+						>
+							<b-form-select
+								id="filter-sort-type"
+								v-model="selectSortTypeSelected"
+								:options="selectSortTypeOption"
+							/>
+						</b-form-group>
+					</div>
 				</div>
+			</div>
+
+			<div v-if="customers.length > 0 ">
+				<b-container fluid>
+					<b-row
+						cols="1"
+						cols-sm="1"
+						cols-md="2"
+						cols-lg="2"
+						cols-xl="4"
+					>
+						<div v-for="customer in customers" :key="customer._id" :v-if="loaded">
+							<b-col class="mb-4">
+								<CardCustomer :customer="customer" :show-extra-info="false" />
+							</b-col>
+						</div>
+					</b-row>
+				</b-container>
 				<Pagination :paginator="paginator" @at="paginatorAt" />
 			</div>
-			<div v-else>
+			<div v-else-if="!loaded">
 				<h2 style="color: white;">
-					No customers found.
+					No customer found.
 				</h2>
 			</div>
+			<div v-else />
 		</b-container>
 	</div>
 </template>
@@ -30,6 +64,7 @@
 /* eslint-disable no-continue */
 
 import api from '../../assets/helper/api';
+import Helper from '../../assets/helper/helper';
 
 export default {
 	data() {
@@ -38,6 +73,9 @@ export default {
 			customers: [],
 			filterNameText: '',
 			filterOnlyWithRents: false,
+			selectSortTypeSelected: 'A-Z',
+			selectSortTypeOption: ['A-Z', 'Z-A'],
+			nameList: [],
 		};
 	},
 	computed: {
@@ -46,15 +84,19 @@ export default {
 		},
 	},
 	watch: {
-		async filterNameText() {
+		filterNameText() {
 			this.filterUpdate();
 		},
-		async filterOnlyWithRents() {
+		filterOnlyWithRents() {
+			this.filterUpdate();
+		},
+		selectSortTypeSelected() {
 			this.filterUpdate();
 		},
 	},
 	async mounted() {
 		this.paginator = await api.localPagination.fromApi(api.customers.get, []);
+		this.nameList = this.paginator.getAllDocs().map((doc) => `${doc.lastname} ${doc.firstname}`);
 		this.filterUpdate();
 	},
 	methods: {
@@ -73,6 +115,8 @@ export default {
 				filtered.push(doc);
 			}
 
+			this.customers = Helper.sortCustomersBy(filtered, this.selectSortTypeSelected);
+
 			this.customers = this.paginator.setFiltered(filtered);
 		},
 		async paginatorAt(paginator, page) {
@@ -82,20 +126,3 @@ export default {
 };
 
 </script>
-
-<style scoped>
-	#filter-container {
-		height: 100px;
-	}
-	.container-grid {
-		grid-template-columns: repeat(3, 1fr);
-		grid-template-rows: auto;
-		justify-content: stretch;
-		column-gap: 15px;
-		row-gap: 5px;
-	}
-
-	.spacer{
-		height: 10px;
-	}
-</style>

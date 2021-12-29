@@ -5,7 +5,7 @@
 		</h2>
 		<div class="spacer" />
 
-		<div id="filter-container">
+		<div class="filter-container">
 			<div id="filter-group">
 				<b-form-group
 					id="filter-name-container"
@@ -63,11 +63,12 @@
 			</b-container>
 			<Pagination :paginator="paginator" @at="paginatorAt" />
 		</div>
-		<div v-else>
+		<div v-else-if="!loaded">
 			<h2 style="color: white;">
 				No employee found.
 			</h2>
 		</div>
+		<div v-else />
 	</div>
 </template>
 
@@ -100,10 +101,10 @@ export default {
 		},
 	},
 	watch: {
-		async filterNameText() {
+		filterNameText() {
 			this.filterUpdate();
 		},
-		async filterOnlyWithRents() {
+		filterOnlyWithRents() {
 			this.filterUpdate();
 		},
 		selectSortTypeSelected() {
@@ -151,17 +152,3 @@ export default {
 };
 
 </script>
-
-<style scoped>
-	.container-grid {
-		grid-template-columns: repeat(4, 1fr);
-		grid-template-rows: auto;
-		justify-content: stretch;
-		column-gap: 15px;
-		row-gap: 5px;
-	}
-
-	#filter-container{
-		padding: 0 10vw 0 10vw;
-	}
-</style>

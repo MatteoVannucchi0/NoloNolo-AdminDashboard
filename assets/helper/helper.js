@@ -179,6 +179,21 @@ function sortEmployeesBy(employees, by) {
 	return employees;
 }
 
+function sortCustomersBy(customers, by) {
+	switch (by) {
+	case 'A-Z':
+		customers.sort((a, b) => (a.lastname.localeCompare(b.lastname)));
+		break;
+	case 'Z-A':
+		customers.sort((a, b) => (-a.lastname.localeCompare(b.lastname)));
+		break;
+	default:
+		break;
+	}
+
+	return customers;
+}
+
 export default {
 	randomBetween,
 	randomColor,
@@ -190,4 +205,5 @@ export default {
 	rentalsToValueDictionary,
 	sortRentalsBy,
 	sortEmployeesBy,
+	sortCustomersBy,
 };
