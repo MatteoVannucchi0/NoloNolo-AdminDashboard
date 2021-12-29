@@ -263,6 +263,12 @@ const api = {
 				method: 'get',
 			});
 		},
+		async priceEstimation(id, query = {}) {
+			return request({
+				url: `${config.productsApiUrl}/${id}/priceEstimation?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.productsApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.productsApiUrl); },
 		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.productsApiUrl); },
