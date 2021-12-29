@@ -14,7 +14,7 @@
 			</NuxtLink>
 			<span v-else><img :src="profilePictureUrl"></span>
 		</div>
-		<div v-if="false" id="email">
+		<div v-if="false" class="card-email">
 			{{ employee.loginInfo.email }}
 		</div>
 	</div>
@@ -48,33 +48,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-	.card-container {
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-	}
-	.container-flex{
-		align-items: center;
-	}
-
-	.card {
-		padding: 25px;
-	}
-
-	#email {
-		font-size: 1.2em !important;
-
-	}
-
-    .card-image {
-        width: 200px;
-        height: 200px;
-    }
-
-    .card-image img {
-        width: 100%;
-        height: 100%;
-    }
-</style>
