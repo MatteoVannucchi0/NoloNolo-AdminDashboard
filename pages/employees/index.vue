@@ -5,32 +5,59 @@
 				EMPLOYEES
 			</h2>
 			<div class="spacer" />
-			<b-form-group id="filter-container">
-				<b-form-input v-model="filterNameText" placeholder="Enter the employee's name" />
-				<b-form-checkbox v-model="filterOnlyWithRents" name="checkboxFilterOnlyWithRents">
-					Only with rentals
-				</b-form-checkbox>
-				<b-form-checkbox-group
-					id="checkbox-state"
-					v-model="checkboxRoleSelected"
-					:options="checkboxRoleOption"
-					aria-describedby="employees role selection"
-					name="checkbox-state"
-				/>
-				Sort type: <b-form-select
-					v-model="selectSortTypeSelected"
-					:options="selectSortTypeOption"
-					class="mb-3"
-					value-field="item"
-					text-field="name"
-					disabled-field="notEnabled"
-				/>
-			</b-form-group>
-			<div id="employeeContainer" class="container-grid">
-				<CardEmployee v-for="employee in employees" :key="employee._id" :v-if="loaded" :employee="employee" />
+
+			<div id="filter-container">
+				<div id="filter-group">
+					<b-form-group
+						id="filter-name-container"
+						label-for="filter-name-input"
+						label="Nome impiegato"
+						description="Filtro degli impiegati per nome"
+					>
+						<b-form-input id="filter-name-input" v-model="filterNameText" placeholder="Enter the employee's name" list="name-list" />
+						<b-form-datalist id="name-list" :options="nameList" />
+					</b-form-group>
+					<div id="other-filter">
+						<b-form-group
+							id="filter-sort-type-container"
+							label-for="filter-sort-type"
+							label="Ordina per:"
+						>
+							<b-form-select
+								id="filter-sort-type"
+								v-model="selectSortTypeSelected"
+								:options="selectSortTypeOption"
+							/>
+						</b-form-group>
+						<b-form-group
+							id="filter-checkbox-role-container"
+							label-for="filter-checkbox-role"
+							label="Mostra solo:"
+						>
+							<b-form-checkbox-group
+								id="filter-checkbox-role"
+								v-model="checkboxRoleSelected"
+								:options="checkboxRoleOption"
+								aria-describedby="employees role selection"
+								name="checkbox-state"
+							/>
+						</b-form-group>
+					</div>
+				</div>
+			</div>
+
+			<div v-if="employees.length > 0">
+				<div id="employeeContainer" class="container-grid">
+					<CardEmployee v-for="employee in employees" :key="employee._id" :v-if="loaded" :employee="employee" />
+				</div>
+				<Pagination :paginator="paginator" @at="paginatorAt" />
+			</div>
+			<div v-else>
+				<h2 style="color: white;">
+					No employee found.
+				</h2>
 			</div>
 		</b-container>
-		<Pagination :paginator="paginator" @at="paginatorAt" />
 	</div>
 </template>
 
@@ -50,10 +77,11 @@ export default {
 			checkboxRoleSelected: ['employee', 'admin'],
 			checkboxRoleOption: [
 				{ text: 'Employee', value: 'employee' },
-				{ text: 'admin', value: 'admin' },
+				{ text: 'Admin', value: 'admin' },
 			],
 			selectSortTypeSelected: 'A-Z',
 			selectSortTypeOption: ['A-Z', 'Z-A', 'Role-Ascending', 'Role-Descending'],
+			nameList: [],
 		};
 	},
 	computed: {
@@ -78,6 +106,8 @@ export default {
 	async mounted() {
 		// this.paginator = (await api.employees.get()).data;
 		this.paginator = await api.localPagination.fromApi(api.employees.get, []);
+		this.nameList = this.paginator.getAllDocs().map((doc) => `${doc.lastname} ${doc.firstname}`);
+
 		this.filterUpdate();
 	},
 	methods: {
@@ -100,13 +130,7 @@ export default {
 				filtered.push(doc);
 			}
 
-			console.log(this.selectSortTypeSelected);
-
-			console.log(filtered);
-
 			filtered = Helper.sortEmployeesBy(filtered, this.selectSortTypeSelected);
-
-			console.log(filtered);
 
 			this.employees = this.paginator.setFiltered(filtered);
 		},
@@ -120,10 +144,14 @@ export default {
 
 <style scoped>
 	.container-grid {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		grid-template-rows: auto;
 		justify-content: stretch;
 		column-gap: 15px;
 		row-gap: 5px;
+	}
+
+	#filter-container{
+		padding: 0 10vw 0 10vw;
 	}
 </style>

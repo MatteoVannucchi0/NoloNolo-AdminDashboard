@@ -69,13 +69,8 @@ export default {
 			return this.shortDescription ? 'espandi' : 'comprimi';
 		},
 	},
-	mounted() {
-		console.log('Dentro: ', this.product);
-	},
 	methods: {
 		changeDescription() {
-			console.log(this.shortDescription);
-			// eslint-disable-next-line vue/no-mutating-props
 			this.shortDescription = !this.shortDescription;
 		},
 	},
@@ -85,7 +80,7 @@ export default {
 <style scoped>
 	.card-container {
 		display: flex;
-		justify-content: start;
+		justify-content: flex-start;
 		align-items: center;
 	}
 

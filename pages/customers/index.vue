@@ -11,15 +11,15 @@
 					Only with rentals
 				</b-form-checkbox>
 			</b-form-group>
-			<div v-if="!isEmpty">
-				<b-card-group id="customerContainer" class="container-grid">
+			<div v-if="customers.length > 0">
+				<div id="customersContainer" class="container-grid">
 					<CardCustomer v-for="customer in customers" :key="customer._id" :v-if="loaded" :customer="customer" />
-				</b-card-group>
+				</div>
 				<Pagination :paginator="paginator" @at="paginatorAt" />
 			</div>
 			<div v-else>
 				<h2 style="color: white;">
-					No customer found.
+					No customers found.
 				</h2>
 			</div>
 		</b-container>
@@ -27,60 +27,56 @@
 </template>
 
 <script>
+/* eslint-disable no-continue */
 
 import api from '../../assets/helper/api';
 
 export default {
 	data() {
 		return {
-			paginator: {
-				type: Object,
-				default: () => {},
-			},
+			paginator: {},
+			customers: [],
 			filterNameText: '',
 			filterOnlyWithRents: false,
 		};
 	},
 	computed: {
-		duplicateData() {
-			return undefined;
-		},
-		customers() {
-			return this.paginator ? this.paginator.docs : undefined;
-		},
 		loaded() {
 			return !!this.paginator;
-		},
-		isEmpty() {
-			return this.paginator.totalDocs === 0;
 		},
 	},
 	watch: {
 		async filterNameText() {
-			await this.getFiltered();
+			this.filterUpdate();
 		},
 		async filterOnlyWithRents() {
-			await this.getFiltered();
+			this.filterUpdate();
 		},
 	},
 	async mounted() {
-		this.paginator = (await api.customers.get()).data;
+		this.paginator = await api.localPagination.fromApi(api.customers.get, []);
+		this.filterUpdate();
 	},
 	methods: {
-		async getFiltered() {
-			const query = {};
-			if (this.filterNameText.length > 0) {
-				query.nameStartWith = this.filterNameText;
+		filterUpdate() {
+			const filtered = [];
+
+			for (const doc of this.paginator.getAllDocs()) {
+				const fullName = `${doc.firstname} ${doc.lastname}`.toLowerCase();
+				const inverseFullName = `${doc.lastname} ${doc.firstname}`.toLowerCase();
+				const shouldInclude = this.filterNameText.toLowerCase();
+
+				if (!fullName.includes(shouldInclude) && !inverseFullName.includes(shouldInclude)) {
+					continue;
+				}
+
+				filtered.push(doc);
 			}
 
-			if (this.filterOnlyWithRents) {
-				query.onlyWithRentals = this.filterOnlyWithRents;
-			}
-
-			await this.paginatorAt(this.paginator, 1, query);
+			this.customers = this.paginator.setFiltered(filtered);
 		},
-		async paginatorAt(paginator, page, query = {}) {
-			this.paginator = (await api.customers.paginatorAt(paginator, page, query)).data;
+		async paginatorAt(paginator, page) {
+			this.employees = this.paginator.at(page);
 		},
 	},
 };
@@ -89,10 +85,10 @@ export default {
 
 <style scoped>
 	#filter-container {
-		height: 200px;
+		height: 100px;
 	}
 	.container-grid {
-		grid-template-columns: repeat(5, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: auto;
 		justify-content: stretch;
 		column-gap: 15px;
@@ -100,6 +96,6 @@ export default {
 	}
 
 	.spacer{
-		height: 30px;
+		height: 10px;
 	}
 </style>

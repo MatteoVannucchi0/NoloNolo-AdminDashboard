@@ -9,40 +9,52 @@
 		<div id="overtime-earning" class="card">
 			<ChartProductEarningOverTime :product="product" />
 		</div>
-		<div v-if="rentalsLoaded" class="product-rentals">
-			<h2 v-if="!noRentals" class="text-center">
-				Rentals
-			</h2>
-			<h2 v-else class="text-center">
-				No Rentals Found
-			</h2>
-			<b-form-group id="filter-container">
-				<b-form-input v-model="filterRentalsId" placeholder="Enter the rental's id" />
-				<b-form-checkbox-group
-					id="checkbox-state"
-					v-model="checkboxStateSelected"
-					:options="checkboxStateOption"
-					aria-describedby="rentals state selection"
-					name="checkbox-state"
-				/>
-				Sort type: <b-form-select
-					v-model="selectSortTypeSelected"
-					:options="selectSortTypeOption"
-					class="mb-3"
-					value-field="item"
-					text-field="name"
-					disabled-field="notEnabled"
-				/>
-			</b-form-group>
+		<b-tabs id="rentals-and-units" fill active-nav-item-class="tab-active">
+			<b-tab title="Rentals" active>
+				<div v-if="rentalsLoaded" class="product-rentals">
+					<h2 v-if="!noRentals" class="text-center">
+						Rentals
+					</h2>
+					<h2 v-else class="text-center">
+						No Rentals Found
+					</h2>
+					<b-form-group id="filter-container">
+						<b-form-input v-model="filterRentalsId" placeholder="Enter the rental's id" />
+						<b-form-checkbox-group
+							id="checkbox-state"
+							v-model="checkboxStateSelected"
+							:options="checkboxStateOption"
+							aria-describedby="rentals state selection"
+							name="checkbox-state"
+						/>
+						Sort type: <b-form-select
+							v-model="selectSortTypeSelected"
+							:options="selectSortTypeOption"
+							class="mb-3"
+							value-field="item"
+							text-field="name"
+							disabled-field="notEnabled"
+						/>
+					</b-form-group>
 
-			<div v-if="!noRentals">
-				<div class="product-rentals-grid">
-					<CardRental v-for="rental in customerRentals" :key="rental._id" :rental="rental" :link-product="false" />
+					<div v-if="!noRentals">
+						<div class="product-rentals-grid">
+							<CardRental v-for="rental in customerRentals" :key="rental._id" :rental="rental" :link-product="false" />
+						</div>
+						<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
+					</div>
+					<div v-else class="empty-rentals" />
 				</div>
-				<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
-			</div>
-			<div v-else class="empty-rentals" />
-		</div>
+			</b-tab>
+			<b-tab title="Units">
+				<div v-if="currentUnits.length > 0" class="product-rentals-grid">
+					<CardUnit v-for="unit in currentUnits" :key="unit._id" :unit="unit" />
+				</div>
+				<h2 v-else class="text-center">
+					No Units Found
+				</h2>
+			</b-tab>
+		</b-tabs>
 	</div>
 </template>
 
@@ -72,6 +84,10 @@ export default {
 			],
 			selectSortTypeSelected: 'State-Ascending',
 			selectSortTypeOption: ['Date-Ascending', 'Date-Descending', 'State-Ascending', 'State-Descending'],
+
+			unitsPaginator: {},
+			currentUnits: [],
+			unitsLoaded: false,
 		};
 	},
 	computed: {
@@ -91,14 +107,22 @@ export default {
 		},
 	},
 	async mounted() {
+		this.unitsPaginator = await api.localPagination.fromApi(api.products.getUnits, [this.product._id]);
+		this.filterUpdateUnits();
+		console.log(this.currentUnits);
 		// this.rentalsPaginator = await api.localPagination.fromApi(api.products.getRentals, [this.product._id]);
 		// this.filterUpdate();
 		// this.rentalsLoaded = true;
 	},
 	methods: {
-		paginatorRentalAt(paginator, page) {
+		paginatorRentalAt(page) {
+			this.currentUnits = this.unitsPaginator.at(page);
 		},
-		filterUpdate() {
+		filterUpdateRentals() {
+		},
+		filterUpdateUnits() {
+			const filtered = this.unitsPaginator.getAllDocs();
+			this.currentUnits = this.unitsPaginator.setFiltered(filtered);
 		},
 	},
 };
@@ -117,7 +141,7 @@ export default {
 		grid-area: graph2;
 	}
 
-	.product-rentals {
+	#rentals-and-units {
 		grid-area: row3;
 	}
 
@@ -132,5 +156,13 @@ export default {
 
 	.empty-rentals {
 		height: 500px;
+	}
+
+</style>
+
+<style>
+	.tab-active{
+		background-color:#27293d !important;
+		color: white;
 	}
 </style>

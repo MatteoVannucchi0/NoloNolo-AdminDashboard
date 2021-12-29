@@ -313,7 +313,7 @@ const api = {
 			const backendPaginator = (await getterFunction(...params, query)).data;
 
 			// Non è detto che le api restituiscano sempre un paginator, quindi .docs non è sempre definito
-			return new Paginator(backendPaginator.docs || backendPaginator, 6);
+			return new Paginator(backendPaginator.docs || backendPaginator, 8);
 		},
 
 		from(docs, limit) {
