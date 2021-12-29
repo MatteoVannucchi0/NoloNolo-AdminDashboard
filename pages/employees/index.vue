@@ -47,9 +47,15 @@
 
 		<div v-if="employees.length > 0">
 			<b-container fluid>
-				<b-row cols="1" cols-sm="1" cols-md="2" cols-lg="2" cols-xl="4">
+				<b-row
+					cols="1"
+					cols-sm="1"
+					cols-md="2"
+					cols-lg="2"
+					cols-xl="4"
+				>
 					<div v-for="employee in employees" :key="employee._id" :v-if="loaded">
-						<b-col>
+						<b-col class="mb-4">
 							<CardEmployee :employee="employee" />
 						</b-col>
 					</div>
