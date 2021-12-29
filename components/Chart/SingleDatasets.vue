@@ -1,10 +1,12 @@
 <template>
-	<div :id="containerId" class="chart-container" :aria-label="chartOptions.title" role="figure">
-		<canvas :id="chartId" :height="height" :width="width" />
+	<div :id="containerId" ref="container" class="chart-container" :aria-label="chartOptions.title" role="figure">
+		<canvas :id="chartId" class="chart-canvas" />
 	</div>
 </template>
 
 <script>
+/* eslint-disable vue/no-mutating-props */
+
 import Chart from 'chart.js';
 
 export default {
@@ -46,20 +48,13 @@ export default {
 				},
 			}),
 		},
-		width: {
-			type: String,
-			default: 'auto',
-		},
-		height: {
-			type: String,
-			default: 'auto',
-		},
 	},
 	data() {
 		return {
 			loaded: true,
 			ctx: null,
 			chart: null,
+
 		};
 	},
 	computed: {
@@ -87,7 +82,8 @@ export default {
 			this.createChart();
 		},
 	},
-	mounted() {
+	async mounted() {
+		await this.$nextTick();
 		this.createChart();
 	},
 	methods: {

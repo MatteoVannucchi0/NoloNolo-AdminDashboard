@@ -1,5 +1,5 @@
 <template>
-	<div style="height: 100%;">
+	<div>
 		<ChartRentalsOverCategory :get-rentals="getRentals" name="EmployeeCategoryEarning" />
 	</div>
 </template>

@@ -1,49 +1,71 @@
 <template>
-	<div class="info-cards-container">
-		<div id="main-info" class="card card-container">
-			<CardEmployee :employee="employee" :link="false" />
-		</div>
-		<div id="category-earning" class="card">
-			<ChartEmployeeEarningOverCategory :employee="employee" />
-		</div>
-		<div id="overtime-earning" class="card">
-			<ChartEmployeeEarningOverTime :employee="employee" />
-		</div>
-		<div v-if="rentalsLoaded" class="employee-rentals">
-			<h2 v-if="!noRentals" class="text-center">
-				Rentals
-			</h2>
-			<h2 v-else class="text-center">
-				No Rentals Found
-			</h2>
-			<b-form-group id="filter-container">
-				<b-form-input v-model="filterRentalsId" placeholder="Enter the rental's id" />
-				<b-form-checkbox-group
-					id="checkbox-state"
-					v-model="checkboxStateSelected"
-					:options="checkboxStateOption"
-					aria-describedby="rentals state selection"
-					name="checkbox-state"
-				/>
-				Sort type: <b-form-select
-					v-model="selectSortTypeSelected"
-					:options="selectSortTypeOption"
-					class="mb-3"
-					value-field="item"
-					text-field="name"
-					disabled-field="notEnabled"
-				/>
-			</b-form-group>
+	<b-container fluid>
+		<b-row>
+			<b-col class="mb-4 pl-0" sm="12" md="6" align-v="stretch">
+				<CardEmployee :employee="employee" :link="false" />
+			</b-col>
 
-			<div v-if="!noRentals">
-				<div class="employee-rentals-grid">
-					<CardRental v-for="rental in customerRentals" :key="rental._id" :rental="rental" :link-employee="false" />
+			<b-col id="category-earning" class="mb-4 card" sm="12" md="6" align-v="stretch">
+				<ChartEmployeeEarningOverCategory :employee="employee" />
+			</b-col>
+		</b-row>
+		<b-row>
+			<b-col id="overtime-earning" class="mb-4 card">
+				<ChartEmployeeEarningOverTime :employee="employee" />
+			</b-col>
+		</b-row>
+		<b-row>
+			<b-col>
+				<div v-if="rentalsLoaded" class="employee-rentals">
+					<h2 v-if="!noRentals" class="text-center">
+						Rentals
+					</h2>
+					<h2 v-else class="text-center">
+						No Rentals Found
+					</h2>
+					<b-form-group id="filter-container">
+						<b-form-input v-model="filterRentalsId" placeholder="Enter the rental's id" />
+						<b-form-checkbox-group
+							id="checkbox-state"
+							v-model="checkboxStateSelected"
+							:options="checkboxStateOption"
+							aria-describedby="rentals state selection"
+							name="checkbox-state"
+						/>
+						Sort type: <b-form-select
+							v-model="selectSortTypeSelected"
+							:options="selectSortTypeOption"
+							class="mb-3"
+							value-field="item"
+							text-field="name"
+							disabled-field="notEnabled"
+						/>
+					</b-form-group>
+
+					<div v-if="!noRentals">
+						<b-container fluid>
+							<b-row
+								cols="1"
+								cols-sm="1"
+								cols-md="1"
+								cols-lg="2"
+								cols-xl="2"
+							>
+								<div v-for="rental in customerRentals" :key="rental._id">
+									<b-col class="mb-4">
+										<CardRental :rental="rental" :link-employee="false" />
+									</b-col>
+								</div>
+							</b-row>
+						</b-container>
+						<div class="employee-rentals-grid" />
+						<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
+					</div>
+					<div v-else class="empty-rentals" />
 				</div>
-				<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
-			</div>
-			<div v-else class="empty-rentals" />
-		</div>
-	</div>
+			</b-col>
+		</b-row>
+	</b-container>
 </template>
 
 <script>
@@ -115,30 +137,6 @@ export default {
 </script>
 
 <style scoped>
-	#main-info {
-		grid-area: info;
-	}
-
-	#category-earning {
-		grid-area: graph1;
-	}
-
-	#overtime-earning {
-		grid-area: graph2;
-	}
-
-	.employee-rentals {
-		grid-area: row3;
-	}
-
-	.employee-rentals-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: auto;
-		justify-content: stretch;
-		column-gap: 15px;
-		row-gap: 5px;
-	}
 
 	.empty-rentals {
 		height: 500px;
