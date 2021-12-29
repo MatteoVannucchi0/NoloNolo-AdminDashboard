@@ -16,7 +16,7 @@
 		</h4>
 		<div class="card-description">
 			{{ shortenDescription }}
-			<b-button @click="changeDescription">
+			<b-button v-if="shortenDescription != product.description || !shortDescription" @click="changeDescription">
 				{{ expandButtonDescription }}
 			</b-button>
 		</div>

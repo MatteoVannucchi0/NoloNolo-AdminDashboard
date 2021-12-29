@@ -190,8 +190,21 @@ function sortCustomersBy(customers, by) {
 	default:
 		break;
 	}
-
 	return customers;
+}
+
+function sortProductsBy(products, by) {
+	switch (by) {
+	case 'A-Z':
+		products.sort((a, b) => (a.name.localeCompare(b.name)));
+		break;
+	case 'Z-A':
+		products.sort((a, b) => (-a.name.localeCompare(b.name)));
+		break;
+	default:
+		break;
+	}
+	return products;
 }
 
 export default {
@@ -206,4 +219,5 @@ export default {
 	sortRentalsBy,
 	sortEmployeesBy,
 	sortCustomersBy,
+	sortProductsBy,
 };

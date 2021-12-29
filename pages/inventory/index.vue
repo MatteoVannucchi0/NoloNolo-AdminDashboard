@@ -5,22 +5,59 @@
 				INVENTORY
 			</h2>
 			<div class="spacer" />
-			<b-form-group id="filter-container">
-				<b-form-input v-model="filterNameText" placeholder="Enter the product's name" />
-				Sort type: <b-form-select
-					v-model="selectSortTypeSelected"
-					:options="selectSortTypeOption"
-					class="mb-3"
-					value-field="item"
-					text-field="name"
-					disabled-field="notEnabled"
-				/>
-			</b-form-group>
-			<div id="employeeContainer" class="container-grid">
-				<CardProduct v-for="product in products" :key="product._id" :v-if="loaded" :product="product" />
+
+			<div class="filter-container">
+				<div id="filter-group">
+					<b-form-group
+						id="filter-name-container"
+						label-for="filter-name-input"
+						label="Nome oggetto"
+						description="Filtro degli oggetti per nome"
+					>
+						<b-form-input id="filter-name-input" v-model="filterNameText" placeholder="Inserisci il nome dell'oggetto" list="name-list" />
+						<b-form-datalist id="name-list" :options="nameList" />
+					</b-form-group>
+					<div id="other-filter">
+						<b-form-group
+							id="filter-sort-type-container"
+							label-for="filter-sort-type"
+							label="Ordina per:"
+						>
+							<b-form-select
+								id="filter-sort-type"
+								v-model="selectSortTypeSelected"
+								:options="selectSortTypeOption"
+							/>
+						</b-form-group>
+					</div>
+				</div>
 			</div>
+
+			<div v-if="products.length > 0">
+				<b-container fluid>
+					<b-row
+						cols="1"
+						cols-sm="1"
+						cols-md="2"
+						cols-lg="2"
+						cols-xl="4"
+					>
+						<div v-for="product in products" :key="product._id" :v-if="loaded">
+							<b-col class="mb-4">
+								<CardProduct :product="product" />
+							</b-col>
+						</div>
+					</b-row>
+				</b-container>
+				<Pagination :paginator="paginator" @at="paginatorAt" />
+			</div>
+			<div v-else-if="!loaded">
+				<h2 style="color: white;">
+					No product found.
+				</h2>
+			</div>
+			<div v-else />
 		</b-container>
-		<Pagination :paginator="paginator" @at="paginatorAt" />
 	</div>
 </template>
 
@@ -37,7 +74,8 @@ export default {
 			products: [],
 			filterNameText: '',
 			selectSortTypeSelected: 'A-Z',
-			selectSortTypeOption: ['A-Z', 'Z-A', 'Role-Ascending', 'Role-Descending'],
+			selectSortTypeOption: ['A-Z', 'Z-A'],
+			nameList: [],
 		};
 	},
 	computed: {
@@ -55,18 +93,17 @@ export default {
 		selectSortTypeSelected() {
 			this.filterUpdate();
 		},
-		checkboxRoleSelected() {
-			this.filterUpdate();
-		},
 	},
 	async mounted() {
 		// this.paginator = (await api.products.get()).data;
 		this.paginator = await api.localPagination.fromApi(api.products.get, []);
+		this.nameList = this.paginator.getAllDocs().map((doc) => `${doc.name}`);
+
 		this.filterUpdate();
 	},
 	methods: {
 		filterUpdate() {
-			const filtered = [];
+			let filtered = [];
 
 			for (const doc of this.paginator.getAllDocs()) {
 				const shouldInclude = this.filterNameText.toLowerCase();
@@ -79,7 +116,7 @@ export default {
 				filtered.push(doc);
 			}
 
-			// filtered = Helper.sortproductsBy(filtered, this.selectSortTypeSelected);
+			filtered = Helper.sortProductsBy(filtered, this.selectSortTypeSelected);
 
 			this.products = this.paginator.setFiltered(filtered);
 		},

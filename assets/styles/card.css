@@ -30,7 +30,7 @@
         font-size: 1.7em !important;
 
         /* NO a capo */
-        white-space: nowrap;
+        white-space: wrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -46,6 +46,7 @@
         font-size: 1.2em !important;
 
         /* NO a capo */
+        white-space: wrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
