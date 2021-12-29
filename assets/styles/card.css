@@ -20,18 +20,35 @@
     align-items: center;
 }
 
-.card-title {
-    text-align: center;
-    /*text-transform: uppercase;*/
-    margin-bottom: 0;
-    color: white;
-    font-weight: 400 !important;
-    font-size: 1.7em !important;
+@media only screen and (min-width: 600px) {
+    .card-title {
+        text-align: center;
+        /*text-transform: uppercase;*/
+        margin-bottom: 0;
+        color: white;
+        font-weight: 400 !important;
+        font-size: 1.7em !important;
 
-    /* NO a capo */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+        /* NO a capo */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .card-title {
+        text-align: center;
+        /*text-transform: uppercase;*/
+        margin-bottom: 0;
+        color: white;
+        font-weight: 400 !important;
+        font-size: 1.2em !important;
+
+        /* NO a capo */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .card-error {

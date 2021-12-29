@@ -1,5 +1,8 @@
 <template>
-	<b-card :title="rental._id" text-variant="white">
+	<b-card text-variant="white">
+		<b-card-title class="card-title">
+			{{ rental._id }}
+		</b-card-title>
 		<b-badge :variant="badgeColor" pill>
 			{{ rental.state }}
 		</b-badge>
