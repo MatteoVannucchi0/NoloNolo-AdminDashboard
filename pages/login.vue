@@ -7,6 +7,11 @@
 <script>
 export default {
 	layout: 'empty',
+	head() {
+		return {
+			title: 'Dashboard-login',
+		};
+	},
 };
 </script>
 

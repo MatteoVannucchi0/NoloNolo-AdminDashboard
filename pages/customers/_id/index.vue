@@ -19,6 +19,11 @@ export default {
 			loaded: false,
 		};
 	},
+	head() {
+		return {
+			title: `Cliente ${this.$route.params.id}`,
+		};
+	},
 	async mounted() {
 		this.customer = (await api.customers.getSingle(this.$route.params.id)).data;
 		this.loaded = true;

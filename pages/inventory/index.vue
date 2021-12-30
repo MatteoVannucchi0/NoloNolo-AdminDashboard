@@ -78,6 +78,11 @@ export default {
 			nameList: [],
 		};
 	},
+	head() {
+		return {
+			title: 'Inventario',
+		};
+	},
 	computed: {
 		loaded() {
 			return !!this.paginator;

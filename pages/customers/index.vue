@@ -78,6 +78,11 @@ export default {
 			nameList: [],
 		};
 	},
+	head() {
+		return {
+			title: 'Clienti',
+		};
+	},
 	computed: {
 		loaded() {
 			return !!this.paginator;

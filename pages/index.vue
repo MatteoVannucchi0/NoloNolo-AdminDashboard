@@ -1,11 +1,25 @@
 <template>
 	<div>
 		<b-container id="layout-test" fluid>
+			<b-container fluid>
+				<h2 class="text-center">
+					Benvenuto nella dashboard di NoloNolo
+				</h2>
+				<b-row class="mb-4">
+					<b-col class="card">
+						<ChartMainPerformanceOverTime v-if="rentals.length > 0" :rentals="rentals" />
+					</b-col>
+				</b-row>
+				<b-row>
+					<b-col class="card">
+						<ChartMainPerformanceOverCategory v-if="rentals.length > 0" :rentals="rentals" />
+					</b-col>
+				</b-row>
+			</b-container>
 			<div class="card">
-				<ChartMainPerformanceOverTime v-if="rentals.length > 0" :rentals="rentals" />
-			</div>
-			<div class="card">
-				<ChartMainPerformanceOverCategory v-if="rentals.length > 0" :rentals="rentals" />
+				TODO top impiegati
+				TODO top customer
+				TODO top oggetti
 			</div>
 		</b-container>
 	</div>
@@ -38,13 +52,4 @@ export default {
 </script>
 
 <style scoped>
-	.card {
-		display: flex;
-		justify-content: center;
-	}
-
-	#layout-test {
-		display: grid;
-		grid-gap: 10px;
-	}
 </style>

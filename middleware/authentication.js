@@ -4,6 +4,12 @@ export default async function ({ redirect, route }) {
 	// Solo nel caso in cui non sia già nella pagina di login effettuo i controlli
 
 	if (route.path === '/login' || route.path === '/login/') {
+		// Sono nella pagina di login
+		if ((await config.loggedIn())) {
+			console.log('Logged in successfully');
+			return redirect('/');
+		}
+
 		return undefined;
 	}
 

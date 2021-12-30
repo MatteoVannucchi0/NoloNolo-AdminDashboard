@@ -19,6 +19,11 @@ export default {
 			loaded: false,
 		};
 	},
+	head() {
+		return {
+			title: `Impiegato ${this.$route.params.id}`,
+		};
+	},
 	async mounted() {
 		this.employee = (await api.employees.getSingle(this.$route.params.id)).data;
 		this.loaded = true;

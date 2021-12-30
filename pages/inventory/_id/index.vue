@@ -19,6 +19,11 @@ export default {
 			loaded: false,
 		};
 	},
+	head() {
+		return {
+			title: `Prodotto ${this.$route.params.id}`,
+		};
+	},
 	async mounted() {
 		this.product = (await api.products.getSingle(this.$route.params.id)).data;
 		this.loaded = true;

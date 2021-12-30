@@ -25,18 +25,41 @@
 						</NuxtLink>
 					</b-nav-item>
 				</b-navbar-nav>
+				<b-navbar-nav class="ml-auto">
+					<b-nav-item-dropdown right>
+						<!-- Using 'button-content' slot -->
+						<template #button-content>
+							<em>Utente</em>
+						</template>
+						<b-dropdown-item class="black-color" @click="logout">
+							Logout
+						</b-dropdown-item>
+					</b-nav-item-dropdown>
+				</b-navbar-nav>
 			</b-collapse>
 		</b-navbar>
 	</div>
 </template>
 
 <script>
+import config from '../assets/helper/config';
+
 export default {
+	methods: {
+		logout() {
+			config.logout();
+			this.$router.push('/logout');
+		},
+	},
 };
 </script>
 
 <style scoped>
 	#main-navbar{
 		border-bottom: 2px solid #27293d;
+	}
+
+	.black-color{
+		color: black;
 	}
 </style>

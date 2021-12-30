@@ -95,6 +95,11 @@ export default {
 			nameList: [],
 		};
 	},
+	head() {
+		return {
+			title: 'Impiegati',
+		};
+	},
 	computed: {
 		loaded() {
 			return !!this.paginator;
