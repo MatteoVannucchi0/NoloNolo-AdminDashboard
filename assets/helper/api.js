@@ -283,6 +283,12 @@ const api = {
 				method: 'get',
 			});
 		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.unitsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
+			});
+		},
 		async getSingle(id, query = {}) {
 			return request({
 				url: `${config.unitsApiUrl}/${id}?${mapToQueryString(query)}`,
