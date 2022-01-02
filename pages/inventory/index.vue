@@ -2,10 +2,8 @@
 	<div>
 		<b-container fluid>
 			<h2 class="text-center">
-				INVENTORY
+				INVENTARIO
 			</h2>
-			<div class="spacer" />
-
 			<div class="filter-container">
 				<div id="filter-group">
 					<b-form-group
@@ -51,9 +49,9 @@
 				</b-container>
 				<Pagination :paginator="paginator" @at="paginatorAt" />
 			</div>
-			<div v-else-if="!loaded">
+			<div v-else-if="loaded">
 				<h2 style="color: white;">
-					No product found.
+					Nessun prodotto trovato.
 				</h2>
 			</div>
 			<div v-else />
@@ -70,7 +68,7 @@ import Helper from '../../assets/helper/helper';
 export default {
 	data() {
 		return {
-			paginator: {},
+			paginator: undefined,
 			products: [],
 			filterNameText: '',
 			selectSortTypeSelected: 'A-Z',

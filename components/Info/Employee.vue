@@ -58,7 +58,6 @@
 								</div>
 							</b-row>
 						</b-container>
-						<div class="employee-rentals-grid" />
 						<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
 					</div>
 					<div v-else class="empty-rentals" />

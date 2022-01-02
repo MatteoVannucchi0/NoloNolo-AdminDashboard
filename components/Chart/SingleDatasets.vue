@@ -1,6 +1,8 @@
 <template>
 	<div :id="containerId" ref="container" class="chart-container" :aria-label="chartOptions.title" role="figure">
-		<canvas :id="chartId" class="chart-canvas" />
+		<div>
+			<canvas :id="chartId" class="chart-canvas" />
+		</div>
 	</div>
 </template>
 
@@ -37,6 +39,7 @@ export default {
 				responsive: true,
 				maintainAspectRatio: false,
 				legend: {
+					fontColor: 'white',
 					display: false,
 				},
 				title: {
@@ -54,7 +57,7 @@ export default {
 			loaded: true,
 			ctx: null,
 			chart: null,
-
+			canvas: null,
 		};
 	},
 	computed: {
@@ -84,14 +87,16 @@ export default {
 	},
 	async mounted() {
 		await this.$nextTick();
-		this.createChart();
+		await this.createChart();
 	},
 	methods: {
 		createChart() {
 			this.resetCanvas();
 			this.updateChart();
 		},
-		updateChart() {
+		async updateChart() {
+			Chart.defaults.global.defaultFontColor = 'lightblue';
+
 			const datasets = [{ data: this.data, ...this.dataOptions }];
 			const data = {
 				datasets,
@@ -99,6 +104,10 @@ export default {
 			};
 
 			this.ctx = this.ctx || document.getElementById(this.chartId).getContext('2d');
+			this.canvas = this.canvas || document.getElementById(this.chartId);
+			this.canvas.onclick = this.internalOnClick;
+
+			this.$emit('preDraw');
 
 			this.chart = new Chart(this.ctx, {
 				type: this.chartType,
@@ -111,6 +120,17 @@ export default {
 			if (!this.chart) { return; }
 			this.chart.destroy();
 			this.chart = null;
+		},
+		internalOnClick(event) {
+			const activePoints = this.chart.getElementsAtEvent(event);
+			if (activePoints.length === 0) { return; }
+
+			const firstPoint = activePoints[0];
+			// eslint-disable-next-line no-underscore-dangle
+			const label = this.chart.data.labels[firstPoint._index];
+
+			console.log('onCli');
+			this.$emit('onClick', { label, firstPoint });
 		},
 	},
 };

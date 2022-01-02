@@ -10,11 +10,13 @@
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
 			height="350px"
+			@preDraw="$emit('preDraw')"
 		/>
+	</div>
 	</div>
 </template>
 <script>
-/* eslint-disable no-underscore-dangle */
+import appearanceConfig from '../../assets/helper/appearanceConfig';
 
 export default {
 	props: {
@@ -24,7 +26,7 @@ export default {
 		},
 		dataOptions: {
 			type: Object,
-			default: () => {},
+			default: () => ({ backgroundColor: appearanceConfig.backgroundColor }),
 		},
 		name: {
 			type: String,
@@ -42,11 +44,13 @@ export default {
 			dataLabels: [],
 			options: {},
 			chartLabel: [],
+			loaded: false,
 		};
 	},
 	async mounted() {
 		this.rentals = await this.getRentals();
 		await this.updateGraph();
+		this.$emit('loaded');
 	},
 	methods: {
 		async updateGraph() {

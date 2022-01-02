@@ -1,7 +1,7 @@
 <template>
 	<div class="card card-container">
 		<div class="card-title">
-			{{ unit.name }}
+			{{ unit._id }}
 		</div>
 		<h4>
 			<b-badge variant="danger">

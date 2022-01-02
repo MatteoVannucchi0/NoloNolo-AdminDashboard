@@ -39,17 +39,8 @@ export default {
 	},
 	methods: {
 		async getRentals() {
-			// TODO CAMBIARE
-			console.log('getRentals di product earn over time VA CAMBIATO PERCHE PRENDERE TUTTI I RENTALS');
-			const rentals = (await api.rentals.get({ populate: true, limit: 0 })).data.docs;
-			const units = (await api.products.getUnits(this.product._id)).data;
-			const unitsID = units.map((u) => u._id);
-
-			if (units.length === 0) {
-				return [];
-			}
-
-			return rentals.filter((r) => unitsID.includes(r._id));
+			const rentals = (await api.rentals.get({ populate: true, limit: 0, product: this.product._id })).data.docs;
+			return rentals;
 		},
 	},
 };

@@ -1,40 +1,29 @@
 <template>
 	<div>
-		<b-navbar id="main-navbar" toggleable="sm" type="dark">
-			<b-navbar-brand href="#">
-				<NuxtLink to="/" class="sidebar-nav-item">
-					Dashboard
-				</NuxtLink>
+		<b-navbar id="main-navbar" toggleable="sm" type="white">
+			<b-navbar-brand to="/" class="sidebar-nav-item">
+				Dashboard
 			</b-navbar-brand>
 			<b-navbar-toggle target="navbar-collapse" />
 			<b-collapse id="navbar-collapse" is-nav>
 				<b-navbar-nav class="mr-auto">
-					<b-nav-item>
-						<NuxtLink to="/customers" class="sidebar-nav-item">
-							Customers
-						</NuxtLink>
+					<b-nav-item to="/customers" class="sidebar-nav-item">
+						Clienti
 					</b-nav-item>
-					<b-nav-item>
-						<NuxtLink to="/employees" class="sidebar-nav-item">
-							Employees
-						</NuxtLink>
+					<b-nav-item to="/employees" class="sidebar-nav-item">
+						Impiegati
 					</b-nav-item>
-					<b-nav-item>
-						<NuxtLink to="/inventory" class="sidebar-nav-item">
-							Inventory
-						</NuxtLink>
+					<b-nav-item to="/inventory" class="sidebar-nav-item">
+						Inventario
+					</b-nav-item>
+					<b-nav-item to="/rentals" class="sidebar-nav-item">
+						Noleggi
 					</b-nav-item>
 				</b-navbar-nav>
 				<b-navbar-nav class="ml-auto">
-					<b-nav-item-dropdown right>
-						<!-- Using 'button-content' slot -->
-						<template #button-content>
-							<em>Utente</em>
-						</template>
-						<b-dropdown-item class="black-color" @click="logout">
-							Logout
-						</b-dropdown-item>
-					</b-nav-item-dropdown>
+					<b-nav-item class="sidebar-nav-item" @click="logout">
+						Logout
+					</b-nav-item>
 				</b-navbar-nav>
 			</b-collapse>
 		</b-navbar>
@@ -56,10 +45,9 @@ export default {
 
 <style scoped>
 	#main-navbar{
+		padding-bottom: 0px;
+		padding-top: 0px;
+		margin-bottom: 0px;
 		border-bottom: 2px solid #27293d;
-	}
-
-	.black-color{
-		color: black;
 	}
 </style>

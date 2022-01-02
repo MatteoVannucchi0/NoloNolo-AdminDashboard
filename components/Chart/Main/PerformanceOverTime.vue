@@ -4,12 +4,13 @@
 			:get-rentals="getRentals"
 			name="Performance"
 			:data-options="dataOptions"
+			@loaded="onLoaded"
+			@preDraw="$emit('preDraw')"
 		/>
 	</div>
 </template>
 <script>
 /* eslint-disable no-underscore-dangle */
-import appearanceConfig from '../../../assets/helper/appearanceConfig';
 
 export default {
 	props: {
@@ -19,14 +20,15 @@ export default {
 		return {
 			dataOptions: {
 				borderColor: 'red',
-				hoverBorderColor: appearanceConfig.doughnut.hoverBorderColor,
-				hoverBorderWidth: appearanceConfig.doughnut.hoverBorderWidth,
 			},
 		};
 	},
 	methods: {
 		async getRentals() {
 			return Promise.resolve(this.rentals);
+		},
+		onLoaded() {
+			this.$emit('loaded');
 		},
 	},
 };

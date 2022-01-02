@@ -1,9 +1,8 @@
 <template>
 	<div>
 		<h2 class="text-center">
-			EMPLOYEES
+			IMPIEGATI
 		</h2>
-		<div class="spacer" />
 
 		<div class="filter-container">
 			<div id="filter-group">
@@ -63,9 +62,9 @@
 			</b-container>
 			<Pagination :paginator="paginator" @at="paginatorAt" />
 		</div>
-		<div v-else-if="!loaded">
+		<div v-else-if="loaded">
 			<h2 style="color: white;">
-				No employee found.
+				Nessun impiegato trovato.
 			</h2>
 		</div>
 		<div v-else />
@@ -81,7 +80,7 @@ import Helper from '../../assets/helper/helper';
 export default {
 	data() {
 		return {
-			paginator: {},
+			paginator: undefined,
 			employees: [],
 			filterNameText: '',
 			filterOnlyWithRents: false,

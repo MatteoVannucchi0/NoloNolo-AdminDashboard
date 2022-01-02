@@ -2,17 +2,18 @@
 	<div>
 		<b-container fluid>
 			<h2 class="text-center">
-				CLIENTI
+				NOLEGGI
 			</h2>
+
 			<div class="filter-container">
 				<div id="filter-group">
 					<b-form-group
 						id="filter-name-container"
 						label-for="filter-name-input"
-						label="Nome cliente"
-						description="Filtro dei clienti per nome"
+						label="Nome oggetto"
+						description="Filtro degli oggetti per nome"
 					>
-						<b-form-input id="filter-name-input" v-model="filterNameText" placeholder="Inserisci il nome del cliente" list="name-list" />
+						<b-form-input id="filter-name-input" v-model="filterNameText" placeholder="Inserisci il nome dell'oggetto" list="name-list" />
 						<b-form-datalist id="name-list" :options="nameList" />
 					</b-form-group>
 					<div id="other-filter">
@@ -31,7 +32,7 @@
 				</div>
 			</div>
 
-			<div v-if="customers.length > 0 ">
+			<div v-if="rentals.length > 0">
 				<b-container fluid>
 					<b-row
 						cols="1"
@@ -40,9 +41,9 @@
 						cols-lg="2"
 						cols-xl="4"
 					>
-						<div v-for="customer in customers" :key="customer._id" :v-if="loaded">
+						<div v-for="rental in rentals" :key="rental._id" :v-if="loaded">
 							<b-col class="mb-4">
-								<CardCustomer :customer="customer" :show-extra-info="false" />
+								<CardRental :rental="rental" />
 							</b-col>
 						</div>
 					</b-row>
@@ -51,7 +52,7 @@
 			</div>
 			<div v-else-if="loaded">
 				<h2 style="color: white;">
-					Nessun cliente trovato.
+					Nessun noleggio trovato.
 				</h2>
 			</div>
 			<div v-else />
@@ -69,9 +70,8 @@ export default {
 	data() {
 		return {
 			paginator: undefined,
-			customers: [],
+			rentals: [],
 			filterNameText: '',
-			filterOnlyWithRents: false,
 			selectSortTypeSelected: 'A-Z',
 			selectSortTypeOption: ['A-Z', 'Z-A'],
 			nameList: [],
@@ -79,7 +79,7 @@ export default {
 	},
 	head() {
 		return {
-			title: 'Clienti',
+			title: 'Inventario',
 		};
 	},
 	computed: {
@@ -88,10 +88,10 @@ export default {
 		},
 	},
 	watch: {
-		filterNameText() {
+		async filterNameText() {
 			this.filterUpdate();
 		},
-		filterOnlyWithRents() {
+		async filterOnlyWithRents() {
 			this.filterUpdate();
 		},
 		selectSortTypeSelected() {
@@ -99,8 +99,8 @@ export default {
 		},
 	},
 	async mounted() {
-		this.paginator = await api.localPagination.fromApi(api.customers.get, []);
-		this.nameList = this.paginator.getAllDocs().map((doc) => `${doc.lastname} ${doc.firstname}`);
+		// this.paginator = (await api.rentals.get()).data;
+		this.paginator = await api.localPagination.fromApi(api.rentals.get, []);
 		this.filterUpdate();
 	},
 	methods: {
@@ -108,25 +108,35 @@ export default {
 			const filtered = [];
 
 			for (const doc of this.paginator.getAllDocs()) {
-				const fullName = `${doc.firstname} ${doc.lastname}`.toLowerCase();
-				const inverseFullName = `${doc.lastname} ${doc.firstname}`.toLowerCase();
 				const shouldInclude = this.filterNameText.toLowerCase();
+				// eslint-disable-next-line no-underscore-dangle
+				const name = doc._id.toLowerCase();
 
-				if (!fullName.includes(shouldInclude) && !inverseFullName.includes(shouldInclude)) {
+				if (!name.includes(shouldInclude)) {
 					continue;
 				}
 
 				filtered.push(doc);
 			}
 
-			this.customers = Helper.sortCustomersBy(filtered, this.selectSortTypeSelected);
+			// filtered = Helper.sortrentalsBy(filtered, this.selectSortTypeSelected);
 
-			this.customers = this.paginator.setFiltered(filtered);
+			this.rentals = this.paginator.setFiltered(filtered);
 		},
 		async paginatorAt(paginator, page) {
-			this.employees = this.paginator.at(page);
+			this.rentals = this.paginator.at(page);
 		},
 	},
 };
 
 </script>
+
+<style scoped>
+	.container-grid {
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: auto;
+		justify-content: stretch;
+		column-gap: 15px;
+		row-gap: 5px;
+	}
+</style>

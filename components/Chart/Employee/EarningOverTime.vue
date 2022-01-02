@@ -9,7 +9,6 @@
 </template>
 <script>
 /* eslint-disable no-underscore-dangle */
-import appearanceConfig from '../../../assets/helper/appearanceConfig';
 
 import api from '../../../assets/helper/api';
 
@@ -32,8 +31,6 @@ export default {
 			},
 			dataOptions: {
 				borderColor: 'red',
-				hoverBorderColor: appearanceConfig.doughnut.hoverBorderColor,
-				hoverBorderWidth: appearanceConfig.doughnut.hoverBorderWidth,
 			},
 		};
 	},

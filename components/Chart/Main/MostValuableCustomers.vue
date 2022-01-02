@@ -1,0 +1,85 @@
+<template>
+	<div>
+		<div class="chart-title">
+			Clienti più importanti
+		</div>
+		<ChartSingleDatasets
+			chart-name="MostValuableCustomer"
+			chart-type="bar"
+			:data="data"
+			:data-options="dataOptions"
+			:data-labels="dataLabels"
+			@onClick="onClick"
+			@preDraw="$emit('preDraw')"
+		/>
+	</div>
+</template>
+<script>
+/* eslint-disable no-underscore-dangle */
+import appearanceConfig from '../../../assets/helper/appearanceConfig';
+
+export default {
+	props: {
+		rentals: {
+			type: Array,
+			required: true,
+		},
+		customers: {
+			type: Array,
+			required: true,
+		},
+		dataOptions: {
+			type: Object,
+			default: () => ({ backgroundColor: appearanceConfig.backgroundColor }),
+		},
+	},
+	data() {
+		return {
+			data: [],
+			dataLabels: [],
+			chartLabel: [],
+		};
+	},
+	async mounted() {
+		await this.updateGraph();
+		this.$emit('loaded');
+	},
+	methods: {
+		async updateGraph() {
+			const customersFrequency = new Map();
+
+			for (const rent of this.rentals) {
+				const rentCustomer = `${rent.customer.firstname} ${rent.customer.lastname};${rent.customer._id}`;
+				const newValue = customersFrequency.get(rentCustomer) + 1 || 1;
+				customersFrequency.set(rentCustomer, newValue);
+			}
+
+			const sortedMap = new Map([...customersFrequency].sort((a, b) => b[1] - a[1]).slice(0, 10));
+
+			const data = [];
+			const dataLabels = [];
+			sortedMap.forEach((value, key) => {
+				data.push(value);
+				dataLabels.push(key.split(';')[0]);
+			});
+
+			this.data = data;
+			this.dataLabels = dataLabels;
+		},
+		onClick(contex) {
+			const { label } = contex;
+			let customer = {};
+
+			for (const cust of this.customers) {
+				const custName = `${cust.firstname} ${cust.lastname}`;
+				if (custName === label) {
+					customer = cust;
+					break;
+				}
+			}
+
+			this.$router.push(`/customers/${customer._id}`);
+		},
+	},
+};
+</script>
