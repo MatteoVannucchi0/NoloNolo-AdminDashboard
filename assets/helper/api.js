@@ -345,10 +345,10 @@ config.checkToken = async function () {
 	if (!token) return false;
 
 	try {
-		await api.authentication.verify();
-		return true;
+		const user = (await api.authentication.verify()).data;
+		return [true, user];
 	} catch (err) {
-		return false;
+		return [false, null];
 	}
 };
 

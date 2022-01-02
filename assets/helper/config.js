@@ -13,6 +13,15 @@ const config = {
 	get paginatorLimitRentals() { return 4; },
 	loginTimeout: 5000,
 
+	_user: null,
+	async user() {
+		if (this._user === null) {
+			[this._loggedIn, this._user] = await this.checkToken();
+		}
+
+		return this._user;
+	},
+
 	// TOKEN AND AUTHENTICATION
 	getToken() {
 		try {
@@ -37,7 +46,7 @@ const config = {
 	async loggedIn() {
 		if (this._tokenChanged) {
 			console.log('token changed, checking new token...');
-			this._loggedIn = await this.checkToken();
+			[this._loggedIn, this._user] = await this.checkToken();
 			this._tokenChanged = false;
 		}
 
