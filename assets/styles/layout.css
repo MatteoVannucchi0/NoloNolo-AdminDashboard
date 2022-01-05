@@ -32,7 +32,7 @@
     padding-bottom: 2vh;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 550px) {
     .content-container {
         grid-area: content;
         overflow-y: scroll;
@@ -41,7 +41,7 @@
     }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 550px) {
     .content-container {
         grid-area: content;
         overflow-y: scroll;

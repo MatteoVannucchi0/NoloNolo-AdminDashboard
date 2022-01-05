@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<b-container id="layout-test" fluid>
+		<b-container class="main-container" fluid>
 			<b-container fluid>
 				<h2 class="text-center">
 					Benvenuto {{ user.firstname || '' }} nella dashboard di NoloNolo
