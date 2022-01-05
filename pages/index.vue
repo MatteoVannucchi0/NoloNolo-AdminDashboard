@@ -12,26 +12,62 @@
 					</div>
 				</div>
 
-				<div v-show="preLoaded">
-					<b-row class="mb-4">
-						<b-col class="card">
-							<ChartMainPerformanceOverTime v-if="rentals.length > 0" :rentals="rentals" @preDraw="preDrawGraph" />
+				<div v-show="preLoaded" style="width: 100%;">
+					<b-row class="mb-4" style="height:100%;">
+						<b-col>
+							<ChartMainPerformanceOverTime v-if="rentals.length > 0" class="card" :rentals="rentals" @preDraw="preDrawGraph" />
 						</b-col>
 					</b-row>
-					<b-row class="mb-4">
-						<b-col class="card mr-4">
-							<ChartMainPerformanceOverCategory v-if="rentals.length > 0" :rentals="rentals" @loaded="onGraphLoad" />
-						</b-col>
-						<b-col class="card">
-							<ChartMainMostSoldProducts v-if="rentals.length > 0 && units.length > 0" :rentals="rentals" :units="units" :products="products" />
-						</b-col>
-					</b-row>
-					<b-row class="mb-4">
-						<b-col class="card mr-4">
-							<ChartMainMostValuableCustomers v-if="rentals.length > 0 && customers.length > 0" :rentals="rentals" :customers="customers" />
-						</b-col>
-						<b-col class="card" />
-					</b-row>
+
+					<b-tabs id="tabs-for-chart" fill active-nav-item-class="tab-active" class="mt-4">
+						<b-tab title="Prodotti" active class="pt-4">
+							<b-row>
+								<b-col class="mb-4">
+									<ChartMainMostSoldProducts v-if="rentals.length > 0 && units.length > 0" class="card" :rentals="rentals" :units="units" :products="products" />
+								</b-col>
+							</b-row>
+							<b-row
+								cols="1"
+								cols-sm="1"
+								cols-md="1"
+								cols-lg="2"
+								cols-xl="2"
+							>
+								<b-col class="mb-4">
+									<ChartMainPerformanceOverCategory v-if="rentals.length > 0 && units.length > 0" class="card" :rentals="rentals" :units="units" @loaded="onGraphLoad" />
+								</b-col>
+								<b-col class="mb-4">
+									<ChartMainRentPerCategory v-if="rentals.length > 0 && units.length > 0" class="card" :rentals="rentals" :units="units" />
+								</b-col>
+							</b-row>
+						</b-tab>
+						<b-tab title="Clienti" lazy class="pt-4">
+							<b-row
+								cols="1"
+								cols-sm="1"
+								cols-md="1"
+								cols-lg="1"
+								cols-xl="1"
+							>
+								<b-col class="mb-4">
+									<ChartMainMostValuableCustomers v-if="rentals.length > 0 && customers.length > 0" class="card" :rentals="rentals" :customers="customers" />
+								</b-col>
+							</b-row>
+						</b-tab>
+						<b-tab title="Impiegati" lazy class="pt-4">
+							<b-row
+								cols="1"
+								cols-sm="1"
+								cols-md="1"
+								cols-lg="1"
+								cols-xl="1"
+							>
+								<b-col class="mb-4">
+									<ChartMainMostValuableEmployees v-if="rentals.length > 0 && employees.length > 0" class="card" :rentals="rentals" :employees="employees" />
+								</b-col>
+							</b-row>
+						</b-tab>
+					</b-tabs>
 				</div>
 			</b-container>
 		</b-container>
@@ -66,7 +102,7 @@ export default {
 	},
 	async mounted() {
 		this.user = await config.user();
-		const project = ['state', 'startDate', 'expectedEndDate', 'actualEndDate', 'unit', 'customer'];
+		const project = ['state', 'startDate', 'expectedEndDate', 'actualEndDate', 'unit', 'customer', 'employee'];
 		this.rentals = (await api.rentals.get({ populate: true, limit: 0, project })).data.docs;
 		this.products = (await api.products.get({ limit: 0 })).data.docs;
 		this.units = (await api.units.get({ limit: 0, populate: true })).data;

@@ -40,11 +40,9 @@
 						cols-lg="2"
 						cols-xl="4"
 					>
-						<div v-for="product in products" :key="product._id" :v-if="loaded">
-							<b-col class="mb-4">
-								<CardProduct :product="product" />
-							</b-col>
-						</div>
+						<b-col v-for="product in products" :key="product._id" class="mb-4" :v-if="loaded">
+							<CardProduct :product="product" />
+						</b-col>
 					</b-row>
 				</b-container>
 				<Pagination :paginator="paginator" @at="paginatorAt" />

@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<div class="chart-title">
-			Guadagno per categoria
+			Noleggi per categoria
 		</div>
 		<ChartSingleDatasets
-			chart-name="PerformanceOverCategory"
+			chart-name="RentPerCategory"
 			chart-type="doughnut"
 			:data="data"
 			:data-options="dataOptions"
@@ -13,6 +13,7 @@
 			height="350px"
 			@preDraw="$emit('preDraw')"
 		/>
+	</div>
 	</div>
 </template>
 <script>
@@ -28,6 +29,7 @@ export default {
 			type: Array,
 			required: true,
 		},
+
 	},
 	data() {
 		return {
@@ -58,17 +60,16 @@ export default {
 	},
 	methods: {
 		async updateGraph() {
-			const categoryEarning = new Map();
+			const categoryFrequency = new Map();
 
 			for (const rent of this.rentals) {
 				const { category: rentCategory } = rent.unit.product;
-				const { price } = rent.unit;
 
-				const newValue = categoryEarning.get(rentCategory) + price || price;
-				categoryEarning.set(rentCategory, newValue);
+				const newValue = categoryFrequency.get(rentCategory) + 1 || 1;
+				categoryFrequency.set(rentCategory, newValue);
 			}
 
-			const sortedMap = new Map([...categoryEarning].sort((a, b) => b[1] - a[1]).slice(0, 10));
+			const sortedMap = new Map([...categoryFrequency].sort((a, b) => b[1] - a[1]).slice(0, 10));
 
 			const data = [];
 			const dataLabels = [];

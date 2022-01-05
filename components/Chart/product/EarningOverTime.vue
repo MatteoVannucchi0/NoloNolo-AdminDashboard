@@ -32,8 +32,6 @@ export default {
 			},
 			dataOptions: {
 				borderColor: 'red',
-				hoverBorderColor: appearanceConfig.doughnut.hoverBorderColor,
-				hoverBorderWidth: appearanceConfig.doughnut.hoverBorderWidth,
 			},
 		};
 	},

@@ -342,7 +342,7 @@ config.checkToken = async function () {
 	const token = config.getToken();
 	console.log('Checking token:', token);
 
-	if (!token) return false;
+	if (!token) return [false, null];
 
 	try {
 		const user = (await api.authentication.verify()).data;

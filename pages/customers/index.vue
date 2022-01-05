@@ -40,11 +40,9 @@
 						cols-lg="2"
 						cols-xl="4"
 					>
-						<div v-for="customer in customers" :key="customer._id" :v-if="loaded">
-							<b-col class="mb-4">
-								<CardCustomer :customer="customer" :show-extra-info="false" />
-							</b-col>
-						</div>
+						<b-col v-for="customer in customers" :key="customer._id" :v-if="loaded" class="mb-4">
+							<CardCustomer :customer="customer" :show-extra-info="false" />
+						</b-col>
 					</b-row>
 				</b-container>
 				<Pagination :paginator="paginator" @at="paginatorAt" />

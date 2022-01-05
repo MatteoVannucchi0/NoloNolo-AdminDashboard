@@ -53,11 +53,9 @@
 					cols-lg="2"
 					cols-xl="4"
 				>
-					<div v-for="employee in employees" :key="employee._id" :v-if="loaded">
-						<b-col class="mb-4">
-							<CardEmployee :employee="employee" />
-						</b-col>
-					</div>
+					<b-col v-for="employee in employees" :key="employee._id" :v-if="loaded" class="mb-4">
+						<CardEmployee :employee="employee" />
+					</b-col>
 				</b-row>
 			</b-container>
 			<Pagination :paginator="paginator" @at="paginatorAt" />

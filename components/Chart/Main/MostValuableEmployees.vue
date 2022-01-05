@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<div class="chart-title">
-			Clienti più importanti
+			Impiegati più importanti
 		</div>
 		<ChartSingleDatasets
-			chart-name="MostValuableCustomer"
+			chart-name="MostValuableEmployees"
 			chart-type="bar"
 			:data="data"
 			:data-options="dataOptions"
@@ -15,6 +15,7 @@
 	</div>
 </template>
 <script>
+/* eslint-disable no-continue */
 /* eslint-disable no-underscore-dangle */
 import appearanceConfig from '../../../assets/helper/appearanceConfig';
 
@@ -24,7 +25,7 @@ export default {
 			type: Array,
 			required: true,
 		},
-		customers: {
+		employees: {
 			type: Array,
 			required: true,
 		},
@@ -46,15 +47,17 @@ export default {
 	},
 	methods: {
 		async updateGraph() {
-			const customersFrequency = new Map();
+			const employeesFrequency = new Map();
 
 			for (const rent of this.rentals) {
-				const rentCustomer = `${rent.customer.lastname} ${rent.customer.firstname};${rent.customer._id}`;
-				const newValue = customersFrequency.get(rentCustomer) + 1 || 1;
-				customersFrequency.set(rentCustomer, newValue);
+				if (!rent.employee) { continue; }
+
+				const rentEmployee = `${rent.employee.lastname} ${rent.employee.firstname};${rent.employee._id}`;
+				const newValue = employeesFrequency.get(rentEmployee) + 1 || 1;
+				employeesFrequency.set(rentEmployee, newValue);
 			}
 
-			const sortedMap = new Map([...customersFrequency].sort((a, b) => b[1] - a[1]).slice(0, 10));
+			const sortedMap = new Map([...employeesFrequency].sort((a, b) => b[1] - a[1]).slice(0, 10));
 
 			const data = [];
 			const dataLabels = [];
@@ -68,17 +71,17 @@ export default {
 		},
 		onClick(contex) {
 			const { label } = contex;
-			let customer = {};
+			let employee = {};
 
-			for (const cust of this.customers) {
-				const custName = `${cust.lastname} ${cust.firstname}`;
-				if (custName === label) {
-					customer = cust;
+			for (const emp of this.employees) {
+				const empName = `${emp.lastname} ${emp.firstname}`;
+				if (empName === label) {
+					employee = emp;
 					break;
 				}
 			}
 
-			this.$router.push(`/customers/${customer._id}`);
+			if (employee._id) { this.$router.push(`/employees/${employee._id}`); }
 		},
 	},
 };

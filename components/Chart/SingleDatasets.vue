@@ -1,5 +1,5 @@
 <template>
-	<div :id="containerId" ref="container" class="chart-container" :aria-label="chartOptions.title" role="figure">
+	<div :id="containerId" ref="container" :aria-label="chartOptions.title" role="figure">
 		<div>
 			<canvas :id="chartId" class="chart-canvas" />
 		</div>
