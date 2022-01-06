@@ -1,5 +1,5 @@
 <template>
-	<b-card class="card">
+	<b-card class="card login-form-container">
 		<div class="card-title">
 			{{ title }}
 		</div>

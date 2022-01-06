@@ -1,6 +1,8 @@
 <template>
-	<div class="login-outer-container">
-		<LoginForm title="Sign in" to="/" />
+	<div class="login-outer-container ">
+		<div>
+			<LoginForm title="Sign in" to="/" />
+		</div>
 	</div>
 </template>
 
@@ -16,5 +18,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

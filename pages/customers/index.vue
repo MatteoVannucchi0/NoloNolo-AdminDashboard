@@ -122,7 +122,7 @@ export default {
 			this.customers = this.paginator.setFiltered(filtered);
 		},
 		async paginatorAt(paginator, page) {
-			this.employees = this.paginator.at(page);
+			this.customers = this.paginator.at(page);
 		},
 	},
 };
