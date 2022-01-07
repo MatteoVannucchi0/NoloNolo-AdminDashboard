@@ -1,6 +1,5 @@
-import {
-	shortMonths, months, getShiftedNMonths, getShiftedMonthsForNYear, getLabel,
-} from './graphHelper';
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+	'August', 'September', 'October', 'November', 'December'];
 
 function randomBetween(min, max) {
 	return Math.floor(
