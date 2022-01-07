@@ -17,33 +17,47 @@
 					</h2>
 
 					<b-form-group id="filter-container">
-						<b-form-input v-model="filterRentalsId" placeholder="Enter the rental's id" />
-						<b-form-checkbox-group
-							id="checkbox-state"
-							v-model="checkboxStateSelected"
-							:options="checkboxStateOption"
-							aria-describedby="rentals state selection"
-							name="checkbox-state"
-						/>
-						Sort type: <b-form-select
-							v-model="selectSortTypeSelected"
-							:options="selectSortTypeOption"
-							class="mb-3"
-							value-field="item"
-							text-field="name"
-							disabled-field="notEnabled"
-						/>
-					</b-form-group>
+						<b-form-group
+							id="filter-name-container"
+							label-for="filterRentalsId"
+							label="ID noleggio"
+							description="Filtro dei noleggi per id"
+						>
+							<b-form-input id="filterRentalsId" v-model="filterRentalsId" placeholder="Enter the rental's id" />
+						</b-form-group>
 
-					<div v-if="!noRentals">
-						<div class="product-rentals-grid">
-							<CardRental v-for="rental in productRentals" :key="rental._id" :rental="rental" :link-product="false" />
+						<b-form-group v-slot="{ ariaDescribedby }" label="Filtro per stato del noleggio">
+							<b-form-checkbox-group
+								id="checkbox-state"
+								v-model="checkboxStateSelected"
+								:options="checkboxStateOption"
+								:aria-describedby="ariaDescribedby"
+								name="checkbox-state"
+							/>
+						</b-form-group>
+
+						<b-form-group label="Tipo di ordinamento" label-for="selectSortTypeRentals">
+							<b-form-select
+								id="selectSortTypeRentals"
+								v-model="selectSortTypeSelected"
+								:options="selectSortTypeOption"
+								class="mb-3"
+								value-field="item"
+								text-field="name"
+								disabled-field="notEnabled"
+							/>
+						</b-form-group>
+
+						<div v-if="!noRentals">
+							<div class="product-rentals-grid">
+								<CardRental v-for="rental in productRentals" :key="rental._id" :rental="rental" :link-product="false" />
+							</div>
+							<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
 						</div>
-						<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
-					</div>
-					<h2 v-else class="text-center">
-						No Rentals Found
-					</h2>
+						<h2 v-else class="text-center">
+							No Rentals Found
+						</h2>
+					</b-form-group>
 				</div>
 			</b-tab>
 			<b-tab title="Units">
@@ -53,45 +67,59 @@
 					</h2>
 
 					<b-form-group id="filter-container-units">
-						<b-form-input v-model="filterUnitsId" placeholder="Inserisci il l'id dell'unità" />
-						<b-form-checkbox-group
-							id="checkbox-condition"
-							v-model="checkboxUnitsConditionSelected"
-							:options="checkboxUnitsConditionOption"
-							aria-describedby="Selezione condizione unità"
-							name="checkbox-unit-condition"
-						/>
-						Sort type: <b-form-select
-							v-model="selectSortTypeSelected"
-							:options="selectSortTypeOption"
-							class="mb-3"
-							value-field="item"
-							text-field="name"
-							disabled-field="notEnabled"
-						/>
-					</b-form-group>
+						<b-form-group
+							id="filter-name-container"
+							label-for="filterUnitsId"
+							label="ID unità"
+							description="Filtro delle unità per id"
+						>
+							<b-form-input id="filterUnitsId" v-model="filterUnitsId" placeholder="Inserisci il l'id dell'unità" />
+						</b-form-group>
 
-					<div v-if="!noUnits">
-						<b-container fluid>
-							<b-row
-								cols="1"
-								cols-sm="1"
-								cols-md="1"
-								cols-lg="2"
-								cols-xl="2"
-							>
-								<div v-for="unit in currentUnits" :key="unit._id">
-									<b-col class="mb-4">
-										<CardUnit :unit="unit" />
-									</b-col>
-								</div>
-							</b-row>
-						</b-container>
-						<Pagination v-model="unitsPaginator.currentPage" :paginator="unitsPaginator" @at="paginatorUnitAt" />
-					</div>
-					<h2 v-else class="text-center">
-						Nessuna unità trovata
-					</h2>
+						<b-form-group v-slot="{ ariaDescribedby }" label="Filtro per stato dell'unità">
+							<b-form-checkbox-group
+								id="checkbox-condition"
+								v-model="checkboxUnitsConditionSelected"
+								:options="checkboxUnitsConditionOption"
+								:aria-describedby="ariaDescribedby"
+								name="checkbox-unit-condition"
+							/>
+						</b-form-group>
+
+						<b-form-group label="Tipo di ordinamento" label-for="selectSortTypeUnits">
+							<b-form-select
+								id="selectSortTypeUnits"
+								v-model="selectSortTypeSelected"
+								:options="selectSortTypeOption"
+								class="mb-3"
+								value-field="item"
+								text-field="name"
+								disabled-field="notEnabled"
+							/>
+						</b-form-group>
+
+						<div v-if="!noUnits">
+							<b-container fluid>
+								<b-row
+									cols="1"
+									cols-sm="1"
+									cols-md="1"
+									cols-lg="2"
+									cols-xl="2"
+								>
+									<div v-for="unit in currentUnits" :key="unit._id">
+										<b-col class="mb-4">
+											<CardUnit :unit="unit" />
+										</b-col>
+									</div>
+								</b-row>
+							</b-container>
+							<Pagination v-model="unitsPaginator.currentPage" :paginator="unitsPaginator" @at="paginatorUnitAt" />
+						</div>
+						<h2 v-else class="text-center">
+							Nessuna unità trovata
+						</h2>
+					</b-form-group>
 				</div>
 			</b-tab>
 		</b-tabs>

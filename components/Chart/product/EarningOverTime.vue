@@ -4,12 +4,12 @@
 			:get-rentals="getRentals"
 			name="ProductEarningOverTime"
 			:data-options="dataOptions"
+			aria-label="Grafico dei noleggi nel tempo del prodotto"
 		/>
 	</div>
 </template>
 <script>
 /* eslint-disable no-underscore-dangle */
-import appearanceConfig from '../../../assets/helper/appearanceConfig';
 
 import api from '../../../assets/helper/api';
 

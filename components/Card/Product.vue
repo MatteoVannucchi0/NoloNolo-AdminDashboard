@@ -5,9 +5,9 @@
 		</div>
 		<div class="card-image">
 			<NuxtLink v-if="link" :to="productSingleUrl">
-				<img :src="productImageUrl">
+				<img :src="productImageUrl" :alt="`Immagine del prodotto ${product.name}`">
 			</NuxtLink>
-			<span v-else><img :src="productImageUrl"></span>
+			<span v-else><img :src="productImageUrl" :alt="`Immagine del prodotto ${product.name}`"></span>
 		</div>
 		<h4>
 			<b-badge variant="danger">

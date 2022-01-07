@@ -1,5 +1,5 @@
 <template>
-	<div :id="containerId" ref="container" :aria-label="chartOptions.title" role="figure">
+	<div :id="containerId" ref="container" :aria-label="ariaLabel" role="figure">
 		<div>
 			<canvas :id="chartId" class="chart-canvas" />
 		</div>
@@ -50,6 +50,10 @@ export default {
 					align: 'start',
 				},
 			}),
+		},
+		ariaLabel: {
+			type: String,
+			default: 'grafico',
 		},
 	},
 	data() {

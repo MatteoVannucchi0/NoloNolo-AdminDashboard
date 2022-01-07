@@ -9,6 +9,7 @@
 			:data="data"
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
+			aria-label="Grafico dei prodotti più venduti"
 			@onClick="onClick"
 			@preDraw="$emit('preDraw')"
 		/>

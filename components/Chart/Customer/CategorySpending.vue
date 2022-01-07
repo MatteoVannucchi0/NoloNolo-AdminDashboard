@@ -1,6 +1,6 @@
 <template>
 	<div style="height: 100%;">
-		<ChartRentalsOverCategory :get-rentals="getRentals" name="CustomerCategorySpending" />
+		<ChartRentalsOverCategory :get-rentals="getRentals" name="CustomerCategorySpending" aria-label="Grafico dei noleggi per categoria del cliente" />
 	</div>
 </template>
 <script>

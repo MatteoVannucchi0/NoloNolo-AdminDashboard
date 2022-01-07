@@ -4,6 +4,7 @@
 			:get-rentals="getRentals"
 			name="CustomerSpendingOverTime"
 			:data-options="dataOptions"
+			aria-label="Grafico delle spese nel tempo del cliente"
 		/>
 	</div>
 </template>

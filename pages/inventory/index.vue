@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<b-container fluid>
-			<h2 class="text-center">
+			<h1 class="text-center">
 				INVENTARIO
-			</h2>
+			</h1>
 			<div class="filter-container">
 				<div id="filter-group">
 					<b-form-group

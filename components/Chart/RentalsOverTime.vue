@@ -12,6 +12,7 @@
 			:data="data"
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
+			:aria-label="ariaLabel"
 			height="300px"
 			@preDraw="$emit('preDraw')"
 		/>
@@ -39,6 +40,10 @@ export default {
 		chartType: {
 			type: String,
 			default: 'line',
+		},
+		ariaLabel: {
+			type: String,
+			required: true,
 		},
 	},
 	data() {

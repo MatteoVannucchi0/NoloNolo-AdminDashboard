@@ -4,6 +4,7 @@
 			:get-rentals="getRentals"
 			name="Performance"
 			:data-options="dataOptions"
+			aria-label="Grafico dei guadagni nel tempo"
 			@loaded="onLoaded"
 			@preDraw="$emit('preDraw')"
 		/>

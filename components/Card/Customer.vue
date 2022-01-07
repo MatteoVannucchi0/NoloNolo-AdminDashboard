@@ -3,11 +3,20 @@
 		<b-card-body align="center">
 			<div class="card-image">
 				<NuxtLink v-if="link" :to="customerSingleUrl">
-					<img :src="profilePictureUrl">
+					<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${customer.lastname} ${customer.firstname}`">
 				</NuxtLink>
-				<span v-else><img :src="profilePictureUrl"></span>
+				<span v-else>
+					<img
+						:src="profilePictureUrl"
+						:alt="`Immagine di profilo di ${customer.lastname} ${customer.firstname}`"
+					>
+				</span>
 			</div>
-			<b-card-text v-if="showExtraInfo" class="text-center">
+			<b-card-text
+				v-if="
+					showExtraInfo"
+				class="text-center"
+			>
 				<span id="email"> {{ customer.loginInfo.email }} </span>
 				<div class="Address">
 					<ul>
@@ -21,6 +30,8 @@
 					{{ customer.dateOfBirth }}
 				</div>
 			</b-card-text>
+			</span>
+			</div>
 		</b-card-body>
 	</b-card>
 </template>

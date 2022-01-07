@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<b-container fluid>
-			<h2 class="text-center">
+			<h1 class="text-center">
 				Benvenuto {{ user.firstname || '' }} nella dashboard di NoloNolo
-			</h2>
+			</h1>
 
 			<div style="margin:0 auto;">
 				<div class="text-center">
@@ -96,6 +96,7 @@ export default {
 				{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
 				{ charset: 'utf-8' },
 			],
+			htmlAttrs: { lang: 'it' },
 		};
 	},
 	async mounted() {

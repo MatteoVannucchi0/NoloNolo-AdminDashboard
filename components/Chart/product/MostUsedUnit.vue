@@ -10,6 +10,7 @@
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
 			:chart-options="chartOptions"
+			aria-label="Grafico della frequenza di utilizzo dell'unità più usate di questo prodotto"
 			@preDraw="$emit('preDraw')"
 		/>
 	</div>

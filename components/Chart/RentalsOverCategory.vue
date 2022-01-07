@@ -9,6 +9,7 @@
 			:data="data"
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
+			:aria-label="ariaLabel"
 			height="350px"
 			@preDraw="$emit('preDraw')"
 		/>
@@ -35,6 +36,10 @@ export default {
 		chartType: {
 			type: String,
 			default: 'doughnut',
+		},
+		ariaLabel: {
+			type: String,
+			required: true,
 		},
 	},
 	data() {

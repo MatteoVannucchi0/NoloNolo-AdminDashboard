@@ -17,22 +17,36 @@
 				No Rentals Found
 			</h2>
 			<b-form-group id="filter-container">
-				<b-form-input v-model="filterRentalsId" placeholder="Enter the rental's id" />
-				<b-form-checkbox-group
-					id="checkbox-state"
-					v-model="checkboxStateSelected"
-					:options="checkboxStateOption"
-					aria-describedby="rentals state selection"
-					name="checkbox-state"
-				/>
-				Sort type: <b-form-select
-					v-model="selectSortTypeSelected"
-					:options="selectSortTypeOption"
-					class="mb-3"
-					value-field="item"
-					text-field="name"
-					disabled-field="notEnabled"
-				/>
+				<b-form-group
+					id="filter-name-container"
+					label-for="filterRentalsId"
+					label="ID noleggio"
+					description="Filtro dei noleggi per id"
+				>
+					<b-form-input id="filterRentalsId" v-model="filterRentalsId" placeholder="Enter the rental's id" :aria-describedby="ariaDescribedby" />
+				</b-form-group>
+
+				<b-form-group v-slot="{ ariaDescribedby }" label="Filtro per stato del noleggio">
+					<b-form-checkbox-group
+						id="checkbox-state"
+						v-model="checkboxStateSelected"
+						:options="checkboxStateOption"
+						:aria-describedby="ariaDescribedby"
+						name="checkbox-state"
+					/>
+				</b-form-group>
+
+				<b-form-group label="Tipo di ordinamento" label-for="selectSortType">
+					<b-form-select
+						id="selectSortType"
+						v-model="selectSortTypeSelected"
+						:options="selectSortTypeOption"
+						class="mb-3"
+						value-field="item"
+						text-field="name"
+						disabled-field="notEnabled"
+					/>
+				</b-form-group>
 			</b-form-group>
 
 			<div v-if="!noRentals">

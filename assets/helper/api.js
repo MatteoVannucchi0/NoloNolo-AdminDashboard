@@ -304,6 +304,74 @@ const api = {
 			});
 		},
 	},
+	bills: {
+		async get(query = { }) {
+			return request({
+				url: `${config.billsApiUrl}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.billsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
+			});
+		},
+		async getSingle(id, query = {}) {
+			return request({
+				url: `${config.billsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.billsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
+				data,
+			});
+		},
+		async post(data) {
+			return request({
+				url: `${config.billsApiUrl}/`,
+				method: 'post',
+				data,
+			});
+		},
+	},
+	offers: {
+		async get(query = { }) {
+			return request({
+				url: `${config.offersApiUrl}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.offersApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
+			});
+		},
+		async getSingle(id, query = {}) {
+			return request({
+				url: `${config.offersApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.offersApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
+				data,
+			});
+		},
+		async post(data) {
+			return request({
+				url: `${config.offersApiUrl}/`,
+				method: 'post',
+				data,
+			});
+		},
+	},
 	authentication: {
 		async verify() {
 			return request({

@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<h2 class="text-center">
+		<h1 class="text-center">
 			IMPIEGATI
-		</h2>
+		</h1>
 
 		<div class="filter-container">
 			<div id="filter-group">
@@ -29,14 +29,14 @@
 					</b-form-group>
 					<b-form-group
 						id="filter-checkbox-role-container"
-						label-for="filter-checkbox-role"
-						label="Mostra solo:"
+						v-slot="{ ariaDescribedby }"
+						label="Selezione degli impiegati per ruolo da mostrare"
 					>
 						<b-form-checkbox-group
 							id="filter-checkbox-role"
 							v-model="checkboxRoleSelected"
 							:options="checkboxRoleOption"
-							aria-describedby="employees role selection"
+							:aria-describedby="ariaDescribedby"
 							name="checkbox-state"
 						/>
 					</b-form-group>

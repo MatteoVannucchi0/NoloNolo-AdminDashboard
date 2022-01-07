@@ -9,6 +9,7 @@
 			:data="data"
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
+			aria-label="Grafico degli impiegati più importanti"
 			@onClick="onClick"
 			@preDraw="$emit('preDraw')"
 		/>

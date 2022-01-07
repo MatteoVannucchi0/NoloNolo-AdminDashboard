@@ -10,6 +10,7 @@
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
 			:chart-options="chartOptions"
+			aria-label="Grafico del guadagno per categorie di prodotti"
 			height="350px"
 			@preDraw="$emit('preDraw')"
 		/>

@@ -4,6 +4,7 @@
 			:get-rentals="getRentals"
 			name="EmployeeEarningOverTime"
 			:data-options="dataOptions"
+			aria-label="Grafico dei guadagni nel tempo del impiegato"
 		/>
 	</div>
 </template>

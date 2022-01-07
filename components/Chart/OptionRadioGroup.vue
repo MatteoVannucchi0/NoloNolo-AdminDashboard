@@ -1,15 +1,17 @@
 <template>
 	<div>
-		<b-form-radio-group
-			id="graphTypeSelect"
-			v-model="currentSelected"
-			:options="options"
-			:aria-describedby="ariaDescribedBy"
-			button-variant="outline-primary"
-			name="radio-btn-outline"
-			buttons
-			@change="onChange"
-		/>
+		<b-form-group v-slot="{ ariaDescribedby }" label="Selezione del range temporale del grafico" label-sr-only>
+			<b-form-radio-group
+				id="graphTypeSelect"
+				v-model="currentSelected"
+				:options="options"
+				:aria-describedby="ariaDescribedby"
+				button-variant="outline-primary"
+				name="radio-btn-outline"
+				buttons
+				@change="onChange"
+			/>
+		</b-form-group>
 	</div>
 </template>
 
@@ -23,10 +25,6 @@ export default {
 		selected: {
 			type: [String, Object],
 			required: true,
-		},
-		ariaDescribedBy: {
-			type: String,
-			default: 'Graph data range radio',
 		},
 	},
 	data() {

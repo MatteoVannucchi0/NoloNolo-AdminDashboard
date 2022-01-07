@@ -12,6 +12,7 @@ export default {
 	head() {
 		return {
 			title: 'Dashboard-login',
+			htmlAttrs: { lang: 'it' },
 		};
 	},
 };

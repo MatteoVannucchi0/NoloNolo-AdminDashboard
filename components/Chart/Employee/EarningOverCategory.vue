@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<ChartRentalsOverCategory :get-rentals="getRentals" name="EmployeeCategoryEarning" />
+		<ChartRentalsOverCategory :get-rentals="getRentals" name="EmployeeCategoryEarning" aria-label="Grafico del numero di noleggi per categoria del impiegato" />
 	</div>
 </template>
 <script>

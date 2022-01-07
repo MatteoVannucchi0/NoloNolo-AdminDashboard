@@ -9,6 +9,8 @@ const config = {
 	get rentalsApiUrl() { return `${this.serverApiUrl}/rentals`; },
 	get productsApiUrl() { return `${this.serverApiUrl}/products`; },
 	get unitsApiUrl() { return `${this.serverApiUrl}/units`; },
+	get billsApiUrl() { return `${this.serverApiUrl}/bills`; },
+	get offersApiUrl() { return `${this.serverApiUrl}/offers`; },
 	get paginatorLimit() { return 5; },
 	get paginatorLimitRentals() { return 4; },
 	loginTimeout: 5000,

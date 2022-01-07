@@ -10,9 +10,9 @@
 		</div>
 		<div class="card-image">
 			<NuxtLink v-if="link" :to="employeeSingleUrl">
-				<img :src="profilePictureUrl">
+				<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`">
 			</NuxtLink>
-			<span v-else><img :src="profilePictureUrl"></span>
+			<span v-else><img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`"></span>
 		</div>
 		<div v-if="false" class="card-email">
 			{{ employee.loginInfo.email }}
