@@ -254,6 +254,7 @@ const api = {
 			return request({
 				url: `${config.productsApiUrl}/${id}?${mapToQueryString(query)}`,
 				method: 'patch',
+				headers: { 'Content-Type': 'multipart/form-data' },
 				data,
 			});
 		},
