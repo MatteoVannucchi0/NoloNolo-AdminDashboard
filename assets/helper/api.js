@@ -289,6 +289,13 @@ const api = {
 				method: 'delete',
 			});
 		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.unitsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
+				data,
+			});
+		},
 		async getSingle(id, query = {}) {
 			return request({
 				url: `${config.unitsApiUrl}/${id}?${mapToQueryString(query)}`,
