@@ -3,7 +3,7 @@
 		<div class="chart-title">
 			Noleggi per categoria
 		</div>
-		<ChartSingleDatasets
+		<ChartBase
 			chart-name="RentPerCategory"
 			chart-type="doughnut"
 			:data="data"

@@ -3,13 +3,13 @@
 		<div class="chart-title">
 			Clienti più importanti
 		</div>
-		<ChartSingleDatasets
+		<ChartBase
 			chart-name="MostValuableCustomer"
 			chart-type="bar"
 			:data="data"
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
-			aria-label="Grafico dei clienti più importanti"
+			aria-label="Grafico dei clienti più importanti in base al numero di noleggi"
 			@onClick="onClick"
 			@preDraw="$emit('preDraw')"
 		/>

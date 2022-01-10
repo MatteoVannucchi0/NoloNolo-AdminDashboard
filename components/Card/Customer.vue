@@ -15,11 +15,11 @@
 			<b-card-text
 				v-if="
 					showExtraInfo"
-				class="text-center"
+				class="card-extra-info"
 			>
-				<span id="email"> {{ customer.loginInfo.email }} </span>
+				<span class="card-email"> {{ customer.loginInfo.email }} </span>
 				<div class="Address">
-					<ul>
+					<ul class="card-list">
 						<li><span>Country: {{ customer.address.country }}</span></li>
 						<li><span>City: {{ customer.address.city }}</span></li>
 						<li><span>Zipcode: {{ customer.address.zipcode }}</span></li>
@@ -30,8 +30,6 @@
 					{{ customer.dateOfBirth }}
 				</div>
 			</b-card-text>
-			</span>
-			</div>
 		</b-card-body>
 	</b-card>
 </template>
@@ -69,18 +67,6 @@ export default {
 </script>
 
 <style scoped>
-	.card-container {
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-	}
-	.container-flex{
-		align-items: center;
-	}
-
-	#email {
-		font-size: 1em !important;
-	}
 
     .card-image {
         width: 175px;

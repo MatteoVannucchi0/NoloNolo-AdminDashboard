@@ -22,21 +22,12 @@ export default {
 		},
 	},
 	watch: {
-		paginator() {
-			this.update();
-		},
 		async currentPage(newCurrent) {
 			await this.paginatorAt(newCurrent);
 		},
 	},
-	mounted() {
-		this.update();
-	},
 	methods: {
-		update() {
-		},
 		async paginatorAt(page) {
-			console.log(page);
 			this.$emit('at', this.paginator, page);
 		},
 	},

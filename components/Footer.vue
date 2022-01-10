@@ -1,10 +1,3 @@
 <template>
-	<div id="todo-remove" />
+	<div />
 </template>
-
-<style scoped>
-    #todo-remove {
-        height: 40px;
-        background-color:#27293d;;
-    }
-</style>

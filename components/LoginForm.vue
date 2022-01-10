@@ -44,12 +44,6 @@
 				<b-form-checkbox id="checkbox-1" v-model="remember" name="checkbox-1" class="remember-me-checkbox" switch>
 					Remember me
 				</b-form-checkbox>
-
-				<NuxtLink to="/forgot" class="forgot-password">
-					<p class="card-nuxt-link">
-						Forgot password?
-					</p>
-				</NuxtLink>
 			</div>
 
 			<b-button type="submit" variant="info" block class="card-button">
@@ -115,7 +109,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("../assets/styles/main.css");
 .card {
     padding: 4vh 0px 10vh 0px;
 }

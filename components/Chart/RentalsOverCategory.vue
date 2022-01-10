@@ -3,7 +3,7 @@
 		<div class="chart-title">
 			Spending across products category
 		</div>
-		<ChartSingleDatasets
+		<ChartBase
 			:chart-name="name"
 			:chart-type="chartType"
 			:data="data"
@@ -13,7 +13,6 @@
 			height="350px"
 			@preDraw="$emit('preDraw')"
 		/>
-	</div>
 	</div>
 </template>
 <script>

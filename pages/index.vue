@@ -14,7 +14,7 @@
 			<div v-show="preLoaded" style="width: 100%;">
 				<b-row class="mb-4" style="height:100%;">
 					<b-col>
-						<ChartMainPerformanceOverTime v-if="rentals.length > 0" class="card" :rentals="rentals" @loaded="onGraphLoad" @preDraw="preDrawGraph" />
+						<ChartMainPerformanceOverTime class="card" :rentals="rentals" @loaded="onGraphLoad" @preDraw="preDrawGraph" />
 					</b-col>
 				</b-row>
 
@@ -33,7 +33,7 @@
 							cols-xl="2"
 						>
 							<b-col class="mb-4">
-								<ChartMainPerformanceOverCategory v-if="rentals.length > 0 && units.length > 0" class="card" :rentals="rentals" :units="units" @ />
+								<ChartMainPerformanceOverCategory v-if="rentals.length > 0 && units.length > 0" class="card" :rentals="rentals" :units="units" />
 							</b-col>
 							<b-col class="mb-4">
 								<ChartMainRentPerCategory v-if="rentals.length > 0 && units.length > 0" class="card" :rentals="rentals" :units="units" />

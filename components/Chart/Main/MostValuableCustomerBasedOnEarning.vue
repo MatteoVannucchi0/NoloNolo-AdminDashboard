@@ -1,22 +1,21 @@
 <template>
 	<div>
 		<div class="chart-title">
-			Impiegati più importanti
+			Clienti più importanti
 		</div>
 		<ChartBase
-			chart-name="MostValuableEmployees"
+			chart-name="MostValuableCustomerBasedOnEarning"
 			chart-type="bar"
 			:data="data"
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
-			aria-label="Grafico degli impiegati più importanti"
+			aria-label="Grafico dei clienti più importanti in base al valore dei noleggi"
 			@onClick="onClick"
 			@preDraw="$emit('preDraw')"
 		/>
 	</div>
 </template>
 <script>
-/* eslint-disable no-continue */
 /* eslint-disable no-underscore-dangle */
 import appearanceConfig from '../../../assets/helper/appearanceConfig';
 
@@ -26,7 +25,7 @@ export default {
 			type: Array,
 			required: true,
 		},
-		employees: {
+		customers: {
 			type: Array,
 			required: true,
 		},
@@ -48,17 +47,16 @@ export default {
 	},
 	methods: {
 		async updateGraph() {
-			const employeesFrequency = new Map();
+			const customersSpending = new Map();
 
 			for (const rent of this.rentals) {
-				if (!rent.employee) { continue; }
-
-				const rentEmployee = `${rent.employee.lastname} ${rent.employee.firstname};${rent.employee._id}`;
-				const newValue = employeesFrequency.get(rentEmployee) + 1 || 1;
-				employeesFrequency.set(rentEmployee, newValue);
+				const rentCustomer = `${rent.customer.lastname} ${rent.customer.firstname};${rent.customer._id}`;
+				const rentPrice = rent.unit.price;
+				const newValue = customersSpending.get(rentCustomer) + rentPrice || rentPrice;
+				customersSpending.set(rentCustomer, newValue);
 			}
 
-			const sortedMap = new Map([...employeesFrequency].sort((a, b) => b[1] - a[1]).slice(0, 10));
+			const sortedMap = new Map([...customersSpending].sort((a, b) => b[1] - a[1]).slice(0, 10));
 
 			const data = [];
 			const dataLabels = [];
@@ -72,17 +70,17 @@ export default {
 		},
 		onClick(contex) {
 			const { label } = contex;
-			let employee = {};
+			let customer = {};
 
-			for (const emp of this.employees) {
-				const empName = `${emp.lastname} ${emp.firstname}`;
-				if (empName === label) {
-					employee = emp;
+			for (const cust of this.customers) {
+				const custName = `${cust.lastname} ${cust.firstname}`;
+				if (custName === label) {
+					customer = cust;
 					break;
 				}
 			}
 
-			if (employee._id) { this.$router.push(`/employees/${employee._id}`); }
+			this.$router.push(`/customers/${customer._id}`);
 		},
 	},
 };

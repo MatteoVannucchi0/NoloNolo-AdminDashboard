@@ -3,7 +3,7 @@
 		<div class="chart-title">
 			Unità più usate
 		</div>
-		<ChartSingleDatasets
+		<ChartBase
 			chart-name="ProductMostUsedUnit"
 			chart-type="bar"
 			:data="data"

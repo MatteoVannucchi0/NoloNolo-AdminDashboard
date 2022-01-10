@@ -3,7 +3,7 @@
 		<div class="chart-title">
 			Prodotti più venduti
 		</div>
-		<ChartSingleDatasets
+		<ChartBase
 			chart-name="MostSoldProducts"
 			chart-type="bar"
 			:data="data"

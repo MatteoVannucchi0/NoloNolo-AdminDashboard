@@ -3,7 +3,7 @@
 		<div class="chart-title">
 			Guadagno per categoria
 		</div>
-		<ChartSingleDatasets
+		<ChartBase
 			chart-name="PerformanceOverCategory"
 			chart-type="doughnut"
 			:data="data"

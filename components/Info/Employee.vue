@@ -1,17 +1,25 @@
 <template>
 	<b-container fluid>
-		<b-row>
-			<b-col class="mb-4 pl-0" sm="12" md="6" align-v="stretch">
+		<b-row
+			cols="1"
+			cols-sm="1"
+			cols-md="1"
+			cols-lg="2"
+			cols-xl="2"
+		>
+			<b-col class="mb-4">
 				<CardEmployee :employee="employee" :link="false" />
 			</b-col>
 
-			<b-col id="category-earning" class="mb-4 card" sm="12" md="6" align-v="stretch">
-				<ChartEmployeeEarningOverCategory :employee="employee" />
+			<b-col class="mb-4">
+				<div class="card" style="height:100%;">
+					<ChartEmployeeEarningOverCategory :employee="employee" />
+				</div>
 			</b-col>
 		</b-row>
 		<b-row>
-			<b-col id="overtime-earning" class="mb-4 card">
-				<ChartEmployeeEarningOverTime :employee="employee" />
+			<b-col class="mb-4">
+				<ChartEmployeeEarningOverTime class="card" :employee="employee" />
 			</b-col>
 		</b-row>
 		<b-row>

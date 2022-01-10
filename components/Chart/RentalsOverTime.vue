@@ -6,7 +6,7 @@
 		<div>
 			<ChartOptionRadioGroup :options="graphDataRangeOptions" :selected="graphDataRangeSelected" @onChange="updateSelected" />
 		</div>
-		<ChartSingleDatasets
+		<ChartBase
 			:chart-name="name"
 			:chart-type="chartType"
 			:data="data"
