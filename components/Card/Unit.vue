@@ -8,9 +8,6 @@
 				{{ unit.condition }}
 			</b-badge>
 		</h4>
-		<div class="card-description">
-			Prezzo: {{ unit.price }}€
-		</div>
 	</div>
 </template>
 

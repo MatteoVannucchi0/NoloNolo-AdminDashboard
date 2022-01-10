@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="chart-title">
+			Guadagno nel tempo
+		</div>
 		<ChartRentalsOverTime
 			:get-rentals="getRentals"
 			name="EmployeeEarningOverTime"

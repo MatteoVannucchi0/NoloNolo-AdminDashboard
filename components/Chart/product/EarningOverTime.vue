@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<ChartBase
+		<div class="chart-title">
+			Guadagno nel tempo
+		</div>
+		<ChartRentalsOverTime
 			:get-rentals="getRentals"
 			name="ProductEarningOverTime"
 			:data-options="dataOptions"

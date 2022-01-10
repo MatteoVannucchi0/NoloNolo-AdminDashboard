@@ -1,14 +1,29 @@
 <template>
-	<div class="info-cards-container">
-		<div id="main-info" class="card card-container">
-			<CardProduct :product="product" :link="false" />
-		</div>
-		<div id="category-earning" class="card">
-			<ChartProductMostUsedUnit :product="product" />
-		</div>
-		<div id="overtime-earning" class="card">
-			<ChartProductEarningOverTime :product="product" />
-		</div>
+	<b-container fluid>
+		<b-row
+			cols="1"
+			cols-sm="1"
+			cols-md="1"
+			cols-lg="2"
+			cols-xl="2"
+		>
+			<b-col class="mb-4">
+				<CardProduct :product="product" :link="false" />
+			</b-col>
+			<b-col class="mb-4">
+				<div class="card" style="height:100%;">
+					<ChartProductMostUsedUnit :product="product" />
+				</div>
+			</b-col>
+		</b-row>
+		<b-row>
+			<b-col class="mb-4">
+				<div class="card" style="height:100%;">
+					<ChartProductEarningOverTime :product="product" />
+				</div>
+			</b-col>
+		</b-row>
+
 		<b-tabs id="rentals-and-units" fill active-nav-item-class="tab-active">
 			<b-tab title="Rentals" active>
 				<div v-if="rentalsLoaded" class="product-rentals">
@@ -49,9 +64,21 @@
 						</b-form-group>
 
 						<div v-if="!noRentals">
-							<div class="product-rentals-grid">
-								<CardRental v-for="rental in productRentals" :key="rental._id" :rental="rental" :link-product="false" />
-							</div>
+							<b-container fluid>
+								<b-row
+									cols="1"
+									cols-sm="1"
+									cols-md="1"
+									cols-lg="2"
+									cols-xl="2"
+								>
+									<div v-for="rental in productRentals" :key="rental._id">
+										<b-col class="mb-4">
+											<CardRental :rental="rental" :link-product="false" />
+										</b-col>
+									</div>
+								</b-row>
+							</b-container>
 							<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
 						</div>
 						<h2 v-else class="text-center">
@@ -124,7 +151,7 @@
 			</b-tab>
 		</b-tabs>
 		<div class="spacer" />
-	</div>
+	</b-container>
 </template>
 
 <script>
@@ -200,17 +227,18 @@ export default {
 	async mounted() {
 		this.rentalsPaginator = await api.localPagination.fromApi(api.rentals.get, [], { product: this.product._id });
 		this.unitsPaginator = await api.localPagination.fromApi(api.products.getUnits, [this.product._id]);
+
 		this.filterUpdateUnits();
 		this.filterUpdateRentals();
 		this.rentalsLoaded = true;
 		this.unitsLoaded = true;
 	},
 	methods: {
-		paginatorRentalAt(page) {
-			this.productRentals = this.productRentals.at(page);
+		paginatorRentalAt(paginator, page) {
+			this.productRentals = this.rentalsPaginator.at(page);
 		},
-		paginatorUnitAt(page) {
-			this.unitsPaginator = this.unitsPaginator.at(page);
+		paginatorUnitAt(paginator, page) {
+			this.currentUnits = this.unitsPaginator.at(page);
 		},
 		filterUpdateRentals() {
 			let filtered = [];

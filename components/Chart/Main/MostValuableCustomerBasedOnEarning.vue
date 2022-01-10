@@ -51,7 +51,7 @@ export default {
 
 			for (const rent of this.rentals) {
 				const rentCustomer = `${rent.customer.lastname} ${rent.customer.firstname};${rent.customer._id}`;
-				const rentPrice = rent.unit.price;
+				const rentPrice = rent.state === 'close' ? rent.bill.priceRecap.finalPrice : rent.priceEstimation.finalPrice;
 				const newValue = customersSpending.get(rentCustomer) + rentPrice || rentPrice;
 				customersSpending.set(rentCustomer, newValue);
 			}

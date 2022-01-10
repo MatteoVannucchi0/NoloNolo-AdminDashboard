@@ -12,7 +12,6 @@
 </template>
 <script>
 /* eslint-disable no-underscore-dangle */
-
 export default {
 	props: {
 		rentals: [],

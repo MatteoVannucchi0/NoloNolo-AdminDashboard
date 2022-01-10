@@ -55,6 +55,16 @@ const config = {
 		console.log('Is logged in: ', this._loggedIn);
 		return this._loggedIn;
 	},
+	async loggedInCustomer() {
+		const loggedIn = await this.loggedIn();
+		const user = await this.user();
+		return loggedIn && !user.authorization;
+	},
+	async loggedInEmployee() {
+		const loggedIn = await this.loggedIn();
+		const user = await this.user();
+		return loggedIn && !!user.authorization;
+	},
 	logout() {
 		this.setToken('', false);
 		this.setToken('', true);

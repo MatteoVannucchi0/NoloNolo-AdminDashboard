@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<div class="chart-title">
-			Spending across products category
-		</div>
 		<ChartBase
 			:chart-name="name"
 			:chart-type="chartType"
@@ -63,8 +60,8 @@ export default {
 
 			for (const rent of rentals) {
 				const { category } = rent.unit.product;
-				// TODO dovrebbe essere rentals.priceEstimantion ...., però i dati non ci sono quindi simulo
-				const spent = rent.unit.price;
+				const spent = rent.state === 'close' ? rent.bill.priceRecap.finalPrice : rent.priceEstimation.finalPrice;
+
 				categoryToSpending[category] = categoryToSpending[category] ? categoryToSpending[category] + spent : spent;
 			}
 

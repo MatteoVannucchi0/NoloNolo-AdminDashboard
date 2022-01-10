@@ -101,8 +101,7 @@ export default {
 	},
 	async mounted() {
 		this.user = await config.user();
-		const project = ['state', 'startDate', 'expectedEndDate', 'actualEndDate', 'unit', 'customer', 'employee'];
-		this.rentals = (await api.rentals.get({ populate: true, limit: 0, project })).data.docs;
+		this.rentals = (await api.rentals.get({ populate: true, limit: 0 })).data.docs;
 		this.products = (await api.products.get({ limit: 0 })).data.docs;
 		this.units = (await api.units.get({ limit: 0, populate: true })).data;
 		this.customers = (await api.customers.get({ limit: 0 })).data.docs;

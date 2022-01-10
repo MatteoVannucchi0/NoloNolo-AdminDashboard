@@ -63,7 +63,7 @@ export default {
 
 			for (const rent of this.rentals) {
 				const { category: rentCategory } = rent.unit.product;
-				const { price } = rent.unit;
+				const price = rent.state === 'close' ? rent.bill.priceRecap.finalPrice : rent.priceEstimation.finalPrice;
 
 				const newValue = categoryEarning.get(rentCategory) + price || price;
 				categoryEarning.set(rentCategory, newValue);

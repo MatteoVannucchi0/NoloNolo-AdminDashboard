@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<div class="chart-title">
-			Earning over time
-		</div>
 		<div>
 			<ChartOptionRadioGroup :options="graphDataRangeOptions" :selected="graphDataRangeSelected" @onChange="updateSelected" />
 		</div>
@@ -78,9 +75,13 @@ export default {
 
 		async updateGraph() {
 			const graphPeriod = this.graphDataRangeSelected;
+			console.log(this.rentals);
 			const dateMap = helper.rentalsToValueDictionary(this.rentals, graphPeriod, (rent) => {
 				const endDate = rent.state === 'close' ? new Date(rent.actualEndDate) : new Date(rent.expectedEndDate);
-				return { endDate, value: rent.unit.price };
+				const value = rent.state === 'close' ? rent.bill.priceRecap.finalPrice : rent.priceEstimation.finalPrice;
+				console.log('CIAOOO');
+				console.log(value);
+				return { endDate, value };
 			});
 
 			const data = [];
@@ -90,7 +91,7 @@ export default {
 				dataLabels.push(key);
 			});
 
-			this.data = data.length !== 0 ? data : [1];
+			this.data = data.length !== 0 ? data : [0];
 			this.dataLabels = dataLabels.length !== 0 ? dataLabels : [''];
 		},
 	},

@@ -5,57 +5,63 @@
 				NOLEGGI
 			</h2>
 
-			<div class="filter-container">
-				<div id="filter-group">
-					<b-form-group
-						id="filter-name-container"
-						label-for="filter-name-input"
-						label="Nome oggetto"
-						description="Filtro degli oggetti per nome"
-					>
-						<b-form-input id="filter-name-input" v-model="filterNameText" placeholder="Inserisci il nome dell'oggetto" list="name-list" />
-						<b-form-datalist id="name-list" :options="nameList" />
-					</b-form-group>
-					<div id="other-filter">
-						<b-form-group
-							id="filter-sort-type-container"
-							label-for="filter-sort-type"
-							label="Ordina per:"
-						>
-							<b-form-select
-								id="filter-sort-type"
-								v-model="selectSortTypeSelected"
-								:options="selectSortTypeOption"
-							/>
-						</b-form-group>
-					</div>
-				</div>
-			</div>
+			<b-form-group class="filter-container">
+				<b-form-group
+					id="filter-name-container"
+					label-for="filter-name-input"
+					label="Nome oggetto"
+					description="Filtro degli oggetti per nome"
+				>
+					<b-form-input id="filter-name-input" v-model="filterNameText" placeholder="Inserisci il nome dell'oggetto" list="name-list" />
+					<b-form-datalist id="name-list" :options="nameList" />
+				</b-form-group>
+				<b-form-group
+					id="filter-sort-type-container"
+					label-for="filter-sort-type"
+					label="Ordina per:"
+				>
+					<b-form-select
+						id="filter-sort-type"
+						v-model="selectSortTypeSelected"
+						:options="selectSortTypeOption"
+					/>
+				</b-form-group>
+				<b-form-group v-slot="{ ariaDescribedby }" label="Filtro per stato del noleggio">
+					<b-form-checkbox-group
+						id="checkbox-state"
+						v-model="checkboxStateSelected"
+						:options="checkboxStateOption"
+						:aria-describedby="ariaDescribedby"
+						name="checkbox-state"
+					/>
+				</b-form-group>
+			</b-form-group>
+		</b-container>
 
-			<div v-if="rentals.length > 0">
-				<b-container fluid>
-					<b-row
-						cols="1"
-						cols-sm="1"
-						cols-md="2"
-						cols-lg="2"
-						cols-xl="4"
-					>
-						<div v-for="rental in rentals" :key="rental._id" :v-if="loaded">
-							<b-col class="mb-4">
-								<CardRental :rental="rental" />
-							</b-col>
-						</div>
-					</b-row>
-				</b-container>
-				<Pagination :paginator="paginator" @at="paginatorAt" />
-			</div>
-			<div v-else-if="loaded">
-				<h2 style="color: white;">
-					Nessun noleggio trovato.
-				</h2>
-			</div>
-			<div v-else />
+		<div v-if="rentals.length > 0">
+			<b-container fluid>
+				<b-row
+					cols="1"
+					cols-sm="1"
+					cols-md="2"
+					cols-lg="2"
+					cols-xl="4"
+				>
+					<div v-for="rental in rentals" :key="rental._id" :v-if="loaded">
+						<b-col class="mb-4">
+							<CardRental :rental="rental" />
+						</b-col>
+					</div>
+				</b-row>
+			</b-container>
+			<Pagination :paginator="paginator" @at="paginatorAt" />
+		</div>
+		<div v-else-if="loaded">
+			<h2 style="color: white;">
+				Nessun noleggio trovato.
+			</h2>
+		</div>
+		<div v-else />
 		</b-container>
 	</div>
 </template>
@@ -72,8 +78,14 @@ export default {
 			paginator: undefined,
 			rentals: [],
 			filterNameText: '',
-			selectSortTypeSelected: 'A-Z',
-			selectSortTypeOption: ['A-Z', 'Z-A'],
+			checkboxStateSelected: ['pending', 'open', 'close'],
+			checkboxStateOption: [
+				{ text: 'Pending', value: 'pending' },
+				{ text: 'Open', value: 'open' },
+				{ text: 'Close', value: 'close' },
+			],
+			selectSortTypeSelected: 'State-Ascending',
+			selectSortTypeOption: ['Date-Ascending', 'Date-Descending', 'State-Ascending', 'State-Descending'],
 			nameList: [],
 		};
 	},
@@ -97,6 +109,9 @@ export default {
 		selectSortTypeSelected() {
 			this.filterUpdate();
 		},
+		checkboxStateSelected() {
+			this.filterUpdate();
+		},
 	},
 	async mounted() {
 		// this.paginator = (await api.rentals.get()).data;
@@ -105,7 +120,7 @@ export default {
 	},
 	methods: {
 		filterUpdate() {
-			const filtered = [];
+			let filtered = [];
 
 			for (const doc of this.paginator.getAllDocs()) {
 				const shouldInclude = this.filterNameText.toLowerCase();
@@ -116,10 +131,14 @@ export default {
 					continue;
 				}
 
+				if (!this.checkboxStateSelected.includes(doc.state)) {
+					continue;
+				}
+
 				filtered.push(doc);
 			}
 
-			// filtered = Helper.sortrentalsBy(filtered, this.selectSortTypeSelected);
+			filtered = Helper.sortRentalsBy(filtered, this.selectSortTypeSelected);
 
 			this.rentals = this.paginator.setFiltered(filtered);
 		},

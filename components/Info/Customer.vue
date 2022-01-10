@@ -1,14 +1,28 @@
 <template>
-	<div class="info-cards-container">
-		<div class="card card-container main-info">
-			<CardCustomer :customer="customer" :link="false" />
-		</div>
-		<div class="card category-spending">
-			<ChartCustomerCategorySpending :customer="customer" />
-		</div>
-		<div class="card spending-overtime">
-			<ChartCustomerSpendingOverTime :customer="customer" />
-		</div>
+	<b-container fluid>
+		<b-row
+			cols="1"
+			cols-sm="1"
+			cols-md="1"
+			cols-lg="2"
+			cols-xl="2"
+		>
+			<b-col class="mb-4">
+				<CardCustomer :customer="customer" :link="false" />
+			</b-col>
+			<b-col class="mb-4">
+				<div class="card" style="height:100%;">
+					<ChartCustomerCategorySpending :customer="customer" />
+				</div>
+			</b-col>
+		</b-row>
+		<b-row>
+			<b-col class="mb-4">
+				<div class="card" style="height:100%;">
+					<ChartCustomerSpendingOverTime :customer="customer" />
+				</div>
+			</b-col>
+		</b-row>
 		<div v-if="rentalsLoaded" class="customer-rentals">
 			<h2 v-if="!noRentals" class="text-center">
 				Rentals
@@ -57,7 +71,7 @@
 			</div>
 			<div v-else class="empty-rentals" />
 		</div>
-	</div>
+	</b-container>
 </template>
 
 <script>
