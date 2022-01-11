@@ -1,5 +1,5 @@
 <template>
-	<b-card text-variant="white">
+	<b-card text-variant="white" style="height: 100%;">
 		<b-card-title class="card-title">
 			{{ rental._id }}
 		</b-card-title>

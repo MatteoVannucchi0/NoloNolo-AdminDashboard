@@ -36,32 +36,29 @@
 					/>
 				</b-form-group>
 			</b-form-group>
-		</b-container>
 
-		<div v-if="rentals.length > 0">
-			<b-container fluid>
-				<b-row
-					cols="1"
-					cols-sm="1"
-					cols-md="2"
-					cols-lg="2"
-					cols-xl="4"
-				>
-					<div v-for="rental in rentals" :key="rental._id" :v-if="loaded">
-						<b-col class="mb-4">
+			<div v-if="rentals.length > 0">
+				<b-container fluid>
+					<b-row
+						cols="1"
+						cols-sm="1"
+						cols-md="2"
+						cols-lg="2"
+						cols-xl="4"
+					>
+						<b-col v-for="rental in rentals" :key="rental._id" :v-if="loaded" class="mb-4">
 							<CardRental :rental="rental" />
 						</b-col>
-					</div>
-				</b-row>
-			</b-container>
-			<Pagination :paginator="paginator" @at="paginatorAt" />
-		</div>
-		<div v-else-if="loaded">
-			<h2 style="color: white;">
-				Nessun noleggio trovato.
-			</h2>
-		</div>
-		<div v-else />
+					</b-row>
+				</b-container>
+				<Pagination :paginator="paginator" @at="paginatorAt" />
+			</div>
+			<div v-else-if="loaded">
+				<h2 style="color: white;">
+					Nessun noleggio trovato.
+				</h2>
+			</div>
+			<div v-else />
 		</b-container>
 	</div>
 </template>
