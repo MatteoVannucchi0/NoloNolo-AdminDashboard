@@ -41,7 +41,7 @@
 						cols-xl="4"
 					>
 						<b-col v-for="product in products" :key="product._id" class="mb-4" :v-if="loaded">
-							<CardProduct :product="product" />
+							<CardProduct :product="product" :description="false" />
 						</b-col>
 					</b-row>
 				</b-container>

@@ -22,10 +22,7 @@ import appearanceConfig from '../../assets/helper/appearanceConfig';
 
 export default {
 	props: {
-		getRentals: {
-			type: Function,
-			required: true,
-		},
+		rentals: [],
 		dataOptions: {
 			type: Object,
 			default: () => ({ backgroundColor: appearanceConfig.backgroundColor }),
@@ -45,7 +42,6 @@ export default {
 	},
 	data() {
 		return {
-			rentals: [],
 			data: [],
 			dataLabels: [],
 			options: {},
@@ -62,9 +58,11 @@ export default {
 		async graphDataRangeSelected() {
 			await this.updateGraph();
 		},
+		async rentals() {
+			await this.updateGraph();
+		},
 	},
 	async mounted() {
-		this.rentals = await this.getRentals();
 		await this.updateGraph();
 		this.$emit('loaded');
 	},

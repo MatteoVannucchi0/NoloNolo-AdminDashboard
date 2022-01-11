@@ -14,7 +14,7 @@
 				{{ product.category + " - " + product.subcategory }}
 			</b-badge>
 		</h4>
-		<div class="card-description">
+		<div v-if="description" class="card-description">
 			{{ shortenDescription }}
 			<b-button v-if="shortenDescription != product.description || !shortDescription" @click="changeDescription">
 				{{ expandButtonDescription }}
@@ -37,6 +37,10 @@ export default {
 			default: () => {},
 		},
 		link: {
+			type: Boolean,
+			default: true,
+		},
+		description: {
 			type: Boolean,
 			default: true,
 		},
@@ -76,20 +80,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-	.card-container {
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-	}
-
-	.card {
-		padding: 25px;
-	}
-
-    .card-image img {
-        width: 200px;
-        height: 200px;
-    }
-</style>

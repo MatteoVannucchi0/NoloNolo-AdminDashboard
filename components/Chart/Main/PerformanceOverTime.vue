@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<ChartRentalsOverTime
-			:get-rentals="getRentals"
+			:rentals="rentals"
 			name="Performance"
 			:data-options="dataOptions"
 			aria-label="Grafico dei guadagni nel tempo"
@@ -24,9 +24,6 @@ export default {
 		};
 	},
 	methods: {
-		async getRentals() {
-			return Promise.resolve(this.rentals);
-		},
 		onLoaded() {
 			this.$emit('loaded');
 		},

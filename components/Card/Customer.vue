@@ -1,37 +1,34 @@
 <template>
-	<b-card :title="customer.lastname + ' ' + customer.firstname" text-variant="white">
-		<b-card-body align="center">
-			<div class="card-image">
-				<NuxtLink v-if="link" :to="customerSingleUrl">
-					<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${customer.lastname} ${customer.firstname}`">
-				</NuxtLink>
-				<span v-else>
-					<img
-						:src="profilePictureUrl"
-						:alt="`Immagine di profilo di ${customer.lastname} ${customer.firstname}`"
-					>
-				</span>
+	<div class="card card-container">
+		<div class="card-title">
+			{{ customer.lastname }} {{ customer.firstname }}
+		</div>
+		<div class="card-image">
+			<NuxtLink v-if="link" :to="customerSingleUrl">
+				<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${customer.lastname} ${customer.firstname}`">
+			</NuxtLink>
+			<span v-else>
+				<img
+					:src="profilePictureUrl"
+					:alt="`Immagine di profilo di ${customer.lastname} ${customer.firstname}`"
+				>
+			</span>
+		</div>
+		<div v-if="showExtraInfo">
+			<span class="card-email"> {{ customer.loginInfo.email }} </span>
+			<div class="Address">
+				<ul class="card-list">
+					<li><span>Country: {{ customer.address.country }}</span></li>
+					<li><span>City: {{ customer.address.city }}</span></li>
+					<li><span>Zipcode: {{ customer.address.zipcode }}</span></li>
+					<li><span>Street Address: {{ customer.address.streetAddress }}</span></li>
+				</ul>
 			</div>
-			<b-card-text
-				v-if="
-					showExtraInfo"
-				class="card-extra-info"
-			>
-				<span class="card-email"> {{ customer.loginInfo.email }} </span>
-				<div class="Address">
-					<ul class="card-list">
-						<li><span>Country: {{ customer.address.country }}</span></li>
-						<li><span>City: {{ customer.address.city }}</span></li>
-						<li><span>Zipcode: {{ customer.address.zipcode }}</span></li>
-						<li><span>Street Address: {{ customer.address.streetAddress }}</span></li>
-					</ul>
-				</div>
-				<div>
-					{{ customer.dateOfBirth }}
-				</div>
-			</b-card-text>
-		</b-card-body>
-	</b-card>
+			<div>
+				{{ customer.dateOfBirth }}
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -65,19 +62,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-
-    .card-image {
-        width: 175px;
-        height: 175px;
-    }
-    .card-image img {
-        width: 100%;
-        height: 100%;
-    }
-
-	.card .card-body {
-		padding: 4px;
-	}
-</style>

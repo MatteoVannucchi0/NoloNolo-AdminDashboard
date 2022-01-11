@@ -4,7 +4,7 @@
 			Guadagno nel tempo
 		</div>
 		<ChartRentalsOverTime
-			:get-rentals="getRentals"
+			:rentals="rentals"
 			name="ProductEarningOverTime"
 			:data-options="dataOptions"
 			aria-label="Grafico dei noleggi nel tempo del prodotto"
@@ -25,24 +25,14 @@ export default {
 	},
 	data() {
 		return {
-			rentals: {
-				type: Array,
-				default: () => [],
-			},
-			loaded: {
-				type: Boolean,
-				default: false,
-			},
+			rentals: [],
 			dataOptions: {
 				borderColor: 'red',
 			},
 		};
 	},
-	methods: {
-		async getRentals() {
-			const rentals = (await api.rentals.get({ populate: true, limit: 0, product: this.product._id })).data.docs;
-			return rentals;
-		},
+	async mounted() {
+		this.rentals = (await api.rentals.get({ populate: true, limit: 0, product: this.product._id })).data.docs;
 	},
 };
 </script>

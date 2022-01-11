@@ -8,12 +8,16 @@
 		<div class="card-title">
 			{{ employee.lastname }} {{ employee.firstname }}
 		</div>
-		<div class="card-image">
-			<NuxtLink v-if="link" :to="employeeSingleUrl">
+		<NuxtLink v-if="link" :to="employeeSingleUrl">
+			<div class="card-image">
 				<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`">
-			</NuxtLink>
-			<span v-else><img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`"></span>
+			</div>
+		</NuxtLink>
+		<div v-else class="card-image">
+			<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`">
 		</div>
+
+		<div class="card-image" />
 		<div v-if="false" class="card-email">
 			{{ employee.loginInfo.email }}
 		</div>

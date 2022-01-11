@@ -4,7 +4,7 @@
 			Spese nel tempo
 		</div>
 		<ChartRentalsOverTime
-			:get-rentals="getRentals"
+			:rentals="rentals"
 			name="CustomerSpendingOverTime"
 			:data-options="dataOptions"
 			aria-label="Grafico delle spese nel tempo del cliente"
@@ -25,10 +25,7 @@ export default {
 	},
 	data() {
 		return {
-			rentals: {
-				type: Array,
-				default: () => [],
-			},
+			rentals: [],
 			loaded: {
 				type: Boolean,
 				default: false,
@@ -38,10 +35,8 @@ export default {
 			},
 		};
 	},
-	methods: {
-		async getRentals() {
-			return (await api.customers.getRentals(this.customer._id, { populate: true, limit: 0 })).data.docs;
-		},
+	async mounted() {
+		this.rentals = (await api.customers.getRentals(this.customer._id, { populate: true, limit: 0 })).data.docs;
 	},
 };
 </script>

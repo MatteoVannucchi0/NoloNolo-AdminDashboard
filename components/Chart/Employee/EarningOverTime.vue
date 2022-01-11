@@ -4,7 +4,7 @@
 			Guadagno nel tempo
 		</div>
 		<ChartRentalsOverTime
-			:get-rentals="getRentals"
+			:rentals="rentals"
 			name="EmployeeEarningOverTime"
 			:data-options="dataOptions"
 			aria-label="Grafico dei guadagni nel tempo del impiegato"
@@ -25,10 +25,7 @@ export default {
 	},
 	data() {
 		return {
-			rentals: {
-				type: Array,
-				default: () => [],
-			},
+			rentals: [],
 			loaded: {
 				type: Boolean,
 				default: false,
@@ -38,10 +35,8 @@ export default {
 			},
 		};
 	},
-	methods: {
-		async getRentals() {
-			return (await api.rentals.get({ populate: true, employee: this.employee._id, limit: 0 })).data.docs;
-		},
+	async mounted() {
+		this.rentals = (await api.rentals.get({ populate: true, employee: this.employee._id, limit: 0 })).data.docs;
 	},
 };
 </script>
