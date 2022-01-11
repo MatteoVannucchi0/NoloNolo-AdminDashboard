@@ -37,37 +37,56 @@ const config = {
 	setToken(token, remember = true) {
 		try {
 			this._tokenChanged = true;
+			this._tokenChangedCustomer = true;
+			this._tokenChangedEmployee = true;
+
 			if (remember) localStorage.setItem('authToken', token);
 			else sessionStorage.setItem('authToken', token);
 		} catch (err) {
 			console.error(err);
 		}
 	},
+
 	_loggedIn: false,
-	_loggedInCustomer: false,
-	_loggedInEmployee: false,
 	_tokenChanged: true,
 	async loggedIn() {
 		if (this._tokenChanged) {
 			console.log('token changed, checking new token...');
 
 			[this._loggedIn, this._user] = await this.checkToken();
-			this._loggedInCustomer = await this.checkTokenCustomer();
-			this._loggedInEmployee = await this.checkTokenEmployee();
-
 			this._tokenChanged = false;
 		}
 
-		console.log(`Is logged in: ${this._loggedIn}, ${this._loggedInCustomer ? 'is a customer' : 'is an employee'} `);
+		console.log(`Is logged in: ${this._loggedIn}`);
 		return this._loggedIn;
 	},
-	async loggedInCustomer() {
-		await this.loggedIn();
-		return this._loggedInCustomer;
-	},
+
+	_loggedInEmployee: false,
+	_tokenChangedEmployee: true,
 	async loggedInEmployee() {
-		await this.loggedIn();
+		if (this._tokenChangedEmployee) {
+			console.log('token changed, checking new token...');
+
+			[this._loggedInEmployee, this._user] = await this.checkTokenEmployee();
+			this._tokenChangedEmployee = false;
+		}
+
+		console.log(`Is logged in: ${this._loggedInEmployee} as an employee`);
 		return this._loggedInEmployee;
+	},
+
+	_loggedInCustomer: false,
+	_tokenChangedCustomer: true,
+	async loggedInCustomer() {
+		if (this._tokenChangedCustomer) {
+			console.log('token changed, checking new token...');
+
+			[this._loggedInCustomer, this._user] = await this.checkTokenEmployee();
+			this._tokenChangedCustomer = false;
+		}
+
+		console.log(`Is logged in: ${this._loggedInCustomer} as an customer`);
+		return this._loggedInCustomer;
 	},
 	logout() {
 		this.setToken('', false);

@@ -444,25 +444,29 @@ config.checkToken = async function () {
 
 config.checkTokenCustomer = async function () {
 	const token = config.getToken();
-	if (!token) return false;
+	console.log('Checking token:', token);
+
+	if (!token) return [false, null];
 
 	try {
-		await api.authentication.verifyCustomer();
-		return true;
+		const user = (await api.authentication.verifyCustomer()).data;
+		return [true, user];
 	} catch (err) {
-		return false;
+		return [false, null];
 	}
 };
 
 config.checkTokenEmployee = async function () {
 	const token = config.getToken();
-	if (!token) return false;
+	console.log('Checking token:', token);
+
+	if (!token) return [false, null];
 
 	try {
-		await api.authentication.verifyEmployee();
-		return true;
+		const user = (await api.authentication.verifyEmployee()).data;
+		return [true, user];
 	} catch (err) {
-		return false;
+		return [false, null];
 	}
 };
 

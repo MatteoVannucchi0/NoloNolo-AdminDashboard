@@ -37,7 +37,7 @@ export default {
 	methods: {
 		logout() {
 			config.logout();
-			this.$router.push('/logout');
+			this.$router.push('/login');
 		},
 	},
 };
