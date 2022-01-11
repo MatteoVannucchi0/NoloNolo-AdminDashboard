@@ -142,34 +142,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-	.main-info {
-		grid-area: info;
-	}
-
-	.category-spending {
-		grid-area: graph1;
-	}
-
-	.spending-overtime {
-		grid-area: graph2;
-	}
-
-	.customer-rentals {
-		grid-area: row3;
-	}
-
-	.customer-rentals-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: auto;
-		justify-content: stretch;
-		column-gap: 15px;
-		row-gap: 5px;
-	}
-
-	.empty-rentals {
-		height: 500px;
-	}
-</style>

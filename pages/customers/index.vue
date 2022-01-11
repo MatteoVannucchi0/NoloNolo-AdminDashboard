@@ -103,7 +103,7 @@ export default {
 	},
 	methods: {
 		filterUpdate() {
-			const filtered = [];
+			let filtered = [];
 
 			for (const doc of this.paginator.getAllDocs()) {
 				const fullName = `${doc.firstname} ${doc.lastname}`.toLowerCase();
@@ -117,7 +117,7 @@ export default {
 				filtered.push(doc);
 			}
 
-			this.customers = Helper.sortCustomersBy(filtered, this.selectSortTypeSelected);
+			filtered = Helper.sortCustomersBy(filtered, this.selectSortTypeSelected);
 
 			this.customers = this.paginator.setFiltered(filtered);
 		},

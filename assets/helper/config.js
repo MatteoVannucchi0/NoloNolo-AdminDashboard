@@ -44,32 +44,38 @@ const config = {
 		}
 	},
 	_loggedIn: false,
+	_loggedInCustomer: false,
+	_loggedInEmployee: false,
 	_tokenChanged: true,
 	async loggedIn() {
 		if (this._tokenChanged) {
 			console.log('token changed, checking new token...');
+
 			[this._loggedIn, this._user] = await this.checkToken();
+			this._loggedInCustomer = await this.checkTokenCustomer();
+			this._loggedInEmployee = await this.checkTokenEmployee();
+
 			this._tokenChanged = false;
 		}
 
-		console.log('Is logged in: ', this._loggedIn);
+		console.log(`Is logged in: ${this._loggedIn}, ${this._loggedInCustomer ? 'is a customer' : 'is an employee'} `);
 		return this._loggedIn;
 	},
 	async loggedInCustomer() {
-		const loggedIn = await this.loggedIn();
-		const user = await this.user();
-		return loggedIn && !user.authorization;
+		await this.loggedIn();
+		return this._loggedInCustomer;
 	},
 	async loggedInEmployee() {
-		const loggedIn = await this.loggedIn();
-		const user = await this.user();
-		return loggedIn && !!user.authorization;
+		await this.loggedIn();
+		return this._loggedInEmployee;
 	},
 	logout() {
 		this.setToken('', false);
 		this.setToken('', true);
 	},
 	async checkToken() { throw new Error('checkToken must be overwritten before use'); },
+	async checkTokenEmployee() { throw new Error('checkToken must be overwritten before use'); },
+	async checkTokenCustomer() { throw new Error('checkToken must be overwritten before use'); },
 };
 
 // TODO toglierelo

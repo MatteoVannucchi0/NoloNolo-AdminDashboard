@@ -388,6 +388,20 @@ const api = {
 				timeout: config.loginTimeout,
 			});
 		},
+		async verifyCustomer() {
+			return request({
+				url: `${config.serverApiUrl}/authentication/verifyCustomer`,
+				method: 'get',
+				timeout: config.loginTimeout,
+			});
+		},
+		async verifyEmployee() {
+			return request({
+				url: `${config.serverApiUrl}/authentication/verifyEmployee`,
+				method: 'get',
+				timeout: config.loginTimeout,
+			});
+		},
 	},
 	localPagination: {
 		async fromApi(getterFunction, params = [], query = {}) {
@@ -425,6 +439,30 @@ config.checkToken = async function () {
 		return [true, user];
 	} catch (err) {
 		return [false, null];
+	}
+};
+
+config.checkTokenCustomer = async function () {
+	const token = config.getToken();
+	if (!token) return false;
+
+	try {
+		await api.authentication.verifyCustomer();
+		return true;
+	} catch (err) {
+		return false;
+	}
+};
+
+config.checkTokenEmployee = async function () {
+	const token = config.getToken();
+	if (!token) return false;
+
+	try {
+		await api.authentication.verifyEmployee();
+		return true;
+	} catch (err) {
+		return false;
 	}
 };
 
