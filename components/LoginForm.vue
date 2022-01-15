@@ -14,6 +14,11 @@
 			<p>No user found with that email</p>
 		</div>
 
+		<div v-if="noAuthorization" class="card-error">
+			<p><b>Login Failed:</b></p>
+			<p>You must be an admin to login</p>
+		</div>
+
 		<div v-if="wrongPassword" class="card-error">
 			<p><b>Login Failed:</b></p>
 			<p>Incorrect password</p>
@@ -77,6 +82,7 @@ export default {
 			remember: true,
 			wrongEmail: false,
 			wrongPassword: false,
+			noAuthorization: false,
 			unknownError: false,
 		};
 	},
@@ -87,6 +93,14 @@ export default {
 
 			try {
 				const res = await api.employees.login(data);
+				const user = res.data;
+
+				console.log(user);
+				if (user.authorization !== 'admin') {
+					this.noAuthorization = true;
+					return;
+				}
+
 				config.setToken(res.headers.authorization, this.remember);
 
 				// TODO vanno tolti
