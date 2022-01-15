@@ -1,4 +1,5 @@
 @import url("./main.css");
+
 .navbar {
     background: transparent;
     color: white;
@@ -11,4 +12,11 @@
 
 .navbar * {
     color: white;
+}
+
+.navbar-nav-item-color a {
+    color: rgba(255, 255, 255, 1) !important;
+    margin-bottom: 2vh;
+    font-size: 1.3em;
+    font-weight: bold;
 }

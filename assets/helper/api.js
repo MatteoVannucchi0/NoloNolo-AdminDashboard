@@ -66,7 +66,7 @@ const api = {
 			});
 		},
 		async post(data) {
-			// TODO se si aggiungono le immagini va messo multiplart form data
+			// const headers = { 'Content-Type': 'multipart/form-data' },
 			return request({
 				url: config.customersApiUrl,
 				method: 'post',

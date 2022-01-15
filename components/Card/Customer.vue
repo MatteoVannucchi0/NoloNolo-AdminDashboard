@@ -1,8 +1,5 @@
 <template>
 	<div class="card card-container">
-		<div class="card-title">
-			{{ customer.lastname }} {{ customer.firstname }}
-		</div>
 		<div class="card-image">
 			<NuxtLink v-if="link" :to="customerSingleUrl">
 				<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${customer.lastname} ${customer.firstname}`">
@@ -14,6 +11,10 @@
 				>
 			</span>
 		</div>
+		<div class="card-title">
+			{{ customer.lastname }} {{ customer.firstname }}
+		</div>
+
 		<div v-if="showExtraInfo">
 			<span class="card-email"> {{ customer.loginInfo.email }} </span>
 			<div class="Address">

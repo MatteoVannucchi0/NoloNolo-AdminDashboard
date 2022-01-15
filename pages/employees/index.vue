@@ -13,7 +13,7 @@
 						label="Nome impiegato"
 						description="Filtro degli impiegati per nome"
 					>
-						<b-form-input id="filter-name-input" v-model="filterNameText" placeholder="Enter the employee's name" list="name-list" />
+						<b-form-input id="filter-name-input" v-model="filterNameText" placeholder="Inserisci il nome dell'impiegato" list="name-list" />
 						<b-form-datalist id="name-list" :options="nameList" />
 					</b-form-group>
 					<div id="other-filter">

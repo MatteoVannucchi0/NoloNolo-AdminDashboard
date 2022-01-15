@@ -1,19 +1,19 @@
 <template>
 	<div class="card card-container">
-		<div class="card-title">
-			{{ product.name }}
-		</div>
 		<div class="card-image">
 			<NuxtLink v-if="link" :to="productSingleUrl">
 				<img :src="productImageUrl" :alt="`Immagine del prodotto ${product.name}`">
 			</NuxtLink>
 			<span v-else><img :src="productImageUrl" :alt="`Immagine del prodotto ${product.name}`"></span>
 		</div>
-		<h4>
+		<div class="card-title">
+			{{ product.name }}
+		</div>
+		<h5>
 			<b-badge variant="danger">
 				{{ product.category + " - " + product.subcategory }}
 			</b-badge>
-		</h4>
+		</h5>
 		<div v-if="description" class="card-description">
 			{{ shortenDescription }}
 			<b-button v-if="shortenDescription != product.description || !shortDescription" @click="changeDescription">

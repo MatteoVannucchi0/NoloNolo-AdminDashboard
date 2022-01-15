@@ -1,13 +1,5 @@
 <template>
 	<div class="card card-container">
-		<h4>
-			<b-badge :variant="badgeColor">
-				{{ employee.authorization }}
-			</b-badge>
-		</h4>
-		<div class="card-title">
-			{{ employee.lastname }} {{ employee.firstname }}
-		</div>
 		<NuxtLink v-if="link" :to="employeeSingleUrl">
 			<div class="card-image">
 				<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`">
@@ -15,6 +7,14 @@
 		</NuxtLink>
 		<div v-else class="card-image">
 			<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`">
+		</div>
+		<h4>
+			<b-badge :variant="badgeColor">
+				{{ employee.authorization }}
+			</b-badge>
+		</h4>
+		<div class="card-title">
+			{{ employee.lastname }} {{ employee.firstname }}
 		</div>
 
 		<div class="card-image" />
