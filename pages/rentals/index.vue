@@ -77,12 +77,12 @@ export default {
 			filterNameText: '',
 			checkboxStateSelected: ['pending', 'open', 'close'],
 			checkboxStateOption: [
-				{ text: 'Pending', value: 'pending' },
-				{ text: 'Open', value: 'open' },
-				{ text: 'Close', value: 'close' },
+				{ text: 'In attesa', value: 'pending' },
+				{ text: 'Aperti', value: 'open' },
+				{ text: 'Chiusi', value: 'close' },
 			],
-			selectSortTypeSelected: 'State-Ascending',
-			selectSortTypeOption: ['Date-Ascending', 'Date-Descending', 'State-Ascending', 'State-Descending'],
+			selectSortTypeSelected: 'Più recenti',
+			selectSortTypeOption: ['Più recenti', 'Meno recenti', 'Stato crescente', 'Stato decrescente'],
 			nameList: [],
 		};
 	},

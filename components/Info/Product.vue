@@ -25,10 +25,10 @@
 		</b-row>
 
 		<b-tabs id="rentals-and-units" fill active-nav-item-class="tab-active">
-			<b-tab title="Rentals" active>
+			<b-tab title="Noleggi" active>
 				<div v-if="rentalsLoaded" class="product-rentals">
 					<h2 class="text-center">
-						Rentals
+						Noleggi
 					</h2>
 
 					<b-form-group id="filter-container">
@@ -38,7 +38,7 @@
 							label="ID noleggio"
 							description="Filtro dei noleggi per id"
 						>
-							<b-form-input id="filterRentalsId" v-model="filterRentalsId" placeholder="Enter the rental's id" />
+							<b-form-input id="filterRentalsId" v-model="filterRentalsId" placeholder="Inserisci l'id del noleggio" />
 						</b-form-group>
 
 						<b-form-group v-slot="{ ariaDescribedby }" label="Filtro per stato del noleggio">
@@ -80,12 +80,12 @@
 							<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
 						</div>
 						<h2 v-else class="text-center">
-							No Rentals Found
+							Nessun noleggio trovato
 						</h2>
 					</b-form-group>
 				</div>
 			</b-tab>
-			<b-tab title="Units">
+			<b-tab title="Unità">
 				<div v-if="unitsLoaded">
 					<h2 class="text-center">
 						Unità
@@ -173,12 +173,12 @@ export default {
 			filterRentalsId: '',
 			checkboxStateSelected: ['pending', 'open', 'close'],
 			checkboxStateOption: [
-				{ text: 'Pending', value: 'pending' },
-				{ text: 'Open', value: 'open' },
-				{ text: 'Close', value: 'close' },
+				{ text: 'In attesa', value: 'pending' },
+				{ text: 'Aperti', value: 'open' },
+				{ text: 'Chiusi', value: 'close' },
 			],
-			selectSortTypeSelected: 'State-Ascending',
-			selectSortTypeOption: ['Date-Ascending', 'Date-Descending', 'State-Ascending', 'State-Descending'],
+			selectSortTypeSelected: 'Più recenti',
+			selectSortTypeOption: ['Più recenti', 'Meno recenti', 'Stato crescente', 'Stato decrescente'],
 
 			unitsPaginator: {},
 			currentUnits: [],

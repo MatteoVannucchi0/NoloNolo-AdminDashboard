@@ -4,7 +4,7 @@
 			{{ rental._id }}
 		</b-card-title>
 		<b-badge :variant="badgeColor" pill>
-			{{ rental.state }}
+			{{ state }}
 		</b-badge>
 		<b-card-body align="">
 			<b-card-text class="">
@@ -13,27 +13,27 @@
 				</div>
 				<div>
 					<NuxtLink v-if="linkCustomer" :to="customerLink">
-						Customer: {{ rental.customer }}
+						Cliente: {{ rental.customer }}
 					</NuxtLink>
 					<span v-else>
-						Customer: {{ rental.customer }}
+						Cliente: {{ rental.customer }}
 					</span>
 				</div>
 				<div v-if="rental.employee">
 					<NuxtLink v-if="linkEmployee" :to="employeeLink">
-						Employee: {{ rental.employee }}
+						Impiegato: {{ rental.employee }}
 					</NuxtLink>
 					<span v-else>
-						Employee: {{ rental.employee }}
+						Impiegato: {{ rental.employee }}
 					</span>
 				</div>
 				<div>
 					<NuxtLink :to="productLink">
-						Unit: {{ rental.unit }}
+						Unità: {{ rental.unit }}
 					</NuxtLink>
 				</div>
 				<div>
-					Price: {{ roundToTwo(rentalPrice) + '€' }}
+					Prezzo: {{ roundToTwo(rentalPrice) + '€' }}
 				</div>
 			</b-card-text>
 		</b-card-body>
@@ -43,6 +43,7 @@
 <script>
 /* eslint-disable no-underscore-dangle */
 import api from '../../assets/helper/api';
+import Helper from '../../assets/helper/helper';
 
 export default {
 	props: {
@@ -83,10 +84,12 @@ export default {
 			if (this.rental.state === 'close') return this.bill.priceRecap.finalPrice || 0;
 			return this.rental.priceEstimation.finalPrice || 0;
 		},
+		state() {
+			return Helper.rentalStateTranslation(this.rental.state);
+		},
 	},
 	async mounted() {
 		if (this.rental.state === 'close') { this.bill = (await api.bills.getSingle(this.rental.bill)).data; }
-		console.log(this.bill);
 		const unit = (await api.units.getSingle(this.rental.unit)).data;
 		this.productLink = `/inventory/${unit.product}`;
 

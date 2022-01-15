@@ -131,16 +131,16 @@ function stateToOrder(state) {
 function sortRentalsBy(rentals, by) {
 	switch (by) {
 	// Pending -> Open -> Close
-	case 'State-Ascending':
+	case 'Stato crescente':
 		rentals.sort((a, b) => (stateToOrder(a.state) - stateToOrder(b.state)));
 		break;
-	case 'State-Descending':
+	case 'Stato decrescente':
 		rentals.sort((a, b) => (-stateToOrder(a.state) + stateToOrder(b.state)));
 		break;
-	case 'Date-Ascending':
+	case 'Meno recenti':
 		rentals.sort((a, b) => (new Date(a.startDate).getTime() - new Date(b.startDate).getTime()));
 		break;
-	case 'Date-Descending':
+	case 'Più recenti':
 		rentals.sort((a, b) => (-new Date(a.startDate).getTime() + new Date(b.startDate).getTime()));
 		break;
 	default:
@@ -206,6 +206,13 @@ function sortProductsBy(products, by) {
 	return products;
 }
 
+function rentalStateTranslation(state) {
+	if (state === 'pending') return 'in attesa';
+	if (state === 'open') return 'aperto';
+
+	return 'chiuso';
+}
+
 export default {
 	randomBetween,
 	randomColor,
@@ -219,4 +226,5 @@ export default {
 	sortEmployeesBy,
 	sortCustomersBy,
 	sortProductsBy,
+	rentalStateTranslation,
 };

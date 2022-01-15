@@ -106,11 +106,11 @@ export default {
 			filterRentalsId: '',
 			checkboxStateSelected: ['open', 'close'],
 			checkboxStateOption: [
-				{ text: 'Open', value: 'open' },
-				{ text: 'Close', value: 'close' },
+				{ text: 'Aperti', value: 'open' },
+				{ text: 'Chiusi', value: 'close' },
 			],
-			selectSortTypeSelected: 'State-Ascending',
-			selectSortTypeOption: ['Date-Ascending', 'Date-Descending', 'State-Ascending', 'State-Descending'],
+			selectSortTypeSelected: 'Più recenti',
+			selectSortTypeOption: ['Più recenti', 'Meno recenti', 'Stato crescente', 'Stato decrescente'],
 		};
 	},
 	computed: {
