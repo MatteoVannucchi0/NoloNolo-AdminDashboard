@@ -86,11 +86,11 @@ export default {
 			filterOnlyWithRents: false,
 			checkboxRoleSelected: ['employee', 'admin'],
 			checkboxRoleOption: [
-				{ text: 'Employee', value: 'employee' },
-				{ text: 'Admin', value: 'admin' },
+				{ text: 'Impiegati', value: 'employee' },
+				{ text: 'Manager', value: 'admin' },
 			],
 			selectSortTypeSelected: 'A-Z',
-			selectSortTypeOption: ['A-Z', 'Z-A', 'Role-Ascending', 'Role-Descending'],
+			selectSortTypeOption: ['A-Z', 'Z-A', 'Ruolo crescente', 'Ruolo decrescente'],
 			nameList: [],
 		};
 	},
