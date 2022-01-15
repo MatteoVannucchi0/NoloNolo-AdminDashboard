@@ -95,7 +95,6 @@ export default {
 				const res = await api.employees.login(data);
 				const user = res.data;
 
-				console.log(user);
 				if (user.authorization !== 'admin') {
 					this.noAuthorization = true;
 					return;

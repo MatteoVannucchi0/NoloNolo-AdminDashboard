@@ -9,6 +9,7 @@
 			:data="data"
 			:data-options="dataOptions"
 			:data-labels="dataLabels"
+			:chart-options="chartOptions"
 			aria-label="Grafico dei clienti più importanti in base al numero di noleggi"
 			@onClick="onClick"
 			@preDraw="$emit('preDraw')"
@@ -33,12 +34,38 @@ export default {
 			type: Object,
 			default: () => ({ backgroundColor: appearanceConfig.backgroundColor }),
 		},
+
 	},
 	data() {
 		return {
 			data: [],
 			dataLabels: [],
 			chartLabel: [],
+			chartOptions: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					fontColor: 'white',
+					display: false,
+				},
+				title: {
+					display: true,
+					color: 'rgba(229,12,12,0.7)',
+					text: '',
+					position: 'top',
+					align: 'start',
+				},
+				scales: {
+					yAxes: [{
+						display: true,
+						ticks: {
+							suggestedMin: 0, // minimum will be 0, unless there is a lower value.
+							// OR //
+							beginAtZero: true, // minimum value will be 0.
+						},
+					}],
+				},
+			},
 		};
 	},
 	async mounted() {
