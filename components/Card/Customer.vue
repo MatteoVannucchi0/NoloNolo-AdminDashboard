@@ -19,14 +19,14 @@
 			<span class="card-email"> {{ customer.loginInfo.email }} </span>
 			<div class="Address">
 				<ul class="card-list">
-					<li><span>Country: {{ customer.address.country }}</span></li>
-					<li><span>City: {{ customer.address.city }}</span></li>
-					<li><span>Zipcode: {{ customer.address.zipcode }}</span></li>
-					<li><span>Street Address: {{ customer.address.streetAddress }}</span></li>
+					<li><span>Nazione: {{ customer.address.country }}</span></li>
+					<li><span>Città: {{ customer.address.city }}</span></li>
+					<li><span>Codice postale: {{ customer.address.zipcode }}</span></li>
+					<li><span>Via: {{ customer.address.streetAddress }}</span></li>
 				</ul>
 			</div>
 			<div>
-				{{ customer.dateOfBirth }}
+				Data di nascita: {{ new Date(customer.dateOfBirth).toLocaleDateString() }}
 			</div>
 		</div>
 	</div>

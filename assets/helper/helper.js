@@ -165,10 +165,10 @@ function sortEmployeesBy(employees, by) {
 	case 'Z-A':
 		employees.sort((a, b) => (-a.lastname.localeCompare(b.lastname)));
 		break;
-	case 'Role-Ascending':
+	case 'Ruolo crescente':
 		employees.sort((a, b) => (roleToValue(a.authorization) - roleToValue(b.authorization)));
 		break;
-	case 'Role-Descending':
+	case 'Ruolo decrescente':
 		employees.sort((a, b) => (-roleToValue(a.authorization) + roleToValue(b.authorization)));
 		break;
 	default:
@@ -213,6 +213,12 @@ function rentalStateTranslation(state) {
 	return 'chiuso';
 }
 
+function roleTranslation(role) {
+	if (role === 'employee') return 'impiegato';
+
+	return 'manager';
+}
+
 export default {
 	randomBetween,
 	randomColor,
@@ -227,4 +233,5 @@ export default {
 	sortCustomersBy,
 	sortProductsBy,
 	rentalStateTranslation,
+	roleTranslation,
 };

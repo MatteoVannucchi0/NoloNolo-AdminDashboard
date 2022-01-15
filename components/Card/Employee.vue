@@ -1,16 +1,16 @@
 <template>
 	<div class="card card-container">
-		<NuxtLink v-if="link" :to="employeeSingleUrl">
-			<div class="card-image">
+		<div class="card-image">
+			<NuxtLink v-if="link" :to="employeeSingleUrl">
 				<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`">
-			</div>
-		</NuxtLink>
-		<div v-else class="card-image">
-			<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`">
+			</NuxtLink>
+			<span v-else>
+				<img :src="profilePictureUrl" :alt="`Immagine di profilo di ${employee.lastname} ${employee.firstname}`">
+			</span>
 		</div>
 		<h4>
 			<b-badge :variant="badgeColor">
-				{{ employee.authorization }}
+				{{ role }}
 			</b-badge>
 		</h4>
 		<div class="card-title">
@@ -27,6 +27,7 @@
 <script>
 /* eslint-disable no-underscore-dangle */
 import api from '../../assets/helper/api';
+import Helper from '../../assets/helper/helper';
 
 export default {
 	props: {
@@ -48,6 +49,9 @@ export default {
 		},
 		badgeColor() {
 			return this.employee.authorization === 'admin' ? 'danger' : 'warning';
+		},
+		role() {
+			return Helper.roleTranslation(this.employee.authorization);
 		},
 	},
 };
