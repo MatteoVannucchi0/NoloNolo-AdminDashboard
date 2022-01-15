@@ -77,8 +77,10 @@ const config = {
 
 	async loggedInAdmin() {
 		const loggedEmployee = await this.loggedInEmployee();
-		if (loggedEmployee) {
-			const isAdmin = (await this.user()).authorization === 'admin';
+		const user = await this.user();
+
+		if (loggedEmployee && user && user.authorization) {
+			const isAdmin = user.authorization === 'admin';
 			return isAdmin;
 		}
 
