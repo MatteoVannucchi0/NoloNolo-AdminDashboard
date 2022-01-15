@@ -4,7 +4,7 @@ export default async function ({ redirect, route }) {
 	// Solo nel caso in cui non sia già nella pagina di login effettuo i controlli
 	if (route.path === '/login' || route.path === '/login/') {
 		// Sono nella pagina di login
-		if ((await config.loggedInEmployee())) {
+		if ((await config.loggedInAdmin())) {
 			console.log('Logged in successfully');
 			return redirect('/');
 		}
@@ -13,7 +13,7 @@ export default async function ({ redirect, route }) {
 	}
 
 	// If the user is not authenticated
-	if (!(await config.loggedInEmployee())) {
+	if (!(await config.loggedInAdmin())) {
 		console.log(`Trying to access ${route.path} while not authenticated`);
 		return redirect('/login');
 	}

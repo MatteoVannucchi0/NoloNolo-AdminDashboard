@@ -75,6 +75,16 @@ const config = {
 		return this._loggedInEmployee;
 	},
 
+	async loggedInAdmin() {
+		const loggedEmployee = await this.loggedInEmployee();
+		if (loggedEmployee) {
+			const isAdmin = (await this.user()).authorization === 'admin';
+			return isAdmin;
+		}
+
+		return false;
+	},
+
 	_loggedInCustomer: false,
 	_tokenChangedCustomer: true,
 	async loggedInCustomer() {
