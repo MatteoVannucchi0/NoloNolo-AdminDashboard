@@ -26,7 +26,7 @@
 			<b-col>
 				<div v-if="rentalsLoaded" class="employee-rentals">
 					<h2 class="text-center">
-						Rentals
+						Noleggi
 					</h2>
 
 					<b-form-group id="filter-container">
@@ -36,7 +36,7 @@
 							label="ID noleggio"
 							description="Filtro dei noleggi per id"
 						>
-							<b-form-input id="filterRentalsId" v-model="filterRentalsId" placeholder="Enter the rental's id" />
+							<b-form-input id="filterRentalsId" v-model="filterRentalsId" placeholder="Inserisci l'id del noleggio" />
 						</b-form-group>
 						<b-form-group v-slot="{ ariaDescribedby }" label="Filtro per stato del noleggio">
 							<b-form-checkbox-group
@@ -77,7 +77,7 @@
 						<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
 					</div>
 					<h2 v-else class="text-center empty-rentals">
-						No Rentals Found
+						Nessun noleggio trovato
 					</h2>
 				</div>
 			</b-col>
