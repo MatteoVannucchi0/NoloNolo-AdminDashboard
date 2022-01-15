@@ -72,11 +72,9 @@
 									cols-lg="2"
 									cols-xl="2"
 								>
-									<div v-for="rental in productRentals" :key="rental._id">
-										<b-col class="mb-4">
-											<CardRental :rental="rental" :link-product="false" />
-										</b-col>
-									</div>
+									<b-col v-for="rental in productRentals" :key="rental._id" class="mb-4">
+										<CardRental :rental="rental" :link-product="false" />
+									</b-col>
 								</b-row>
 							</b-container>
 							<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />

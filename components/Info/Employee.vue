@@ -25,12 +25,10 @@
 		<b-row>
 			<b-col>
 				<div v-if="rentalsLoaded" class="employee-rentals">
-					<h2 v-if="!noRentals" class="text-center">
+					<h2 class="text-center">
 						Rentals
 					</h2>
-					<h2 v-else class="text-center">
-						No Rentals Found
-					</h2>
+
 					<b-form-group id="filter-container">
 						<b-form-group
 							id="filter-name-container"
@@ -71,16 +69,16 @@
 								cols-lg="2"
 								cols-xl="2"
 							>
-								<div v-for="rental in customerRentals" :key="rental._id">
-									<b-col class="mb-4">
-										<CardRental :rental="rental" :link-employee="false" />
-									</b-col>
-								</div>
+								<b-col v-for="rental in customerRentals" :key="rental._id" class="mb-4">
+									<CardRental :rental="rental" :link-employee="false" />
+								</b-col>
 							</b-row>
 						</b-container>
 						<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
 					</div>
-					<div v-else class="empty-rentals" />
+					<h2 v-else class="text-center empty-rentals">
+						No Rentals Found
+					</h2>
 				</div>
 			</b-col>
 		</b-row>
@@ -157,7 +155,4 @@ export default {
 
 <style scoped>
 
-	.empty-rentals {
-		height: 500px;
-	}
 </style>

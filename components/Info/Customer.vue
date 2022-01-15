@@ -23,54 +23,68 @@
 				</div>
 			</b-col>
 		</b-row>
-		<div v-if="rentalsLoaded" class="customer-rentals">
-			<h2 v-if="!noRentals" class="text-center">
-				Rentals
-			</h2>
-			<h2 v-else class="text-center">
-				No Rentals Found
-			</h2>
-			<b-form-group id="filter-container">
-				<b-form-group
-					id="filter-name-container"
-					label-for="filterRentalsId"
-					label="ID noleggio"
-					description="Filtro dei noleggi per id"
-				>
-					<b-form-input id="filterRentalsId" v-model="filterRentalsId" placeholder="Enter the rental's id" :aria-describedby="ariaDescribedby" />
-				</b-form-group>
+		<b-row>
+			<b-col>
+				<div v-if="rentalsLoaded" class="customer-rentals">
+					<h2 class="text-center">
+						Rentals
+					</h2>
 
-				<b-form-group v-slot="{ ariaDescribedby }" label="Filtro per stato del noleggio">
-					<b-form-checkbox-group
-						id="checkbox-state"
-						v-model="checkboxStateSelected"
-						:options="checkboxStateOption"
-						:aria-describedby="ariaDescribedby"
-						name="checkbox-state"
-					/>
-				</b-form-group>
+					<b-form-group id="filter-container">
+						<b-form-group
+							id="filter-name-container"
+							label-for="filterRentalsId"
+							label="ID noleggio"
+							description="Filtro dei noleggi per id"
+						>
+							<b-form-input id="filterRentalsId" v-model="filterRentalsId" placeholder="Enter the rental's id" :aria-describedby="ariaDescribedby" />
+						</b-form-group>
 
-				<b-form-group label="Tipo di ordinamento" label-for="selectSortType">
-					<b-form-select
-						id="selectSortType"
-						v-model="selectSortTypeSelected"
-						:options="selectSortTypeOption"
-						class="mb-3"
-						value-field="item"
-						text-field="name"
-						disabled-field="notEnabled"
-					/>
-				</b-form-group>
-			</b-form-group>
+						<b-form-group v-slot="{ ariaDescribedby }" label="Filtro per stato del noleggio">
+							<b-form-checkbox-group
+								id="checkbox-state"
+								v-model="checkboxStateSelected"
+								:options="checkboxStateOption"
+								:aria-describedby="ariaDescribedby"
+								name="checkbox-state"
+							/>
+						</b-form-group>
 
-			<div v-if="!noRentals">
-				<div class="customer-rentals-grid">
-					<CardRental v-for="rental in customerRentals" :key="rental._id" :rental="rental" :link-customer="false" />
+						<b-form-group label="Tipo di ordinamento" label-for="selectSortType">
+							<b-form-select
+								id="selectSortType"
+								v-model="selectSortTypeSelected"
+								:options="selectSortTypeOption"
+								class="mb-3"
+								value-field="item"
+								text-field="name"
+								disabled-field="notEnabled"
+							/>
+						</b-form-group>
+					</b-form-group>
+
+					<div v-if="!noRentals">
+						<b-container fluid>
+							<b-row
+								cols="1"
+								cols-sm="1"
+								cols-md="1"
+								cols-lg="2"
+								cols-xl="2"
+							>
+								<b-col v-for="rental in customerRentals" :key="rental._id" class="mb-4">
+									<CardRental :rental="rental" :link-customer="false" />
+								</b-col>
+							</b-row>
+						</b-container>
+						<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
+					</div>
+					<h2 v-else class="text-center empty-rentals">
+						No Rentals Found
+					</h2>
 				</div>
-				<Pagination v-model="rentalsPaginator.currentPage" :paginator="rentalsPaginator" @at="paginatorRentalAt" />
-			</div>
-			<div v-else class="empty-rentals" />
-		</div>
+			</b-col>
+		</b-row>
 	</b-container>
 </template>
 

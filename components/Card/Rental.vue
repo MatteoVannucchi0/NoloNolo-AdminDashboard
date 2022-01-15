@@ -32,16 +32,8 @@
 						Unit: {{ rental.unit }}
 					</NuxtLink>
 				</div>
-
 				<div>
-					Price Estimation: {{ rental.priceEstimantion }}
-				</div>
-				<div>
-					Final Bill: {{ rental.bill }}
-				</div>
-
-				<div>
-					State: {{ rental.state }}
+					Price: {{ roundToTwo(rentalPrice) + '€' }}
 				</div>
 			</b-card-text>
 		</b-card-body>
@@ -70,6 +62,8 @@ export default {
 	data() {
 		return {
 			productLink: '/inventory/',
+			bill: undefined,
+			loaded: false,
 		};
 	},
 	computed: {
@@ -84,10 +78,24 @@ export default {
 			if (this.rental.state === 'open') return 'info';
 			return 'danger';
 		},
+		rentalPrice() {
+			if (!this.loaded) return 0;
+			if (this.rental.state === 'close') return this.bill.priceRecap.finalPrice || 0;
+			return this.rental.priceEstimation.finalPrice || 0;
+		},
 	},
 	async mounted() {
+		if (this.rental.state === 'close') { this.bill = (await api.bills.getSingle(this.rental.bill)).data; }
+		console.log(this.bill);
 		const unit = (await api.units.getSingle(this.rental.unit)).data;
 		this.productLink = `/inventory/${unit.product}`;
+
+		this.loaded = true;
+	},
+	methods: {
+		roundToTwo(num) {
+			return +(`${Math.round(`${num}e+2`)}e-2`);
+		},
 	},
 };
 </script>
