@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="chart-title">
+			Performance nel tempo
+		</div>
 		<ChartRentalsOverTime
 			:rentals="rentals"
 			name="Performance"
