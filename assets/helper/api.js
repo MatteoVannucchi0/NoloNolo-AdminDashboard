@@ -270,6 +270,13 @@ const api = {
 				method: 'get',
 			});
 		},
+		async postAltProduct(id, data){
+			return request({
+				url: `${config.productsApiUrl}/${id}/altproducts`,
+				method: 'post',
+				data,
+			});
+		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.productsApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.productsApiUrl); },
 		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.productsApiUrl); },
