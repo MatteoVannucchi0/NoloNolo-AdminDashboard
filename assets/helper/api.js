@@ -443,7 +443,7 @@ const api = {
 // Sovrascrive la checkToken di base per usare le richieste delle api
 config.checkToken = async function () {
 	const token = config.getToken();
-	console.log('Checking token:', token);
+	//console.log('Checking token:', token);
 
 	if (!token) return [false, null];
 
@@ -457,7 +457,7 @@ config.checkToken = async function () {
 
 config.checkTokenCustomer = async function () {
 	const token = config.getToken();
-	console.log('Checking token:', token);
+	//console.log('Checking token:', token);
 
 	if (!token) return [false, null];
 
@@ -471,7 +471,7 @@ config.checkTokenCustomer = async function () {
 
 config.checkTokenEmployee = async function () {
 	const token = config.getToken();
-	console.log('Checking token:', token);
+	//console.log('Checking token:', token);
 
 	if (!token) return [false, null];
 
