@@ -277,6 +277,12 @@ const api = {
 				data,
 			});
 		},
+		async deleteAltProduct(productId, altProductId){
+			return request({
+				url: `${config.productsApiUrl}/${productId}/altproducts/${altProductId}`,
+				method: 'delete',
+			});
+		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.productsApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.productsApiUrl); },
 		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.productsApiUrl); },
