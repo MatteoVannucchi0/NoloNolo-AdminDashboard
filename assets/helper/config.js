@@ -51,13 +51,13 @@ const config = {
 	_tokenChanged: true,
 	async loggedIn() {
 		if (this._tokenChanged) {
-			console.log('token changed, checking new token...');
+			//console.log('token changed, checking new token...');
 
 			[this._loggedIn, this._user] = await this.checkToken();
 			this._tokenChanged = false;
 		}
 
-		console.log(`Is logged in: ${this._loggedIn}`);
+		//console.log(`Is logged in: ${this._loggedIn}`);
 		return this._loggedIn;
 	},
 
@@ -65,13 +65,13 @@ const config = {
 	_tokenChangedEmployee: true,
 	async loggedInEmployee() {
 		if (this._tokenChangedEmployee) {
-			console.log('token changed, checking new token...');
+			//console.log('token changed, checking new token...');
 
 			[this._loggedInEmployee, this._user] = await this.checkTokenEmployee();
 			this._tokenChangedEmployee = false;
 		}
 
-		console.log(`Is logged in: ${this._loggedInEmployee} as an employee`);
+		//console.log(`Is logged in: ${this._loggedInEmployee} as an employee`);
 		return this._loggedInEmployee;
 	},
 
@@ -91,13 +91,13 @@ const config = {
 	_tokenChangedCustomer: true,
 	async loggedInCustomer() {
 		if (this._tokenChangedCustomer) {
-			console.log('token changed, checking new token...');
+			//console.log('token changed, checking new token...');
 
 			[this._loggedInCustomer, this._user] = await this.checkTokenEmployee();
 			this._tokenChangedCustomer = false;
 		}
 
-		console.log(`Is logged in: ${this._loggedInCustomer} as an customer`);
+		//console.log(`Is logged in: ${this._loggedInCustomer} as an customer`);
 		return this._loggedInCustomer;
 	},
 	logout() {
